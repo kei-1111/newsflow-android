@@ -1,5 +1,5 @@
 import com.android.build.gradle.LibraryExtension
-import io.github.kei_1111.androidtemplate.configureAndroidKotlin
+import io.github.kei_1111.newsflow.android.configureAndroidKotlin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -10,7 +10,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
-                apply("androidtemplate.detekt")
+                apply("newsflow.android.detekt")
             }
 
             extensions.configure<LibraryExtension> {

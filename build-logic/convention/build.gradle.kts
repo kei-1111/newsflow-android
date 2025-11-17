@@ -5,7 +5,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "io.github.kei_1111.androidtemplate.buildlogic"
+group = "io.github.kei_1111.newsflow.android.buildlogic"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -27,23 +27,23 @@ dependencies {
 gradlePlugin {
     plugins {
         register("androidApplication") {
-            id = libs.plugins.androidtemplate.android.application.get().pluginId
+            id = libs.plugins.newsflow.android.android.application.get().pluginId
             implementationClass = "AndroidApplicationConventionPlugin"
         }
         register("androidFeature") {
-            id = libs.plugins.androidtemplate.android.feature.get().pluginId
+            id = libs.plugins.newsflow.android.android.feature.get().pluginId
             implementationClass = "AndroidFeatureConventionPlugin"
         }
         register("androidLibrary") {
-            id = libs.plugins.androidtemplate.android.library.asProvider().get().pluginId
+            id = libs.plugins.newsflow.android.android.library.asProvider().get().pluginId
             implementationClass = "AndroidLibraryConventionPlugin"
         }
         register("androidLibraryCompose") {
-            id = libs.plugins.androidtemplate.android.library.compose.get().pluginId
+            id = libs.plugins.newsflow.android.android.library.compose.get().pluginId
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
         register("detekt") {
-            id = libs.plugins.androidtemplate.detekt.get().pluginId
+            id = libs.plugins.newsflow.android.detekt.get().pluginId
             implementationClass = "DetektConventionPlugin"
         }
     }

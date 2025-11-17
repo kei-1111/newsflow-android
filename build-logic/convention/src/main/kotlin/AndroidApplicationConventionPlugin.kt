@@ -1,9 +1,9 @@
 import com.android.build.api.dsl.ApplicationExtension
-import io.github.kei_1111.androidtemplate.configureAndroidCompose
-import io.github.kei_1111.androidtemplate.configureAndroidKotlin
-import io.github.kei_1111.androidtemplate.implementation
-import io.github.kei_1111.androidtemplate.libs
-import io.github.kei_1111.androidtemplate.versions
+import io.github.kei_1111.newsflow.android.configureAndroidCompose
+import io.github.kei_1111.newsflow.android.configureAndroidKotlin
+import io.github.kei_1111.newsflow.android.implementation
+import io.github.kei_1111.newsflow.android.libs
+import io.github.kei_1111.newsflow.android.versions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -16,7 +16,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("org.jetbrains.kotlin.plugin.compose")
-                apply("androidtemplate.detekt")
+                apply("newsflow.android.detekt")
             }
 
             dependencies {

@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidtemplate.android.application)
+    alias(libs.plugins.newsflow.android.android.application)
 }
 
 android {
-    namespace = "io.github.kei_1111.androidtemplate"
+    namespace = "io.github.kei_1111.newsflow.android"
 
     defaultConfig {
         versionCode = 1

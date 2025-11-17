@@ -56,9 +56,9 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 
 # Convention Plugins
-androidtemplate-android-application = { id = "androidtemplate.android.application" }
-androidtemplate-android-feature = { id = "androidtemplate.android.feature" }
-androidtemplate-android-library = { id = "androidtemplate.android.library" }
-androidtemplate-android-library-compose = { id = "androidtemplate.android.library.compose" }
-androidtemplate-detekt = { id = "androidtemplate.detekt" }
+newsflow-android-android-application = { id = "newsflow.android.android.application" }
+newsflow-android-android-feature = { id = "newsflow.android.android.feature" }
+newsflow-android-android-library = { id = "newsflow.android.android.library" }
+newsflow-android-android-library-compose = { id = "newsflow.android.android.library.compose" }
+newsflow-android-detekt = { id = "newsflow.android.detekt" }
 

@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidtemplate.android.library.compose)
+    alias(libs.plugins.newsflow.android.android.library.compose)
 }
 
 android {
-    namespace = "io.github.kei_1111.androidtemplate.core.designsystem"
+    namespace = "io.github.kei_1111.newsflow.android.core.designsystem"
 }
 
 dependencies {
