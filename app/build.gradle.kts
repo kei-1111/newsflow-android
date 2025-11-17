@@ -22,8 +22,11 @@ android {
 }
 
 dependencies {
+    implementation(projects.feature.home)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.koin.android)
+    implementation(libs.newsflow.library.shared)
 }

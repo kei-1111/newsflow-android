@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
+import io.github.kei_1111.newsflow.android.feature.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsflowAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    HomeScreen()
                 }
             }
         }

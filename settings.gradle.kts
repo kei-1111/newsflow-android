@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -25,3 +26,4 @@ includeBuild("build-logic")
 include(":app")
 include(":core:designsystem")
 include(":core:ui")
+include(":feature:home")
