@@ -13,6 +13,7 @@ import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
 import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
+@Suppress("ModifierMissing")
 @Composable
 fun HomeScreen() {
     val viewModel = koinViewModel<HomeViewModel>()
@@ -35,7 +36,7 @@ private fun HomeScreen(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        when(uiState) {
+        when (uiState) {
             is HomeUiState.Init -> {
                 Text("Initialize...")
             }
