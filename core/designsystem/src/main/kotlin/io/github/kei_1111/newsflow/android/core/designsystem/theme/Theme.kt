@@ -20,7 +20,6 @@ fun NewsflowAndroidTheme(
 
     MaterialExpressiveTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         content = content
     )
 }
