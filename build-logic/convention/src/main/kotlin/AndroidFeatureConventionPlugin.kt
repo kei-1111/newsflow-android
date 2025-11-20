@@ -16,7 +16,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 implementation(project(":core:designsystem"))
                 implementation(project(":core:ui"))
 
-                implementation(libs.library("androidx.material3"))
+                implementation(libs.library("androidx.material3.expressive"))
                 implementation(libs.library("koin.compose.viewmodel"))
                 implementation(libs.library("androidx.navigation.compose"))
             }
