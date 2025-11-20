@@ -20,11 +20,11 @@
 **Plugin ID命名パターン**: `<prefix>.<type>.<subtype>`
 
 **例**:
-- `androidtemplate.android.application`
-- `androidtemplate.android.library`
-- `androidtemplate.android.library.compose`
-- `androidtemplate.android.feature`
-- `androidtemplate.detekt`
+- `newsflow.android.android.application`
+- `newsflow.android.android.library`
+- `newsflow.android.android.library.compose`
+- `newsflow.android.android.feature`
+- `newsflow.android.detekt`
 
 ---
 
@@ -32,11 +32,11 @@
 
 プロジェクト名がmy-appであればパッケージ名はハイフンを除いたmyappとする
 
-**ベースパッケージ**: `io.github.kei_1111.androidtemplate`
+**ベースパッケージ**: `io.github.kei_1111.newsflow.android`
 
 **サブパッケージ構造**:
 ```
-io.github.kei_1111.androidtemplate
+io.github.kei_1111.newsflow.android
 ├── app
 ├── core
 │   ├── designsystem.theme
@@ -91,7 +91,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 ## Composable関数
 
 **Theme関数命名**: `<ProjectName>Theme`
-- 例: `AndroidTemplateTheme`
+- 例: `NewsflowAndroidTheme`
 
 **Screen関数命名**: `<FeatureName>Screen`
 - 例: `HomeScreen`, `ProfileDetailScreen`
@@ -101,7 +101,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 ## Applicationクラス
 
 **命名パターン**: `<ProjectName>Application`
-- 例: `AndroidTemplateApplication`
+- 例: `NewsflowAndroidApplication`
 
 ---
 

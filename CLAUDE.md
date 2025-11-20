@@ -1,4 +1,4 @@
-# Android Template - Project Guide
+# newsflow-android - Project Guide
 
 このプロジェクトは、マルチモジュール構成のAndroidアプリケーションです。
 
