@@ -28,6 +28,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndro
 import io.github.kei_1111.newsflow.android.core.ui.preview.PreviewComponent
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
 
+@Suppress("CyclomaticComplexMethod")
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ErrorContent(
@@ -100,7 +101,7 @@ fun ErrorContent(
 
 @Composable
 @PreviewComponent
-private fun HomeErrorContentPreview(
+private fun ErrorContentPreview(
     @PreviewParameter(ErrorContentPPP::class) parameter: ErrorContentPreviewParameter
 ) {
     NewsflowAndroidTheme {

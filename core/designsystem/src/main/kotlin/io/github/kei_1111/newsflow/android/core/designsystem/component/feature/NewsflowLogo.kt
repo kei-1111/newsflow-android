@@ -22,6 +22,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.PreviewComponent
 
+@Suppress("ModifierMissing")
 @Composable
 fun NewsflowLogo() {
     CompositionLocalProvider(
@@ -50,7 +51,7 @@ fun NewsflowLogo() {
 
 @Composable
 @PreviewComponent
-fun NewsflowLogoPreview() {
+private fun NewsflowLogoPreview() {
     NewsflowAndroidTheme {
         Surface {
             NewsflowLogo()
