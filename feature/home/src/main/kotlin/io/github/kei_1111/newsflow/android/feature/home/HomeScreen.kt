@@ -17,11 +17,11 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeScreen() {
     val viewModel = koinViewModel<HomeViewModel>()
-    val uiState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScreen(
         uiState = uiState,
-        onAction = viewModel::onAction,
+        onAction = viewModel::onUiAction,
         modifier = Modifier.fillMaxSize()
     )
 }
@@ -47,7 +47,7 @@ private fun HomeScreen(
                 Text(uiState.articlesByCategory.values.toString())
             }
             is HomeUiState.Error -> {
-                Text(uiState.message)
+                Text(uiState.error.message ?: "")
             }
         }
     }
