@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Error Titles -->
+    <string name="error_unauthorized_title">Authentication Failed</string>
+    <string name="error_rate_limit_exceeded_title">Rate Limit Exceeded</string>
+    <string name="error_bad_request_title">Invalid Request</string>
+    <string name="error_server_error_title">Server Error</string>
+    <string name="error_network_failure_title">Network Error</string>
+
+    <!-- Error Descriptions -->
+    <string name="error_unauthorized_description">Unable to authenticate with the service. Please try again later.</string>
+    <string name="error_rate_limit_exceeded_description">You\'ve reached the usage limit. Please try again later.</string>
+    <string name="error_bad_request_description">Unable to process your request. Please try again.</string>
+    <string name="error_server_error_description">Something went wrong on our end. Please try again later.</string>
+    <string name="error_network_failure_description">Unable to connect. Please check your internet connection and try again.</string>
+
+    <!-- Error Actions -->
+    <string name="error_retry_button">Retry</string>
+</resources>

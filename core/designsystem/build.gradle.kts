@@ -7,5 +7,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.ui)
+
     implementation(libs.androidx.material3.expressive)
+    implementation(libs.newsflow.library.model)
 }
