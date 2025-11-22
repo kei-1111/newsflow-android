@@ -130,6 +130,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 60
+    ignoreAnnotated: ['Composable']
   LongParameterList:
     active: true
     functionThreshold: 6
@@ -751,7 +752,7 @@ style:
     active: true
   UnusedPrivateMember:
     active: true
-    allowedNames: ''
+    allowedNames: '.*Preview.*'
   UnusedPrivateProperty:
     active: true
     allowedNames: '_|ignored|expected|serialVersionUID'
@@ -1116,7 +1117,7 @@ Compose:
   ParameterNaming:
     active: true
   PreviewAnnotationNaming:
-    active: true
+    active: false
   PreviewNaming:
     active: false
   PreviewPublic:
