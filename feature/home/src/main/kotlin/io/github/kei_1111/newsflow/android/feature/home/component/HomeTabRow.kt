@@ -32,7 +32,7 @@ internal fun HomeTabRow(
         contentColor = TabRowDefaults.primaryContentColor
     ) {
         NewsCategory.entries.forEach { newsCategory ->
-            CategoryTab(
+            NewsCategoryTab(
                 newsCategory = newsCategory,
                 selected = newsCategory == selectedCategory,
                 onClick = { onClickCategoryTab(newsCategory) },
@@ -43,7 +43,7 @@ internal fun HomeTabRow(
 
 @Suppress("CyclomaticComplexMethod")
 @Composable
-private fun CategoryTab(
+private fun NewsCategoryTab(
     newsCategory: NewsCategory,
     selected: Boolean,
     onClick: () -> Unit,
@@ -107,7 +107,7 @@ private fun CategoryTabPreview(
 ) {
     NewsflowAndroidTheme {
         Surface {
-            CategoryTab(
+            NewsCategoryTab(
                 newsCategory = parameter.newsCategory,
                 selected = true,
                 onClick = {},
