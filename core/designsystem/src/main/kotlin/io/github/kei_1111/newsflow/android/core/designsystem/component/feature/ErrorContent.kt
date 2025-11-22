@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameter
 import androidx.compose.ui.unit.dp
 import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
-import io.github.kei_1111.newsflow.android.core.ui.preview.PreviewComponent
+import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
 
 @Suppress("CyclomaticComplexMethod")
@@ -100,7 +100,7 @@ fun ErrorContent(
 }
 
 @Composable
-@PreviewComponent
+@ComponentPreviews
 private fun ErrorContentPreview(
     @PreviewParameter(ErrorContentPPP::class) parameter: ErrorContentPreviewParameter
 ) {

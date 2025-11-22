@@ -5,7 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
-import io.github.kei_1111.newsflow.android.core.ui.preview.PreviewComponent
+import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -18,7 +18,7 @@ fun LoadingContent(
 }
 
 @Composable
-@PreviewComponent
+@ComponentPreviews
 private fun LoadingContentPreview() {
     NewsflowAndroidTheme {
         LoadingContent()
