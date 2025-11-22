@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
 import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
@@ -47,7 +48,10 @@ private fun HomeScreen(
                 Text(uiState.articlesByCategory.values.toString())
             }
             is HomeUiState.Error -> {
-                Text(uiState.error.message ?: "")
+                ErrorContent(
+                    error = uiState.error,
+                    onClickRetryButton = { onAction(HomeUiAction.OnClickRetryButton) }
+                )
             }
         }
     }
