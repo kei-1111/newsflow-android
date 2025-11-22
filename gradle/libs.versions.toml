@@ -8,7 +8,7 @@ koin = "4.1.1"
 kotlin = "2.2.21"
 material3Expressive = "1.5.0-alpha09"
 navigationCompose = "2.9.5"
-newsflowLibrary = "0.1.1"
+newsflowLibrary = "0.1.2"
 serialization = "2.2.21"
 serializationJson = "1.9.0"
 
@@ -30,6 +30,7 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 newsflow-library-home = { group = "io.github.kei-1111.newsflow.library", name = "home", version.ref = "newsflowLibrary" }
+newsflow-library-model = { group = "io.github.kei-1111.newsflow.library", name = "model", version.ref = "newsflowLibrary" }
 newsflow-library-shared = { group = "io.github.kei-1111.newsflow.library", name = "shared", version.ref = "newsflowLibrary" }
 
 # Use build-logic
