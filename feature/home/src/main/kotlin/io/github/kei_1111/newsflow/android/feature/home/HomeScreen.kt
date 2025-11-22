@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
 import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
@@ -42,7 +43,7 @@ private fun HomeScreen(
                 Text("Initialize...")
             }
             is HomeUiState.Loading -> {
-                Text("Loading...")
+                LoadingContent()
             }
             is HomeUiState.Stable -> {
                 Text(uiState.articlesByCategory.values.toString())
