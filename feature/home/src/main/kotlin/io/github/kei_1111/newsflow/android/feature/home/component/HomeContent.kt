@@ -15,6 +15,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
+import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
+import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
@@ -83,7 +85,24 @@ private fun HomeContentPreview() {
                 uiState = HomeUiState.Stable(
                     isLoading = false,
                     currentNewsCategory = NewsCategory.GENERAL,
-                    articlesByCategory = mapOf()
+                    articlesByCategory = mapOf(
+                        NewsCategory.GENERAL to List(10) {
+                            Article(
+                                id = "2135641799",
+                                source = "Politico",
+                                author = "Will Knight",
+                                title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                                description = """
+                                    At its Re:Invent conference, 
+                                    Amazon also announced new tools to help customers build generative AI programs, 
+                                    including one that checks whether a chatbot's outputs are accurate or not.
+                                """.trimIndent(),
+                                url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                                publishedAt = 1763726640000,
+                            )
+                        }
+                    )
                 ),
                 onUiAction = {},
             )
