@@ -73,7 +73,7 @@ private class HomeHorizontalPagerPPP : CollectionPreviewParameterProvider<HomeHo
         HomeHorizontalPagerPreviewParameter(
             isLoading = false,
             articlesByCategory = mapOf(
-                NewsCategory.GENERAL to List(5) {
+                NewsCategory.GENERAL to List(10) {
                     Article(
                         id = "2135641799",
                         source = "Politico",
