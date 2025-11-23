@@ -21,6 +21,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
             dependencies {
                 implementation(project(":core:designsystem"))
+                implementation(project(":core:ui"))
             }
 
             extensions.configure<ApplicationExtension> {
