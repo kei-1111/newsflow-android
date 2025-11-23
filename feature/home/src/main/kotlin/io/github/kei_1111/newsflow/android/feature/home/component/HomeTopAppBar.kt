@@ -9,6 +9,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,6 +23,7 @@ import io.github.kei_1111.newsflow.android.feature.home.R
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun HomeTopAppBar(
+    scrollBehavior: TopAppBarScrollBehavior,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -39,16 +42,24 @@ internal fun HomeTopAppBar(
                     modifier = Modifier.size(32.dp),
                 )
             }
-        }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            scrolledContainerColor = MaterialTheme.colorScheme.surface,
+        ),
+        scrollBehavior = scrollBehavior,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @ComponentPreviews
 private fun HomeTopAppBarPreview() {
     NewsflowAndroidTheme {
         Surface {
-            HomeTopAppBar()
+            HomeTopAppBar(
+                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+            )
         }
     }
 }
