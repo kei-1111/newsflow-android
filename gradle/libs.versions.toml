@@ -1,6 +1,7 @@
 [versions]
 activityCompose = "1.11.0"
 agp = "8.12.3"
+coil = "3.3.0"
 composeBom = "2025.10.01"
 detekt = "1.23.8"
 detektCompose = "0.4.27"
@@ -24,6 +25,8 @@ androidx-material3-expressive = { group = "androidx.compose.material3", name = "
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detektCompose" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
