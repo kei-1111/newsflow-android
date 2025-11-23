@@ -48,7 +48,11 @@ private fun ArticleCardListPreview() {
                         source = "Politico",
                         author = "Will Knight",
                         title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
-                        description = "At its Re:Invent conference, Amazon also announced new tools to help customers build generative AI programs, including one that checks whether a chatbot's outputs are accurate or not.",
+                        description = """
+                            At its Re:Invent conference, 
+                            Amazon also announced new tools to help customers build generative AI programs, 
+                            including one that checks whether a chatbot's outputs are accurate or not.
+                        """.trimIndent(),
                         url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
                         imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
                         publishedAt = 1763726640000,

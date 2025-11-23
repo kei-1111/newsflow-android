@@ -155,12 +155,16 @@ private data class ArticleCardPreviewParameter(
     val imageUrl: String?
 )
 
-private class ArticleCardPPP : CollectionPreviewParameterProvider<ArticleCardPreviewParameter> (
+private class ArticleCardPPP : CollectionPreviewParameterProvider<ArticleCardPreviewParameter>(
     collection = listOf(
         ArticleCardPreviewParameter(
             source = "Politico",
             author = "Will Knight",
-            description = "At its Re:Invent conference, Amazon also announced new tools to help customers build generative AI programs, including one that checks whether a chatbot's outputs are accurate or not.",
+            description = """
+                At its Re:Invent conference, 
+                Amazon also announced new tools to help customers build generative AI programs, 
+                including one that checks whether a chatbot's outputs are accurate or not.
+            """.trimIndent(),
             imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png"
         ),
         ArticleCardPreviewParameter(

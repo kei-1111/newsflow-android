@@ -23,7 +23,7 @@ fun HomeScreen() {
 
     HomeScreen(
         uiState = uiState,
-        onAction = viewModel::onUiAction,
+        onUiAction = viewModel::onUiAction,
         modifier = Modifier.fillMaxSize()
     )
 }
@@ -31,7 +31,7 @@ fun HomeScreen() {
 @Composable
 private fun HomeScreen(
     uiState: HomeUiState,
-    onAction: (HomeUiAction) -> Unit,
+    onUiAction: (HomeUiAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -45,12 +45,13 @@ private fun HomeScreen(
             is HomeUiState.Stable -> {
                 HomeContent(
                     uiState = uiState,
+                    onUiAction = onUiAction,
                 )
             }
             is HomeUiState.Error -> {
                 ErrorContent(
                     error = uiState.error,
-                    onClickRetryButton = { onAction(HomeUiAction.OnClickRetryButton) }
+                    onClickRetryButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
                 )
             }
         }
