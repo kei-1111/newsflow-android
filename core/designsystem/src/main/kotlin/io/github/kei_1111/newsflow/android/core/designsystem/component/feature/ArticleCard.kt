@@ -1,4 +1,4 @@
-package io.github.kei_1111.newsflow.android.feature.home.component
+package io.github.kei_1111.newsflow.android.core.designsystem.component.feature
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +23,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.modifier.debouncedClickable
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
-import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
 import io.github.kei_1111.newsflow.library.core.model.Article
 import java.text.SimpleDateFormat
 import java.util.Date
