@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -45,11 +47,16 @@ fun ArticleCard(
         Column(
             modifier = Modifier.debouncedClickable { onClick() }
         ) {
-            AsyncImage(
-                model = article.imageUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-            )
+            article.imageUrl?.let {
+                AsyncImage(
+                    model = it,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(16f / 9f),
+                    contentScale = ContentScale.Crop,
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,44 +69,50 @@ fun ArticleCard(
                     article.source?.let {
                         Text(
                             text = it,
-                            style = MaterialTheme.typography.labelMediumEmphasized,
                             color = MaterialTheme.colorScheme.primary,
+                            style = MaterialTheme.typography.labelMediumEmphasized,
                         )
                     }
                     article.author?.let {
                         if (article.source != null) {
                             Text(
                                 text = "•",
-                                style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                style = MaterialTheme.typography.labelMedium,
                             )
                         }
                         Text(
                             text = it,
-                            style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelMedium,
                         )
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = article.title,
-                    style = MaterialTheme.typography.headlineSmallEmphasized,
                     color = MaterialTheme.colorScheme.onSurface,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2,
+                    minLines = 2,
+                    style = MaterialTheme.typography.titleMediumEmphasized,
                 )
                 article.description?.let {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 3,
+                        minLines = 3,
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = formatDate(article.publishedAt),
-                    style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelSmall,
                 )
             }
         }
