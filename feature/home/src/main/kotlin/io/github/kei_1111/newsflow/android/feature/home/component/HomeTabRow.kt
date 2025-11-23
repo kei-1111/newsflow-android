@@ -28,7 +28,7 @@ internal fun HomeTabRow(
         selectedTabIndex = NewsCategory.entries.indexOf(selectedCategory),
         modifier = modifier,
         edgePadding = 0.dp,
-        minTabWidth = 120.dp,
+        minTabWidth = 0.dp,
         contentColor = TabRowDefaults.primaryContentColor
     ) {
         NewsCategory.entries.forEach { newsCategory ->
