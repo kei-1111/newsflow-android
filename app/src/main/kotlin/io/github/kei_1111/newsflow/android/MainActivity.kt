@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
+import androidx.compose.material3.Surface
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
+import io.github.kei_1111.newsflow.android.core.ui.provider.DebouncedClickProvider
 import io.github.kei_1111.newsflow.android.feature.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -16,8 +15,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             NewsflowAndroidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen()
+                DebouncedClickProvider {
+                    Surface {
+                        HomeScreen()
+                    }
                 }
             }
         }
