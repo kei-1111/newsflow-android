@@ -3,7 +3,6 @@ package io.github.kei_1111.newsflow.android.feature.home.component
 import androidx.compose.material3.Icon
 import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowTab
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.R
@@ -49,7 +49,7 @@ private fun NewsCategoryTab(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Tab(
+    NewsflowTab(
         selected = selected,
         onClick = onClick,
         modifier = modifier,
