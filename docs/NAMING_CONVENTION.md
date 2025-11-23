@@ -8,8 +8,6 @@
 
 自作プラグインはプロジェクト固有の命名であるため他のプラグインとの命名差別化を図るためにConventionPluginをSuffixにつける
 
-**実装クラス命名パターン**: `Android<Type>ConventionPlugin`
-
 **例**:
 - `AndroidApplicationConventionPlugin`
 - `AndroidLibraryConventionPlugin`
@@ -93,9 +91,6 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 **Theme関数命名**: `<ProjectName>Theme`
 - 例: `NewsflowAndroidTheme`
 
-**Screen関数命名**: `<FeatureName>Screen`
-- 例: `HomeScreen`, `ProfileDetailScreen`
-
 ---
 
 ## Applicationクラス
@@ -110,3 +105,37 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 **命名パターン**: ケバブケース + `.sh`
 - `convert-project.sh`
 - `create-module.sh`
+
+---
+
+## リソース
+
+**アイコン命名パターン**: `ic_<icon_name>`
+
+スネークケースで命名し、`ic`をプレフィックスとして付ける。
+
+**例**:
+- `ic_home`
+- `ic_settings`
+- `ic_arrow_back`
+
+**画像命名パターン**: `img_<image_name>[_preview]`
+
+スネークケースで命名し、`img`をプレフィックスとして付ける。プレビュー用の画像には`preview`をサフィックスとして付ける。
+
+**例**:
+- `img_banner`
+- `img_logo`
+- `img_sample_preview`
+- `img_article_preview`
+
+---
+
+## 汎用コンポーネント
+
+**命名パターン**: `Newsflow<ComponentName>`
+
+`core:designsystem`の`component/common`に配置する汎用コンポーネントは、プロジェクト固有のコンポーネントであることを明示するため、`Newsflow`をプレフィックスとして付ける。
+
+**例**:
+- `NewsflowButton`
