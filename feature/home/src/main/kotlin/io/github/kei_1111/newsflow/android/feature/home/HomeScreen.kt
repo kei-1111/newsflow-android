@@ -39,9 +39,6 @@ private fun HomeScreen(
         contentAlignment = Alignment.Center,
     ) {
         when (uiState) {
-            is HomeUiState.Init -> {
-                Text("Initialize...")
-            }
             is HomeUiState.Stable -> {
                 HomeContent(
                     uiState = uiState,
