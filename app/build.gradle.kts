@@ -26,7 +26,6 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3.expressive)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.koin.android)
     implementation(libs.newsflow.library.shared)
 }
