@@ -91,6 +91,12 @@ dependencies {
 }
 ```
 
+## UI実装ガイドライン
+
+UI/コンポーネント作成時は **Material 3 Expressive** のガイドラインに従ってください。
+
+- ガイドライン: `.claude/skills/material3-expressive/SKILL.md`
+
 ## 参考ドキュメント
 
 - 命名規則: `docs/NAMING_CONVENTION.md`
