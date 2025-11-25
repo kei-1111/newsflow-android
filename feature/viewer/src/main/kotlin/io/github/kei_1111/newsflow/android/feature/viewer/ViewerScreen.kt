@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
+import io.github.kei_1111.newsflow.android.feature.viewer.component.ViewerContent
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiAction
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiEffect
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiState
@@ -65,8 +66,10 @@ private fun ViewerScreen(
             }
 
             is ViewerUiState.Stable -> {
-                Text(
-                    text = uiState.viewingArticle.toString()
+                ViewerContent(
+                    uiState = uiState,
+                    onUiAction = onUiAction,
+                    modifier = Modifier.fillMaxSize()
                 )
             }
 
