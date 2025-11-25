@@ -45,13 +45,13 @@ fun ErrorContent(
         Icon(
             painter = painterResource(
                 when (error) {
-                    is NewsflowError.Unauthorized -> R.drawable.img_unauthorized
-                    is NewsflowError.RateLimitExceeded -> R.drawable.img_ratelimitexceeded
-                    is NewsflowError.BadRequest -> R.drawable.img_badrequest
-                    is NewsflowError.ServerError -> R.drawable.img_servererror
-                    is NewsflowError.NetworkFailure -> R.drawable.img_networkfailure
-                    is NewsflowError.ArticleNotFound -> R.drawable.img_articlenotfound
-                    is NewsflowError.InvalidParameter -> R.drawable.img_invalidparameter
+                    is NewsflowError.NetworkError.Unauthorized -> R.drawable.img_unauthorized
+                    is NewsflowError.NetworkError.RateLimitExceeded -> R.drawable.img_ratelimitexceeded
+                    is NewsflowError.NetworkError.BadRequest -> R.drawable.img_badrequest
+                    is NewsflowError.NetworkError.ServerError -> R.drawable.img_servererror
+                    is NewsflowError.NetworkError.NetworkFailure -> R.drawable.img_networkfailure
+                    is NewsflowError.InternalError.ArticleNotFound -> R.drawable.img_articlenotfound
+                    is NewsflowError.InternalError.InvalidParameter -> R.drawable.img_invalidparameter
                 }
             ),
             contentDescription = null,
@@ -62,13 +62,13 @@ fun ErrorContent(
         Text(
             text = stringResource(
                 when (error) {
-                    is NewsflowError.Unauthorized -> R.string.error_unauthorized_title
-                    is NewsflowError.RateLimitExceeded -> R.string.error_rate_limit_exceeded_title
-                    is NewsflowError.BadRequest -> R.string.error_bad_request_title
-                    is NewsflowError.ServerError -> R.string.error_server_error_title
-                    is NewsflowError.NetworkFailure -> R.string.error_network_failure_title
-                    is NewsflowError.ArticleNotFound -> R.string.error_article_not_found_title
-                    is NewsflowError.InvalidParameter -> R.string.error_invalid_parameter_title
+                    is NewsflowError.NetworkError.Unauthorized -> R.string.error_unauthorized_title
+                    is NewsflowError.NetworkError.RateLimitExceeded -> R.string.error_rate_limit_exceeded_title
+                    is NewsflowError.NetworkError.BadRequest -> R.string.error_bad_request_title
+                    is NewsflowError.NetworkError.ServerError -> R.string.error_server_error_title
+                    is NewsflowError.NetworkError.NetworkFailure -> R.string.error_network_failure_title
+                    is NewsflowError.InternalError.ArticleNotFound -> R.string.error_article_not_found_title
+                    is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_title
                 }
             ),
             style = MaterialTheme.typography.headlineMediumEmphasized,
@@ -78,13 +78,13 @@ fun ErrorContent(
         Text(
             text = stringResource(
                 when (error) {
-                    is NewsflowError.Unauthorized -> R.string.error_unauthorized_description
-                    is NewsflowError.RateLimitExceeded -> R.string.error_rate_limit_exceeded_description
-                    is NewsflowError.BadRequest -> R.string.error_bad_request_description
-                    is NewsflowError.ServerError -> R.string.error_server_error_description
-                    is NewsflowError.NetworkFailure -> R.string.error_network_failure_description
-                    is NewsflowError.ArticleNotFound -> R.string.error_article_not_found_description
-                    is NewsflowError.InvalidParameter -> R.string.error_invalid_parameter_description
+                    is NewsflowError.NetworkError.Unauthorized -> R.string.error_unauthorized_description
+                    is NewsflowError.NetworkError.RateLimitExceeded -> R.string.error_rate_limit_exceeded_description
+                    is NewsflowError.NetworkError.BadRequest -> R.string.error_bad_request_description
+                    is NewsflowError.NetworkError.ServerError -> R.string.error_server_error_description
+                    is NewsflowError.NetworkError.NetworkFailure -> R.string.error_network_failure_description
+                    is NewsflowError.InternalError.ArticleNotFound -> R.string.error_article_not_found_description
+                    is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_description
                 }
             ),
             style = MaterialTheme.typography.bodyLarge,
@@ -127,25 +127,25 @@ private data class ErrorContentPreviewParameter(
 private class ErrorContentPPP : CollectionPreviewParameterProvider<ErrorContentPreviewParameter>(
     collection = listOf(
         ErrorContentPreviewParameter(
-            error = NewsflowError.Unauthorized(),
+            error = NewsflowError.NetworkError.Unauthorized(),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.RateLimitExceeded(),
+            error = NewsflowError.NetworkError.RateLimitExceeded(),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.BadRequest(""),
+            error = NewsflowError.NetworkError.BadRequest(""),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.ServerError(""),
+            error = NewsflowError.NetworkError.ServerError(""),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.NetworkFailure(""),
+            error = NewsflowError.NetworkError.NetworkFailure(""),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.ArticleNotFound(""),
+            error = NewsflowError.InternalError.ArticleNotFound(""),
         ),
         ErrorContentPreviewParameter(
-            error = NewsflowError.InvalidParameter(""),
+            error = NewsflowError.InternalError.InvalidParameter(""),
         ),
     )
 )
