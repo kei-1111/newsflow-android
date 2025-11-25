@@ -22,10 +22,13 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.navigation)
     implementation(projects.feature.home)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3.expressive)
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
     implementation(libs.koin.android)
     implementation(libs.newsflow.library.shared)
 }

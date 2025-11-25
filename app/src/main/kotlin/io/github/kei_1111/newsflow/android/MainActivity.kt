@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.provider.DebouncedClickProvider
-import io.github.kei_1111.newsflow.android.feature.home.HomeScreen
+import io.github.kei_1111.newsflow.android.navigation.NewsflowNavDisplay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
             NewsflowAndroidTheme {
                 DebouncedClickProvider {
                     Surface {
-                        HomeScreen()
+                        NewsflowNavDisplay()
                     }
                 }
             }

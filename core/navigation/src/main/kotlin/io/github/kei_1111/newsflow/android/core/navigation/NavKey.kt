@@ -1,14 +1,12 @@
 package io.github.kei_1111.newsflow.android.core.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface NavKey {
-    @Serializable
-    data object Home : NavKey
+data object Home : NavKey
 
-    @Serializable
-    data class Viewer(
-        val articleId: String,
-    ) : NavKey
-}
+@Serializable
+data class Viewer(
+    val articleId: String,
+) : NavKey

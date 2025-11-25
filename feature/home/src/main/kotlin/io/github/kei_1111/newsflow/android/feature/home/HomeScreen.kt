@@ -2,24 +2,38 @@ package io.github.kei_1111.newsflow.android.feature.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
 import io.github.kei_1111.newsflow.android.feature.home.component.HomeContent
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
+import io.github.kei_1111.newsflow.library.feature.home.HomeUiEffect
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
 import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Suppress("ModifierMissing")
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateViewer: () -> Unit,
+) {
     val viewModel = koinViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val currentNavigateViewer by rememberUpdatedState(navigateViewer)
+
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is HomeUiEffect.NavigateViewer -> currentNavigateViewer()
+            }
+        }
+    }
 
     HomeScreen(
         uiState = uiState,
