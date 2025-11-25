@@ -1,13 +1,15 @@
 package io.github.kei_1111.newsflow.android.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.kei_1111.newsflow.android.core.navigation.Home
-import io.github.kei_1111.newsflow.android.core.navigation.Viewer
 import io.github.kei_1111.newsflow.android.feature.home.navigation.homeEntry
+import io.github.kei_1111.newsflow.android.feature.viewer.navigation.navigateViewer
+import io.github.kei_1111.newsflow.android.feature.viewer.navigation.viewerEntry
 
 @Suppress("ModifierMissing")
 @Composable
@@ -17,12 +19,18 @@ fun NewsflowNavDisplay() {
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
+        entryDecorators = listOf(
+            rememberSaveableStateHolderNavEntryDecorator(),
+            rememberViewModelStoreNavEntryDecorator(),
+        ),
         entryProvider = entryProvider {
-            homeEntry(navigateViewer = { backStack.add(Viewer("test")) })
+            homeEntry(
+                navigateViewer = { backStack.navigateViewer(it) }
+            )
 
-            entry<Viewer> {
-                Text("Viewer")
-            }
+            viewerEntry(
+                navigateBack = { backStack.removeLastOrNull() }
+            )
         }
     )
 }

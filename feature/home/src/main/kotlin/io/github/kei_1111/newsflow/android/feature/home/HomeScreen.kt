@@ -20,7 +20,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Suppress("ModifierMissing")
 @Composable
 fun HomeScreen(
-    navigateViewer: () -> Unit,
+    navigateViewer: (String) -> Unit,
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -30,7 +30,7 @@ fun HomeScreen(
     LaunchedEffect(viewModel) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                is HomeUiEffect.NavigateViewer -> currentNavigateViewer()
+                is HomeUiEffect.NavigateViewer -> currentNavigateViewer(effect.id)
             }
         }
     }

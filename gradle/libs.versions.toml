@@ -7,9 +7,10 @@ detekt = "1.23.8"
 detektCompose = "0.4.27"
 koin = "4.1.1"
 kotlin = "2.2.21"
+lifecycleViewmodelNavigation3 = "2.10.0"
 material3Expressive = "1.5.0-alpha09"
 navigation3 = "1.0.0"
-newsflowLibrary = "0.2.1"
+newsflowLibrary = "0.2.3"
 serialization = "2.2.21"
 serializationJson = "1.9.0"
 
@@ -21,6 +22,7 @@ targetSdk = "36"
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNavigation3" }
 androidx-material3-expressive = { group = "androidx.compose.material3", name = "material3", version.ref = "material3Expressive" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
@@ -33,9 +35,12 @@ detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-form
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
-newsflow-library-home = { group = "io.github.kei-1111.newsflow.library", name = "home", version.ref = "newsflowLibrary" }
-newsflow-library-model = { group = "io.github.kei-1111.newsflow.library", name = "model", version.ref = "newsflowLibrary" }
+
+# NewsflowLibrary
 newsflow-library-shared = { group = "io.github.kei-1111.newsflow.library", name = "shared", version.ref = "newsflowLibrary" }
+newsflow-library-model = { group = "io.github.kei-1111.newsflow.library", name = "model", version.ref = "newsflowLibrary" }
+newsflow-library-home = { group = "io.github.kei-1111.newsflow.library", name = "home", version.ref = "newsflowLibrary" }
+newsflow-library-viewer = { group = "io.github.kei-1111.newsflow.library", name = "viewer", version.ref = "newsflowLibrary" }
 
 # Use build-logic
 android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
