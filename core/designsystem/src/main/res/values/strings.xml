@@ -20,4 +20,5 @@
 
     <!-- Error Actions -->
     <string name="error_retry_button">Retry</string>
+    <string name="error_back_button">Go Back</string>
 </resources>

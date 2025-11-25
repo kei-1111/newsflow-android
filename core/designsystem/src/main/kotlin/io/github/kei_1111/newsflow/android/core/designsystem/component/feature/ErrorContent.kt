@@ -33,7 +33,7 @@ import io.github.kei_1111.newsflow.library.core.model.NewsflowError
 @Composable
 fun ErrorContent(
     error: NewsflowError,
-    onClickRetryButton: () -> Unit,
+    onClickActionButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -92,7 +92,7 @@ fun ErrorContent(
         )
         Spacer(modifier = Modifier.height(32.dp))
         NewsflowButton(
-            onClick = onClickRetryButton,
+            onClick = onClickActionButton,
             modifier = Modifier.fillMaxWidth(),
             shapes = ButtonDefaults.shapes(),
             colors = ButtonDefaults.buttonColors(
@@ -100,7 +100,14 @@ fun ErrorContent(
                 contentColor = MaterialTheme.colorScheme.onError
             ),
         ) {
-            Text(text = stringResource(R.string.error_retry_button))
+            Text(
+                text = stringResource(
+                    when (error) {
+                        is NewsflowError.NetworkError -> R.string.error_retry_button
+                        is NewsflowError.InternalError -> R.string.error_back_button
+                    }
+                )
+            )
         }
     }
 }
@@ -114,7 +121,7 @@ private fun ErrorContentPreview(
         Surface {
             ErrorContent(
                 error = parameter.error,
-                onClickRetryButton = {},
+                onClickActionButton = {},
             )
         }
     }

@@ -62,7 +62,7 @@ private fun HomeScreen(
             is HomeUiState.Error -> {
                 ErrorContent(
                     error = uiState.error,
-                    onClickRetryButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
+                    onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
                 )
             }
         }
