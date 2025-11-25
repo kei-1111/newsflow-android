@@ -45,11 +45,13 @@ fun ErrorContent(
         Icon(
             painter = painterResource(
                 when (error) {
-                    is NewsflowError.Unauthorized -> R.drawable.ic_unauthorized
-                    is NewsflowError.RateLimitExceeded -> R.drawable.ic_ratelimitexceeded
-                    is NewsflowError.BadRequest -> R.drawable.ic_badrequest
-                    is NewsflowError.ServerError -> R.drawable.ic_servererror
-                    is NewsflowError.NetworkFailure -> R.drawable.ic_networkfailure
+                    is NewsflowError.Unauthorized -> R.drawable.img_unauthorized
+                    is NewsflowError.RateLimitExceeded -> R.drawable.img_ratelimitexceeded
+                    is NewsflowError.BadRequest -> R.drawable.img_badrequest
+                    is NewsflowError.ServerError -> R.drawable.img_servererror
+                    is NewsflowError.NetworkFailure -> R.drawable.img_networkfailure
+                    is NewsflowError.ArticleNotFound -> R.drawable.img_articlenotfound
+                    is NewsflowError.InvalidParameter -> R.drawable.img_invalidparameter
                 }
             ),
             contentDescription = null,
@@ -65,6 +67,8 @@ fun ErrorContent(
                     is NewsflowError.BadRequest -> R.string.error_bad_request_title
                     is NewsflowError.ServerError -> R.string.error_server_error_title
                     is NewsflowError.NetworkFailure -> R.string.error_network_failure_title
+                    is NewsflowError.ArticleNotFound -> R.string.error_article_not_found_title
+                    is NewsflowError.InvalidParameter -> R.string.error_invalid_parameter_title
                 }
             ),
             style = MaterialTheme.typography.headlineMediumEmphasized,
@@ -79,6 +83,8 @@ fun ErrorContent(
                     is NewsflowError.BadRequest -> R.string.error_bad_request_description
                     is NewsflowError.ServerError -> R.string.error_server_error_description
                     is NewsflowError.NetworkFailure -> R.string.error_network_failure_description
+                    is NewsflowError.ArticleNotFound -> R.string.error_article_not_found_description
+                    is NewsflowError.InvalidParameter -> R.string.error_invalid_parameter_description
                 }
             ),
             style = MaterialTheme.typography.bodyLarge,
@@ -134,6 +140,12 @@ private class ErrorContentPPP : CollectionPreviewParameterProvider<ErrorContentP
         ),
         ErrorContentPreviewParameter(
             error = NewsflowError.NetworkFailure(""),
+        ),
+        ErrorContentPreviewParameter(
+            error = NewsflowError.ArticleNotFound(""),
+        ),
+        ErrorContentPreviewParameter(
+            error = NewsflowError.InvalidParameter(""),
         ),
     )
 )

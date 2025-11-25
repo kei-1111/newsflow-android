@@ -6,6 +6,8 @@
     <string name="error_bad_request_title">Invalid Request</string>
     <string name="error_server_error_title">Server Error</string>
     <string name="error_network_failure_title">Network Error</string>
+    <string name="error_article_not_found_title">Article Not Found</string>
+    <string name="error_invalid_parameter_title">Something Went Wrong</string>
 
     <!-- Error Descriptions -->
     <string name="error_unauthorized_description">Unable to authenticate with the service. Please try again later.</string>
@@ -13,6 +15,8 @@
     <string name="error_bad_request_description">Unable to process your request. Please try again.</string>
     <string name="error_server_error_description">Something went wrong on our end. Please try again later.</string>
     <string name="error_network_failure_description">Unable to connect. Please check your internet connection and try again.</string>
+    <string name="error_article_not_found_description">The requested article could not be found. Please go back and try again.</string>
+    <string name="error_invalid_parameter_description">An unexpected error occurred. Please go back and try again.</string>
 
     <!-- Error Actions -->
     <string name="error_retry_button">Retry</string>
