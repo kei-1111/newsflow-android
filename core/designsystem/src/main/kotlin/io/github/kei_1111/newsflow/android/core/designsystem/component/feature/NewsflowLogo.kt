@@ -30,11 +30,12 @@ fun NewsflowLogo() {
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_appicon),
                 contentDescription = null,
-                modifier = Modifier.size(36.dp),
+                modifier = Modifier.size(28.dp),
                 tint = MaterialTheme.colorScheme.onSurface
             )
             Text(
