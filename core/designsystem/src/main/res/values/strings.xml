@@ -21,4 +21,10 @@
     <!-- Error Actions -->
     <string name="error_retry_button">Retry</string>
     <string name="error_back_button">Go Back</string>
+
+    <!-- Article Action Bottom Sheet -->
+    <string name="article_action_view_overview">View Overview</string>
+    <string name="article_action_share">Share</string>
+    <string name="article_action_summarize_with_gemini">Summarize with Gemini</string>
+    <string name="article_action_bookmark">Bookmark</string>
 </resources>
