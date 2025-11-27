@@ -1,6 +1,5 @@
 package io.github.kei_1111.newsflow.android.feature.viewer.component
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,9 +22,9 @@ import io.github.kei_1111.newsflow.android.feature.viewer.R
 @Composable
 internal fun ViewerTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    onClickNavigateBack: () -> Unit,
-    onClickShare: () -> Unit,
-    onClickOverview: () -> Unit,
+    onClickBackButton: () -> Unit,
+    onClickShareButton: () -> Unit,
+    onClickBookmarkButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -33,7 +32,7 @@ internal fun ViewerTopAppBar(
         modifier = modifier,
         navigationIcon = {
             IconButton(
-                onClick = onClickNavigateBack,
+                onClick = onClickBackButton,
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back),
@@ -47,7 +46,7 @@ internal fun ViewerTopAppBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = onClickShare,
+                    onClick = onClickShareButton,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
@@ -56,10 +55,10 @@ internal fun ViewerTopAppBar(
                     )
                 }
                 IconButton(
-                    onClick = onClickOverview,
+                    onClick = onClickBookmarkButton,
                 ) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_overview),
+                        painter = painterResource(R.drawable.ic_bookmark_outlined),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
                     )
@@ -78,9 +77,9 @@ private fun ViewerTopAppBarPreview() {
         Surface {
             ViewerTopAppBar(
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                onClickNavigateBack = {},
-                onClickShare = {},
-                onClickOverview = {},
+                onClickBackButton = {},
+                onClickShareButton = {},
+                onClickBookmarkButton = {},
             )
         }
     }
