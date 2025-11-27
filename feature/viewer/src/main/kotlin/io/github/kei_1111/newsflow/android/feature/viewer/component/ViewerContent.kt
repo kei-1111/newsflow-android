@@ -60,7 +60,9 @@ internal fun ViewerContent(
                     // WebViewのスクロールを監視してTopAppBarの高さと色を制御
                     setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                         val deltaY = (oldScrollY - scrollY).toFloat()
-                        scrollBehavior.state.heightOffset += deltaY
+                        // heightOffsetを有効な範囲（heightOffsetLimit〜0f）にクランプ
+                        scrollBehavior.state.heightOffset = (scrollBehavior.state.heightOffset + deltaY)
+                            .coerceIn(scrollBehavior.state.heightOffsetLimit, 0f)
                         scrollBehavior.state.contentOffset = -scrollY.toFloat()
                     }
                 }

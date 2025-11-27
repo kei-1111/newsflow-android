@@ -18,6 +18,8 @@ import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndro
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.viewer.R
 
+// TODO: nestedScrollが上手く行っておらずWebViewのスクロールで
+//  ViewerTopAppBarが閉じるときにガタガタするのを直したい、大きくスクロールすれば出てこないし緊急性は低いので今後やる
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ViewerTopAppBar(
