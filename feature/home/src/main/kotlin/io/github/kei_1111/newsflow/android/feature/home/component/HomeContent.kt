@@ -12,13 +12,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleOverviewBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
@@ -43,19 +42,28 @@ internal fun HomeContent(
     )
     val coroutineScope = rememberCoroutineScope()
 
-    val currentOnUiAction by rememberUpdatedState(onUiAction)
-
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     val layoutDirection = LocalLayoutDirection.current
 
-    LaunchedEffect(pagerState) {
+    LaunchedEffect(pagerState, onUiAction) {
         snapshotFlow { pagerState.settledPage }
             .distinctUntilChanged()
             .drop(1) // Skip initial value to avoid duplicate event on first render
             .collect { page ->
-                currentOnUiAction(HomeUiAction.OnSwipNewsCategoryPage(NewsCategory.entries[page]))
+                onUiAction(HomeUiAction.OnSwipNewsCategoryPage(NewsCategory.entries[page]))
             }
+    }
+
+    uiState.selectedArticle?.let {
+        ArticleOverviewBottomSheet(
+            article = it,
+            onDismissArticleOverviewBottomSheet = { onUiAction(HomeUiAction.OnDismissArticleOverviewBottomSheet) },
+            onClickCopyUrlButton = { onUiAction(HomeUiAction.OnClickCopyUrlButton) },
+            onClickShareButton = { onUiAction(HomeUiAction.OnClickShareButton) },
+            onClickGeminiSummaryButton = {},
+            onClickBookmarkButton = {},
+        )
     }
 
     Scaffold(
@@ -73,7 +81,7 @@ internal fun HomeContent(
             HomeTabRow(
                 selectedCategory = uiState.currentNewsCategory,
                 onClickNewsCategoryTab = { category ->
-                    currentOnUiAction(HomeUiAction.OnClickNewsCategoryTag(category))
+                    onUiAction(HomeUiAction.OnClickNewsCategoryTag(category))
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(NewsCategory.entries.indexOf(category))
                     }
@@ -83,7 +91,8 @@ internal fun HomeContent(
                 pagerState = pagerState,
                 isLoading = uiState.isLoading,
                 articlesByCategory = uiState.articlesByCategory,
-                onClickArticleCard = { currentOnUiAction(HomeUiAction.OnClickArticleCard(it)) },
+                onClickArticleCard = { onUiAction(HomeUiAction.OnClickArticleCard(it)) },
+                onClickMoreButton = { onUiAction(HomeUiAction.OnClickMoreBottom(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),

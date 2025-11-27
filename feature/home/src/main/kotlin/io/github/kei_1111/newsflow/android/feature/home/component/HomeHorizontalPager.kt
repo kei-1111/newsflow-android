@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.OutlinedTextFieldDefaults.contentPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ internal fun HomeHorizontalPager(
     isLoading: Boolean,
     articlesByCategory: Map<NewsCategory, List<Article>>,
     onClickArticleCard: (Article) -> Unit,
+    onClickMoreButton: (Article) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     HorizontalPager(
@@ -46,6 +48,7 @@ internal fun HomeHorizontalPager(
                 ArticleCardList(
                     articles = articlesByCategory[NewsCategory.entries[page]] ?: emptyList(),
                     onClickArticleCard = onClickArticleCard,
+                    onClickMoreButton = onClickMoreButton,
                     contentPadding = PaddingValues(
                         start = 16.dp,
                         top = 16.dp,
@@ -70,6 +73,7 @@ private fun HomeHorizontalPagerPreview(
                 isLoading = parameter.isLoading,
                 articlesByCategory = parameter.articlesByCategory,
                 onClickArticleCard = {},
+                onClickMoreButton = {},
             )
         }
     }

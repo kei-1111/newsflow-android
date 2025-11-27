@@ -18,6 +18,7 @@ import io.github.kei_1111.newsflow.library.core.model.Article
 fun ArticleCardList(
     articles: List<Article>,
     onClickArticleCard: (Article) -> Unit,
+    onClickMoreButton: (Article) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -32,7 +33,7 @@ fun ArticleCardList(
             ArticleCard(
                 article = it,
                 onClickArticleCard = { onClickArticleCard(it) },
-                onClickMoreButton = { /* TODO: アクションボトムシート実装後に実装 */ }
+                onClickMoreButton = { onClickMoreButton(it) }
             )
         }
     }
@@ -60,7 +61,8 @@ private fun ArticleCardListPreview() {
                         publishedAt = 1763726640000,
                     )
                 },
-                onClickArticleCard = {}
+                onClickArticleCard = {},
+                onClickMoreButton = {},
             )
         }
     }
