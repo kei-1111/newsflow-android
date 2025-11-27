@@ -139,3 +139,23 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 
 **例**:
 - `NewsflowButton`
+
+---
+
+## コンポーネント関数のコールバック
+
+**命名パターン**: `on + 動作 + 対象`
+
+動作によって対象が異なる：
+
+| 動作 | 対象 | 理由 |
+|------|------|------|
+| `onClick` | UIコンポーネント | Actionで直接実行される |
+| `onDismiss` | UIコンポーネント | Actionで直接実行される |
+| `onChange` | データ/状態 | Action感がない |
+
+**例**
+- `onClickRetryButton`
+- `onClickNewsCategoryTab`
+- `onDismissDialog`
+- `onChangeSearchQuery`
