@@ -3,8 +3,10 @@ package io.github.kei_1111.newsflow.android.feature.home
 import android.content.ClipData
 import android.content.Intent
 import android.widget.Toast
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,9 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.toClipEntry
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
+import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
+import io.github.kei_1111.newsflow.android.core.ui.preview.ScreenPreviews
 import io.github.kei_1111.newsflow.android.feature.home.component.HomeContent
+import io.github.kei_1111.newsflow.library.core.model.Article
+import io.github.kei_1111.newsflow.library.core.model.NewsCategory
+import io.github.kei_1111.newsflow.library.core.model.NewsflowError
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiEffect
 import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
@@ -80,23 +89,83 @@ private fun HomeScreen(
     onUiAction: (HomeUiAction) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-    ) {
-        when (uiState) {
-            is HomeUiState.Stable -> {
-                HomeContent(
-                    uiState = uiState,
-                    onUiAction = onUiAction,
-                )
-            }
-            is HomeUiState.Error -> {
-                ErrorContent(
-                    error = uiState.error,
-                    onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
-                )
+    Surface(modifier = modifier) {
+        AnimatedContent(
+            targetState = uiState,
+            label = "HomeScreenContent",
+        ) { targetUiState ->
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                when (targetUiState) {
+                    is HomeUiState.Stable -> {
+                        HomeContent(
+                            uiState = targetUiState,
+                            onUiAction = onUiAction,
+                        )
+                    }
+
+                    is HomeUiState.Error -> {
+                        ErrorContent(
+                            error = targetUiState.error,
+                            onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
+                        )
+                    }
+                }
             }
         }
     }
 }
+
+@Composable
+@ScreenPreviews
+private fun HomeScreenPreview(
+    @PreviewParameter(HomeScreenPPP::class) parameter: HomeScreenPreviewParameter,
+) {
+    NewsflowAndroidTheme {
+        HomeScreen(
+            uiState = parameter.uiState,
+            onUiAction = {},
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+private data class HomeScreenPreviewParameter(
+    val uiState: HomeUiState,
+)
+
+private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPreviewParameter>(
+    collection = listOf(
+        HomeScreenPreviewParameter(
+            uiState = HomeUiState.Stable(
+                isLoading = false,
+                currentNewsCategory = NewsCategory.GENERAL,
+                articlesByCategory = mapOf(
+                    NewsCategory.GENERAL to List(10) {
+                        Article(
+                            id = "2135641799",
+                            source = "Politico",
+                            author = "Will Knight",
+                            title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                            description = """
+                                At its Re:Invent conference, 
+                                Amazon also announced new tools to help customers build generative AI programs, 
+                                including one that checks whether a chatbot's outputs are accurate or not.
+                            """.trimIndent(),
+                            url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                            imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                            publishedAt = 1763726640000,
+                        )
+                    }
+                )
+            ),
+        ),
+        HomeScreenPreviewParameter(
+            uiState = HomeUiState.Error(
+                error = NewsflowError.NetworkError.NetworkFailure("Network Failure")
+            )
+        )
+    )
+)
