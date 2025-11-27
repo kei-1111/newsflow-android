@@ -1,103 +1,88 @@
-# newsflow-android - Project Guide
+# CLAUDE.md
 
-このプロジェクトは、マルチモジュール構成のAndroidアプリケーションです。
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## プロジェクト構造
+### Top-Level Rules
+
+- To maximize efficiency, **if you need to execute multiple independent processes, invoke those tools concurrently, not sequentially**.
+- **You must think exclusively in English**. However, you are required to **respond in Japanese**.
+
+## プロジェクト概要
+
+newsflow-androidは、マルチモジュール構成のAndroidニュースアプリケーションです。UIはJetpack Compose、DIはKoin、ビジネスロジックは外部KMPライブラリ（`io.github.kei-1111.newsflow.library`）を使用しています。
+
+## アーキテクチャ
 
 ```
-project-root/
-├── app/                          # メインアプリケーションモジュール
-├── core/
-│   ├── designsystem/            # テーマ、カラー、タイポグラフィ
-│   └── ui/                      # 再利用可能なUIコンポーネント
-├── build-logic/convention/       # Convention Plugins
-├── config/detekt/                # Detekt設定ファイル
-├── scripts/create-module.sh      # 新規モジュール作成スクリプト
-└── gradle/libs.versions.toml     # バージョンカタログ
+app/                    # メインアプリ（Navigation、DI設定）
+core/
+├── designsystem/       # テーマ、共通コンポーネント
+├── navigation/         # ナビゲーション定義（Navigation3）
+└── ui/                 # プレビューアノテーション、Modifier拡張
+feature/
+├── home/               # ホーム画面（記事一覧）
+└── viewer/             # 記事閲覧画面（WebView）
+build-logic/convention/ # Convention Plugins
+```
+
+**依存関係の流れ**: `app` → `feature/*` → `core/*` → 外部KMPライブラリ
+
+**外部KMPライブラリ**: ViewModelとビジネスロジックは`newsflow.library.*`として提供（`libs.newsflow.library.home`等）。このリポジトリはUI層のみを担当。
+
+## 主要コマンド
+
+```bash
+./gradlew build                  # ビルド
+./gradlew test                   # テスト実行
+./gradlew detekt                 # 静的解析
+./scripts/create-module.sh       # 新規モジュール作成
 ```
 
 ## Convention Plugins
 
-Gradleの設定を一元管理するカスタムプラグイン（`build-logic/convention/`）：
-
 | プラグインID | 用途 |
 |-------------|------|
-| `newsflow.android.android.application` | アプリモジュールの設定 |
-| `newsflow.android.android.library` | 基本ライブラリモジュール |
+| `newsflow.android.android.application` | アプリモジュール |
+| `newsflow.android.android.library` | 基本ライブラリ |
 | `newsflow.android.android.library.compose` | Compose対応ライブラリ |
-| `newsflow.android.android.feature` | フィーチャーモジュール |
+| `newsflow.android.android.feature` | フィーチャーモジュール（Compose + core依存） |
 | `newsflow.android.detekt` | コード品質チェック |
-
-使用例：
-```kotlin
-plugins {
-    alias(libs.plugins.newsflow.android.android.library.compose)
-}
-```
-
-## 主要なコマンド
-
-### 新規モジュール作成
-```bash
-./scripts/create-module.sh
-```
-
-### ビルドとテスト
-```bash
-./gradlew build
-./gradlew test
-```
-
-### Detekt（静的解析）
-```bash
-./gradlew detekt
-```
-
-## プレビューアノテーション
-
-`core:ui`モジュールに2種類のカスタムプレビューアノテーションがあります：
-
-- **@PreviewScreen**: 画面用（ライト/ダーク、Phone/Tablet、標準/大フォント）
-- **@PreviewComponent**: コンポーネント用（ライト/ダーク、標準/大フォント）
-
-使用例：
-```kotlin
-@ScreenPreview
-@Composable
-fun HomeScreenPreview() {
-    NewsflowAndroidTheme {
-        HomeScreen()
-    }
-}
-```
-
-## 依存関係の管理
-
-`gradle/libs.versions.toml`でバージョンを一元管理：
-
-```toml
-[versions]
-myLibrary = "1.0.0"
-
-[libraries]
-my-library = { group = "com.example", name = "my-library", version.ref = "myLibrary" }
-```
-
-使用：
-```kotlin
-dependencies {
-    implementation(libs.my.library)
-    implementation(projects.core.ui)
-}
-```
 
 ## UI実装ガイドライン
 
-UI/コンポーネント作成時は **Material 3 Expressive** のガイドラインに従ってください。
+UI作成時は **Material 3 Expressive** のガイドラインに従う。
 
-- ガイドライン: `.claude/skills/material3-expressive/SKILL.md`
+- 詳細: `.claude/skills/material3-expressive/SKILL.md`
+- `MotionScheme.expressive()`を使用
+- `LoadingIndicator`、`DockedToolbar`等のExpressiveコンポーネントを優先
 
-## 参考ドキュメント
+## プレビューアノテーション
 
-- 命名規則: `docs/NAMING_CONVENTION.md`
-- Detekt設定: `config/detekt/detekt.yml`
+`core:ui`に定義されたカスタムアノテーション:
+
+- `@ScreenPreviews`: 画面用（ライト/ダーク、Phone/Tablet、標準/大フォント）
+- `@ComponentPreviews`: コンポーネント用（ライト/ダーク、標準/大フォント）
+
+## 命名規則
+
+| 対象 | パターン | 例 |
+|------|----------|-----|
+| 汎用コンポーネント | `Newsflow<Name>` | `NewsflowButton` |
+| アイコン | `ic_<name>` | `ic_arrow_back` |
+| 画像 | `img_<name>` | `img_banner` |
+| コールバック | `on + 動作 + 対象` | `onClickRetryButton` |
+
+詳細: `.claude/skills/naming-convention/SKILL.md`
+
+## 依存関係の追加
+
+`gradle/libs.versions.toml`でバージョン管理:
+- versions: キャメルケース
+- libraries/plugins: ケバブケース
+
+```kotlin
+dependencies {
+    implementation(libs.my.library)
+    implementation(projects.core.ui)  // typesafe project accessor
+}
+```
