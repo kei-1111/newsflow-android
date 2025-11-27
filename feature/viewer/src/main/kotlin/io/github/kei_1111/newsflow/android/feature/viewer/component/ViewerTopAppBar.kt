@@ -30,7 +30,7 @@ internal fun ViewerTopAppBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = {},
+        title = { /*ViewerTopAppBarはtitleに何も表示させないため空*/ },
         modifier = modifier,
         navigationIcon = {
             IconButton(
