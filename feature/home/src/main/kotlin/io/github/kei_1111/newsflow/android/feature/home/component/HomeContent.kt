@@ -17,6 +17,8 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleOverviewBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -61,8 +63,8 @@ internal fun HomeContent(
             onDismissArticleOverviewBottomSheet = { onUiAction(HomeUiAction.OnDismissArticleOverviewBottomSheet) },
             onClickCopyUrlButton = { onUiAction(HomeUiAction.OnClickCopyUrlButton) },
             onClickShareButton = { onUiAction(HomeUiAction.OnClickShareButton) },
-            onClickGeminiSummaryButton = {},
-            onClickBookmarkButton = {},
+            onClickGeminiSummaryButton = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
+            onClickBookmarkButton = { /* TODO: ブックマーク機能を実装する際に作成 */ },
         )
     }
 
@@ -103,12 +105,15 @@ internal fun HomeContent(
 
 @Composable
 @ComponentPreviews
-private fun HomeContentPreview() {
+private fun HomeContentPreview(
+    @PreviewParameter(HomeContentPPP::class) parameter: HomeContentPreviewParameter,
+) {
     NewsflowAndroidTheme {
         Surface {
             HomeContent(
                 uiState = HomeUiState.Stable(
                     isLoading = false,
+                    selectedArticle = parameter.selectedArticle,
                     currentNewsCategory = NewsCategory.GENERAL,
                     articlesByCategory = mapOf(
                         NewsCategory.GENERAL to List(10) {
@@ -134,3 +139,31 @@ private fun HomeContentPreview() {
         }
     }
 }
+
+private data class HomeContentPreviewParameter(
+    val selectedArticle: Article?,
+)
+
+private class HomeContentPPP : CollectionPreviewParameterProvider<HomeContentPreviewParameter>(
+    collection = listOf(
+        HomeContentPreviewParameter(
+            selectedArticle = null,
+        ),
+        HomeContentPreviewParameter(
+            selectedArticle = Article(
+                id = "2135641799",
+                source = "Politico",
+                author = "Will Knight",
+                title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                description = """
+                    At its Re:Invent conference, 
+                    Amazon also announced new tools to help customers build generative AI programs, 
+                    including one that checks whether a chatbot's outputs are accurate or not.
+                """.trimIndent(),
+                url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                publishedAt = 1763726640000,
+            )
+        )
+    )
+)
