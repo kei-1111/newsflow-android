@@ -31,7 +31,8 @@ fun ArticleCardList(
         items(articles) {
             ArticleCard(
                 article = it,
-                onClick = { onClickArticleCard(it) }
+                onClickArticleCard = { onClickArticleCard(it) },
+                onClickMoreButton = { /* TODO: アクションボトムシート実装後に実装 */ }
             )
         }
     }

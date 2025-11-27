@@ -3,13 +3,18 @@ package io.github.kei_1111.newsflow.android.core.designsystem.component.feature
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,12 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
+import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.modifier.debouncedClickable
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -36,7 +43,8 @@ import java.util.Locale
 @Composable
 fun ArticleCard(
     article: Article,
-    onClick: () -> Unit,
+    onClickArticleCard: () -> Unit,
+    onClickMoreButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -48,14 +56,14 @@ fun ArticleCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .debouncedClickable { onClick() }
+                .debouncedClickable { onClickArticleCard() }
                 .padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                modifier = Modifier
+                    .weight(1f)
+                    .align(Alignment.CenterVertically),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
@@ -99,6 +107,7 @@ fun ArticleCard(
                     style = MaterialTheme.typography.labelSmall,
                 )
             }
+            Spacer(modifier = Modifier.width(8.dp))
             article.imageUrl?.let {
                 AsyncImage(
                     model = it,
@@ -106,8 +115,22 @@ fun ArticleCard(
                     modifier = Modifier
                         .height(80.dp)
                         .aspectRatio(1f)
-                        .clip(MaterialTheme.shapes.medium),
+                        .clip(MaterialTheme.shapes.medium)
+                        .align(Alignment.CenterVertically),
                     contentScale = ContentScale.Crop,
+                )
+            }
+            Spacer(modifier = Modifier.width(4.dp))
+            IconButton(
+                onClick = onClickMoreButton,
+                modifier = Modifier
+                    .size(16.dp)
+                    .align(Alignment.Top),
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_more_vert),
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
                 )
             }
         }
@@ -137,7 +160,8 @@ private fun ArticleCardPreview(
                     imageUrl = parameter.imageUrl,
                     publishedAt = 1763726640000,
                 ),
-                onClick = {},
+                onClickArticleCard = {},
+                onClickMoreButton = {},
             )
         }
     }
