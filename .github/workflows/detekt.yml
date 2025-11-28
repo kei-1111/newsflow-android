@@ -14,7 +14,6 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-      checks: write
 
     steps:
       - name: Checkout code
@@ -35,7 +34,42 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Detekt
-        run: ./gradlew detekt
+        run: ./gradlew detekt --continue
+
+      - name: Write Detekt Summary
+        if: always()
+        run: |
+          echo "## Detekt Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          TOTAL_ERRORS=0
+          for report in $(find . -name "detekt.xml" -type f); do
+            MODULE=$(echo "$report" | sed 's|./\(.*\)/build/.*|\1|')
+            COUNT=$(grep -c '<error' "$report" 2>/dev/null || echo "0")
+            TOTAL_ERRORS=$((TOTAL_ERRORS + COUNT))
+
+            if [ "$COUNT" -gt 0 ]; then
+              echo "- **$MODULE**: $COUNT issue(s)" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "$TOTAL_ERRORS" -eq 0 ]; then
+            echo "✅ No issues found" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Total: **$TOTAL_ERRORS** issue(s)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Setup reviewdog
+        if: always()
+        uses: reviewdog/action-setup@v1
+
+      - name: Run reviewdog
+        if: always() && github.event_name == 'pull_request'
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          find . -name "detekt.xml" -type f -exec cat {} + | reviewdog -f=checkstyle -name="detekt" -reporter=github-pr-review -level=warning
 
       - name: Upload Detekt HTML reports
         if: always()
@@ -44,30 +78,3 @@ jobs:
           name: detekt-reports
           path: '**/build/reports/detekt/detekt.html'
           retention-days: 7
-
-      - name: Check Detekt results
-        if: always()
-        run: |
-          echo "Checking Detekt results..."
-          DETEKT_REPORTS=$(find . -name "detekt.xml" -type f)
-
-          if [ -z "$DETEKT_REPORTS" ]; then
-            echo "::warning::No Detekt reports found"
-            exit 0
-          fi
-
-          HAS_ERRORS=false
-          for report in $DETEKT_REPORTS; do
-            echo "Checking $report"
-            if grep -q '<error' "$report" 2>/dev/null; then
-              echo "::error::Detekt found issues in $report"
-              HAS_ERRORS=true
-            fi
-          done
-
-          if [ "$HAS_ERRORS" = true ]; then
-            echo "::error::Detekt analysis failed. Check the reports for details."
-            exit 1
-          else
-            echo "✓ Detekt analysis passed"
-          fi
