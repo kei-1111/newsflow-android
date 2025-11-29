@@ -16,6 +16,10 @@ jobs:
       pull-requests: write
       checks: write
 
+    env:
+      GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GPR_TOKEN }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
