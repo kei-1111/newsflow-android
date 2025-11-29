@@ -1,3 +1,12 @@
+import java.util.Properties
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = file("local.properties")
+    if (localPropertiesFile.exists()) {
+        load(localPropertiesFile.inputStream())
+    }
+}
+
 pluginManagement {
     repositories {
         google {
@@ -18,6 +27,14 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         mavenLocal()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/kei-1111/newsflow-library")
+            credentials {
+                username = localProperties.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = localProperties.getProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 
