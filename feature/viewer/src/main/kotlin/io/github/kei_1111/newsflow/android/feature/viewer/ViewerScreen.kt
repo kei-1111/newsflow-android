@@ -1,7 +1,6 @@
 package io.github.kei_1111.newsflow.android.feature.viewer
 
 import android.content.Intent
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -82,33 +81,28 @@ private fun ViewerScreen(
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
-        AnimatedContent(
-            targetState = uiState,
-            label = "ViewerScreen",
-        ) { targetUiState ->
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                when (targetUiState) {
-                    is ViewerUiState.Init, ViewerUiState.Loading -> {
-                        LoadingContent()
-                    }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            when (uiState) {
+                is ViewerUiState.Init, ViewerUiState.Loading -> {
+                    LoadingContent()
+                }
 
-                    is ViewerUiState.Stable -> {
-                        ViewerContent(
-                            uiState = targetUiState,
-                            onUiAction = onUiAction,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
+                is ViewerUiState.Stable -> {
+                    ViewerContent(
+                        uiState = uiState,
+                        onUiAction = onUiAction,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
 
-                    is ViewerUiState.Error -> {
-                        ErrorContent(
-                            error = targetUiState.error,
-                            onClickActionButton = { onUiAction(ViewerUiAction.OnClickBackButton) }
-                        )
-                    }
+                is ViewerUiState.Error -> {
+                    ErrorContent(
+                        error = uiState.error,
+                        onClickActionButton = { onUiAction(ViewerUiAction.OnClickBackButton) }
+                    )
                 }
             }
         }

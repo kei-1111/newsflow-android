@@ -3,7 +3,6 @@ package io.github.kei_1111.newsflow.android.feature.home
 import android.content.ClipData
 import android.content.Intent
 import android.widget.Toast
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
@@ -90,28 +89,23 @@ private fun HomeScreen(
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
-        AnimatedContent(
-            targetState = uiState,
-            label = "HomeScreenContent",
-        ) { targetUiState ->
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                when (targetUiState) {
-                    is HomeUiState.Stable -> {
-                        HomeContent(
-                            uiState = targetUiState,
-                            onUiAction = onUiAction,
-                        )
-                    }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            when (uiState) {
+                is HomeUiState.Stable -> {
+                    HomeContent(
+                        uiState = uiState,
+                        onUiAction = onUiAction,
+                    )
+                }
 
-                    is HomeUiState.Error -> {
-                        ErrorContent(
-                            error = targetUiState.error,
-                            onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
-                        )
-                    }
+                is HomeUiState.Error -> {
+                    ErrorContent(
+                        error = uiState.error,
+                        onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
+                    )
                 }
             }
         }
