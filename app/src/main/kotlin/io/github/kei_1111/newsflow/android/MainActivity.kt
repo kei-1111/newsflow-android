@@ -16,9 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsflowAndroidTheme {
                 DebouncedClickProvider {
-                    Surface {
-                        NewsflowNavDisplay()
-                    }
+                    NewsflowNavDisplay()
                 }
             }
         }
