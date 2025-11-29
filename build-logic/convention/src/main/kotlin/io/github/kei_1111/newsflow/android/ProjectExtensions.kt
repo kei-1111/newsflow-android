@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.getByType
+import java.util.Properties
 
 internal fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
     add("implementation", dependencyNotation)
@@ -28,3 +29,11 @@ internal fun VersionCatalog.versions(name: String): String =
 
 internal fun VersionCatalog.library(name: String): MinimalExternalModuleDependency =
     this.findLibrary(name).get().get()
+
+internal val Project.localProperties: Properties
+    get() = Properties().apply {
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            load(localPropertiesFile.inputStream())
+        }
+    }

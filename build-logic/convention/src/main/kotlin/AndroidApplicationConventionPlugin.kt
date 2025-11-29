@@ -3,6 +3,7 @@ import io.github.kei_1111.newsflow.android.configureAndroidCompose
 import io.github.kei_1111.newsflow.android.configureAndroidKotlin
 import io.github.kei_1111.newsflow.android.implementation
 import io.github.kei_1111.newsflow.android.libs
+import io.github.kei_1111.newsflow.android.localProperties
 import io.github.kei_1111.newsflow.android.versions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -28,7 +29,17 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureAndroidKotlin(this)
                 configureAndroidCompose(this)
 
-                defaultConfig.targetSdk = libs.versions("targetSdk").toInt()
+                defaultConfig {
+                    targetSdk = libs.versions("targetSdk").toInt()
+
+                    buildConfigField(
+                        type = "String",
+                        name = "NEWS_API_KEY",
+                        value = "\"${localProperties.getProperty("NEWS_API_KEY") ?: ""}\"",
+                    )
+                }
+
+                buildFeatures.buildConfig = true
 
                 packaging.resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
             }

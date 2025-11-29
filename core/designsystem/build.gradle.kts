@@ -6,7 +6,11 @@ android {
     namespace = "io.github.kei_1111.newsflow.android.core.designsystem"
 
     defaultConfig {
-        buildConfigField("String", "DRAWABLE_PATH", "\"${projectDir}/src/main/res/drawable\"")
+        buildConfigField(
+            type = "String",
+            name = "DRAWABLE_PATH",
+            value = "\"${projectDir}/src/main/res/drawable\""
+        )
     }
 
     buildFeatures.buildConfig = true

@@ -6,6 +6,9 @@ import io.github.kei_1111.newsflow.library.shared.initKoin
 class NewsflowAndroidApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        initKoin(this)
+        initKoin(
+            newsApiKey = BuildConfig.NEWS_API_KEY,
+            appContext = this,
+        )
     }
 }
