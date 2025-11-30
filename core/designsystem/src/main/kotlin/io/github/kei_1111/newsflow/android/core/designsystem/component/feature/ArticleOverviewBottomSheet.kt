@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
@@ -60,7 +62,6 @@ fun ArticleOverviewBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             article.imageUrl?.let { imageUrl ->
                 AsyncImage(
@@ -72,7 +73,7 @@ fun ArticleOverviewBottomSheet(
                     contentScale = ContentScale.Crop,
                 )
             }
-
+            Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier.padding(horizontal = 24.dp)
             ) {
@@ -110,8 +111,8 @@ fun ArticleOverviewBottomSheet(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
                 article.description?.let { description ->
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = description,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -148,7 +149,9 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider()
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -188,7 +191,9 @@ fun ArticleOverviewBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @ComponentPreviews
-private fun ArticleDetailBottomSheetPreview() {
+private fun ArticleDetailBottomSheetPreview(
+    @PreviewParameter(ArticleOverviewBottomSheetPPP::class) parameter: ArticleOverviewBottomSheetPreviewParameter
+) {
     val sheetState = SheetState(
         skipPartiallyExpanded = true,
         positionalThreshold = { 0f },
@@ -201,16 +206,12 @@ private fun ArticleDetailBottomSheetPreview() {
             ArticleOverviewBottomSheet(
                 article = Article(
                     id = "2135641799",
-                    source = "Politico",
-                    author = "Will Knight",
+                    source = parameter.source,
+                    author = parameter.author,
                     title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
-                    description = """
-                        At its Re:Invent conference,
-                        Amazon also announced new tools to help customers build generative AI programs,
-                        including one that checks whether a chatbot's outputs are accurate or not.
-                    """.trimIndent(),
+                    description = parameter.description,
                     url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
-                    imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                    imageUrl = parameter.imageUrl,
                     publishedAt = 1763726640000,
                 ),
                 sheetState = sheetState,
@@ -223,3 +224,38 @@ private fun ArticleDetailBottomSheetPreview() {
         }
     }
 }
+
+private data class ArticleOverviewBottomSheetPreviewParameter(
+    val source: String?,
+    val author: String?,
+    val description: String?,
+    val imageUrl: String?
+)
+
+private class ArticleOverviewBottomSheetPPP :
+    CollectionPreviewParameterProvider<ArticleOverviewBottomSheetPreviewParameter>(
+        collection = listOf(
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = "Politico",
+                author = "Will Knight",
+                description = """
+                    At its Re:Invent conference, 
+                    Amazon also announced new tools to help customers build generative AI programs, 
+                    including one that checks whether a chatbot's outputs are accurate or not.
+                """.trimIndent(),
+                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+            ),
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = null,
+                author = "Will Knight",
+                description = null,
+                imageUrl = null,
+            ),
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = "Politico",
+                author = null,
+                description = null,
+                imageUrl = null
+            )
+        )
+    )
