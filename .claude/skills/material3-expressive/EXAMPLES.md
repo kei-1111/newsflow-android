@@ -183,22 +183,15 @@ fun LoadingContent(
     isLoading: Boolean,
     content: @Composable () -> Unit
 ) {
-    AnimatedContent(
-        targetState = isLoading,
-        transitionSpec = {
-            fadeIn() togetherWith fadeOut()
+    if (isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            ContainedLoadingIndicator()
         }
-    ) { loading ->
-        if (loading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                ContainedLoadingIndicator()
-            }
-        } else {
-            content()
-        }
+    } else {
+        content()
     }
 }
 ```

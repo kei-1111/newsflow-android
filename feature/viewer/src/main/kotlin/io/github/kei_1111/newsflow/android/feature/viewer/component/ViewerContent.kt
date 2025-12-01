@@ -18,15 +18,15 @@ import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.library.core.model.Article
-import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiAction
-import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiState
+import io.github.kei_1111.newsflow.library.feature.viewer.ViewerIntent
+import io.github.kei_1111.newsflow.library.feature.viewer.ViewerState
 
 @SuppressLint("SetJavaScriptEnabled")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ViewerContent(
-    uiState: ViewerUiState.Stable,
-    onUiAction: (ViewerUiAction) -> Unit,
+    state: ViewerState.Stable,
+    onIntent: (ViewerIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -36,8 +36,8 @@ internal fun ViewerContent(
         topBar = {
             ViewerTopAppBar(
                 scrollBehavior = scrollBehavior,
-                onClickBackButton = { onUiAction(ViewerUiAction.OnClickBackButton) },
-                onClickShareButton = { onUiAction(ViewerUiAction.OnClickShareButton(uiState.viewingArticle)) },
+                onClickBackButton = { onIntent(ViewerIntent.NavigateBack) },
+                onClickShareButton = { onIntent(ViewerIntent.ShareArticle(state.viewingArticle)) },
                 onClickBookmarkButton = { /* TODO: ブックマーク機能を実装する際に作成 */ },
             )
         },
@@ -71,7 +71,7 @@ internal fun ViewerContent(
                 .fillMaxSize()
                 .padding(innerPadding),
             update = { webView ->
-                webView.loadUrl(uiState.viewingArticle.url)
+                webView.loadUrl(state.viewingArticle.url)
             }
         )
     }
@@ -83,15 +83,15 @@ private fun ViewerContentPreview() {
     NewsflowAndroidTheme {
         Surface {
             ViewerContent(
-                uiState = ViewerUiState.Stable(
+                state = ViewerState.Stable(
                     viewingArticle = Article(
                         id = "2135641799",
                         source = "Politico",
                         author = "Will Knight",
                         title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
                         description = """
-                            At its Re:Invent conference, 
-                            Amazon also announced new tools to help customers build generative AI programs, 
+                            At its Re:Invent conference,
+                            Amazon also announced new tools to help customers build generative AI programs,
                             including one that checks whether a chatbot's outputs are accurate or not.
                         """.trimIndent(),
                         url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
@@ -99,7 +99,7 @@ private fun ViewerContentPreview() {
                         publishedAt = 1763726640000,
                     ),
                 ),
-                onUiAction = {},
+                onIntent = {},
             )
         }
     }

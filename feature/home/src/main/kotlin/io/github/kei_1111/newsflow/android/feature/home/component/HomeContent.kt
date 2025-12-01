@@ -25,8 +25,8 @@ import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
-import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
-import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
+import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
+import io.github.kei_1111.newsflow.library.feature.home.HomeState
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
@@ -34,12 +34,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeContent(
-    uiState: HomeUiState.Stable,
-    onUiAction: (HomeUiAction) -> Unit,
+    state: HomeState.Stable,
+    onIntent: (HomeIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(
-        initialPage = NewsCategory.entries.indexOf(uiState.currentNewsCategory),
+        initialPage = NewsCategory.entries.indexOf(state.currentNewsCategory),
         pageCount = { NewsCategory.entries.size }
     )
     val coroutineScope = rememberCoroutineScope()
@@ -48,21 +48,21 @@ internal fun HomeContent(
 
     val layoutDirection = LocalLayoutDirection.current
 
-    LaunchedEffect(pagerState, onUiAction) {
+    LaunchedEffect(pagerState, onIntent) {
         snapshotFlow { pagerState.settledPage }
             .distinctUntilChanged()
             .drop(1) // Skip initial value to avoid duplicate event on first render
             .collect { page ->
-                onUiAction(HomeUiAction.OnSwipNewsCategoryPage(NewsCategory.entries[page]))
+                onIntent(HomeIntent.ChangeCategory(NewsCategory.entries[page]))
             }
     }
 
-    uiState.selectedArticle?.let {
+    state.selectedArticle?.let {
         ArticleOverviewBottomSheet(
             article = it,
-            onDismissArticleOverviewBottomSheet = { onUiAction(HomeUiAction.OnDismissArticleOverviewBottomSheet) },
-            onClickCopyUrlButton = { onUiAction(HomeUiAction.OnClickCopyUrlButton) },
-            onClickShareButton = { onUiAction(HomeUiAction.OnClickShareButton) },
+            onDismissArticleOverviewBottomSheet = { onIntent(HomeIntent.DismissArticleOverview) },
+            onClickCopyUrlButton = { onIntent(HomeIntent.CopyArticleUrl) },
+            onClickShareButton = { onIntent(HomeIntent.ShareArticle) },
             onClickGeminiSummaryButton = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
             onClickBookmarkButton = { /* TODO: ブックマーク機能を実装する際に作成 */ },
         )
@@ -81,9 +81,9 @@ internal fun HomeContent(
                 ),
         ) {
             HomeTabRow(
-                selectedCategory = uiState.currentNewsCategory,
+                selectedCategory = state.currentNewsCategory,
                 onClickNewsCategoryTab = { category ->
-                    onUiAction(HomeUiAction.OnClickNewsCategoryTag(category))
+                    onIntent(HomeIntent.ChangeCategory(category))
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(NewsCategory.entries.indexOf(category))
                     }
@@ -91,10 +91,10 @@ internal fun HomeContent(
             )
             HomeHorizontalPager(
                 pagerState = pagerState,
-                isLoading = uiState.isLoading,
-                articlesByCategory = uiState.articlesByCategory,
-                onClickArticleCard = { onUiAction(HomeUiAction.OnClickArticleCard(it)) },
-                onClickMoreButton = { onUiAction(HomeUiAction.OnClickMoreBottom(it)) },
+                isLoading = state.isLoading,
+                articlesByCategory = state.articlesByCategory,
+                onClickArticleCard = { onIntent(HomeIntent.NavigateViewer(it)) },
+                onClickMoreButton = { onIntent(HomeIntent.ShowArticleOverview(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
@@ -111,7 +111,7 @@ private fun HomeContentPreview(
     NewsflowAndroidTheme {
         Surface {
             HomeContent(
-                uiState = HomeUiState.Stable(
+                state = HomeState.Stable(
                     isLoading = false,
                     selectedArticle = parameter.selectedArticle,
                     currentNewsCategory = NewsCategory.GENERAL,
@@ -123,8 +123,8 @@ private fun HomeContentPreview(
                                 author = "Will Knight",
                                 title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
                                 description = """
-                                    At its Re:Invent conference, 
-                                    Amazon also announced new tools to help customers build generative AI programs, 
+                                    At its Re:Invent conference,
+                                    Amazon also announced new tools to help customers build generative AI programs,
                                     including one that checks whether a chatbot's outputs are accurate or not.
                                 """.trimIndent(),
                                 url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
@@ -134,7 +134,7 @@ private fun HomeContentPreview(
                         }
                     )
                 ),
-                onUiAction = {},
+                onIntent = {},
             )
         }
     }

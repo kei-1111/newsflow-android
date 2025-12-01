@@ -26,9 +26,9 @@ import io.github.kei_1111.newsflow.android.feature.home.component.HomeContent
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
-import io.github.kei_1111.newsflow.library.feature.home.HomeUiAction
-import io.github.kei_1111.newsflow.library.feature.home.HomeUiEffect
-import io.github.kei_1111.newsflow.library.feature.home.HomeUiState
+import io.github.kei_1111.newsflow.library.feature.home.HomeEffect
+import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
+import io.github.kei_1111.newsflow.library.feature.home.HomeState
 import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -39,7 +39,7 @@ fun HomeScreen(
     navigateViewer: (String) -> Unit,
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val clipboard = LocalClipboard.current
@@ -48,12 +48,12 @@ fun HomeScreen(
     val currentNavigateViewer by rememberUpdatedState(navigateViewer)
 
     LaunchedEffect(viewModel) {
-        viewModel.uiEffect.collect { effect ->
+        viewModel.effect.collect { effect ->
             when (effect) {
-                is HomeUiEffect.NavigateViewer -> {
+                is HomeEffect.NavigateViewer -> {
                     currentNavigateViewer(effect.id)
                 }
-                is HomeUiEffect.CopyUrl -> {
+                is HomeEffect.CopyUrl -> {
                     coroutineScope.launch {
                         val url = effect.url
                         val clipData = ClipData.newPlainText(url, url)
@@ -61,7 +61,7 @@ fun HomeScreen(
                         Toast.makeText(context, R.string.copy_url, Toast.LENGTH_SHORT).show()
                     }
                 }
-                is HomeUiEffect.ShareArticle -> {
+                is HomeEffect.ShareArticle -> {
                     val title = effect.title
                     val url = effect.url
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -76,16 +76,16 @@ fun HomeScreen(
     }
 
     HomeScreen(
-        uiState = uiState,
-        onUiAction = viewModel::onUiAction,
+        state = state,
+        onIntent = viewModel::onIntent,
         modifier = Modifier.fillMaxSize()
     )
 }
 
 @Composable
 private fun HomeScreen(
-    uiState: HomeUiState,
-    onUiAction: (HomeUiAction) -> Unit,
+    state: HomeState,
+    onIntent: (HomeIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
@@ -93,18 +93,18 @@ private fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            when (uiState) {
-                is HomeUiState.Stable -> {
+            when (state) {
+                is HomeState.Stable -> {
                     HomeContent(
-                        uiState = uiState,
-                        onUiAction = onUiAction,
+                        state = state,
+                        onIntent = onIntent,
                     )
                 }
 
-                is HomeUiState.Error -> {
+                is HomeState.Error -> {
                     ErrorContent(
-                        error = uiState.error,
-                        onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
+                        error = state.error,
+                        onClickActionButton = { onIntent(HomeIntent.RetryLoad) }
                     )
                 }
             }
@@ -119,21 +119,21 @@ private fun HomeScreenPreview(
 ) {
     NewsflowAndroidTheme {
         HomeScreen(
-            uiState = parameter.uiState,
-            onUiAction = {},
+            state = parameter.state,
+            onIntent = {},
             modifier = Modifier.fillMaxSize()
         )
     }
 }
 
 private data class HomeScreenPreviewParameter(
-    val uiState: HomeUiState,
+    val state: HomeState,
 )
 
 private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPreviewParameter>(
     collection = listOf(
         HomeScreenPreviewParameter(
-            uiState = HomeUiState.Stable(
+            state = HomeState.Stable(
                 isLoading = false,
                 currentNewsCategory = NewsCategory.GENERAL,
                 articlesByCategory = mapOf(
@@ -144,8 +144,8 @@ private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPrevi
                             author = "Will Knight",
                             title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
                             description = """
-                                At its Re:Invent conference, 
-                                Amazon also announced new tools to help customers build generative AI programs, 
+                                At its Re:Invent conference,
+                                Amazon also announced new tools to help customers build generative AI programs,
                                 including one that checks whether a chatbot's outputs are accurate or not.
                             """.trimIndent(),
                             url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
@@ -157,7 +157,7 @@ private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPrevi
             ),
         ),
         HomeScreenPreviewParameter(
-            uiState = HomeUiState.Error(
+            state = HomeState.Error(
                 error = NewsflowError.NetworkError.NetworkFailure("Network Failure")
             )
         )

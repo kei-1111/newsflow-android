@@ -27,18 +27,13 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
 # Jetpack Compose
 
 ## State Transitions
-* **Use `AnimatedContent`:** For state-based content switching instead of plain `when` expressions.
+* **Use plain `when` expression:** For state-based content switching.
 * **Use `MotionScheme.expressive()`:** Enable expressive motion for smooth animations.
     ```kotlin
-    AnimatedContent(
-        targetState = uiState,
-        label = "ScreenContent",
-    ) { targetUiState ->
-        when (targetUiState) {
-            is UiState.Loading -> LoadingContent()
-            is UiState.Success -> SuccessContent(targetUiState)
-            is UiState.Error -> ErrorContent(targetUiState.error)
-        }
+    when (state) {
+        is State.Loading -> LoadingContent()
+        is State.Success -> SuccessContent(state)
+        is State.Error -> ErrorContent(state.error)
     }
     ```
 
@@ -54,8 +49,8 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
     ) {
         NewsflowAndroidTheme {
             HomeScreen(
-                uiState = parameter.uiState,
-                onUiAction = {},
+                state = parameter.state,
+                onIntent = {},
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -107,33 +102,28 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
 ```kotlin
 @Composable
 private fun HomeScreen(
-    uiState: HomeUiState,
-    onUiAction: (HomeUiAction) -> Unit,
+    state: HomeState,
+    onIntent: (HomeIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
-        AnimatedContent(
-            targetState = uiState,
-            label = "HomeScreenContent",
-        ) { targetUiState ->
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                when (targetUiState) {
-                    is HomeUiState.Stable -> {
-                        HomeContent(
-                            uiState = targetUiState,
-                            onUiAction = onUiAction,
-                        )
-                    }
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center,
+        ) {
+            when (state) {
+                is HomeState.Stable -> {
+                    HomeContent(
+                        state = state,
+                        onIntent = onIntent,
+                    )
+                }
 
-                    is HomeUiState.Error -> {
-                        ErrorContent(
-                            error = targetUiState.error,
-                            onClickActionButton = { onUiAction(HomeUiAction.OnClickRetryButton) }
-                        )
-                    }
+                is HomeState.Error -> {
+                    ErrorContent(
+                        error = state.error,
+                        onClickActionButton = { onIntent(HomeIntent.RetryLoad) }
+                    )
                 }
             }
         }
@@ -147,28 +137,28 @@ private fun HomeScreenPreview(
 ) {
     NewsflowAndroidTheme {
         HomeScreen(
-            uiState = parameter.uiState,
-            onUiAction = {},
+            state = parameter.state,
+            onIntent = {},
             modifier = Modifier.fillMaxSize()
         )
     }
 }
 
 private data class HomeScreenPreviewParameter(
-    val uiState: HomeUiState,
+    val state: HomeState,
 )
 
 private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPreviewParameter>(
     collection = listOf(
         HomeScreenPreviewParameter(
-            uiState = HomeUiState.Stable(
+            state = HomeState.Stable(
                 isLoading = false,
                 currentNewsCategory = NewsCategory.GENERAL,
                 articlesByCategory = emptyMap()
             ),
         ),
         HomeScreenPreviewParameter(
-            uiState = HomeUiState.Error(
+            state = HomeState.Error(
                 error = NewsflowError.NetworkError.NetworkFailure("Network Failure")
             )
         )

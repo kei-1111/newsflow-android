@@ -23,9 +23,9 @@ import io.github.kei_1111.newsflow.android.core.ui.preview.ScreenPreviews
 import io.github.kei_1111.newsflow.android.feature.viewer.component.ViewerContent
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
-import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiAction
-import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiEffect
-import io.github.kei_1111.newsflow.library.feature.viewer.ViewerUiState
+import io.github.kei_1111.newsflow.library.feature.viewer.ViewerEffect
+import io.github.kei_1111.newsflow.library.feature.viewer.ViewerIntent
+import io.github.kei_1111.newsflow.library.feature.viewer.ViewerState
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -39,20 +39,20 @@ fun ViewerScreen(
     val viewModel = koinViewModel<ViewerViewModel>(
         parameters = { parametersOf(articleId) }
     )
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 
     val currentNavigateBack by rememberUpdatedState(navigateBack)
 
     LaunchedEffect(viewModel) {
-        viewModel.uiEffect.collect { effect ->
+        viewModel.effect.collect { effect ->
             when (effect) {
-                is ViewerUiEffect.NavigateBack -> {
+                is ViewerEffect.NavigateBack -> {
                     currentNavigateBack()
                 }
 
-                is ViewerUiEffect.ShareArticle -> {
+                is ViewerEffect.ShareArticle -> {
                     val title = effect.title
                     val url = effect.url
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -67,8 +67,8 @@ fun ViewerScreen(
     }
 
     ViewerScreen(
-        uiState = uiState,
-        onUiAction = viewModel::onUiAction,
+        state = state,
+        onIntent = viewModel::onIntent,
         modifier = Modifier.fillMaxSize()
     )
 }
@@ -76,8 +76,8 @@ fun ViewerScreen(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun ViewerScreen(
-    uiState: ViewerUiState,
-    onUiAction: (ViewerUiAction) -> Unit,
+    state: ViewerState,
+    onIntent: (ViewerIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
@@ -85,23 +85,23 @@ private fun ViewerScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            when (uiState) {
-                is ViewerUiState.Init, ViewerUiState.Loading -> {
+            when (state) {
+                is ViewerState.Init, ViewerState.Loading -> {
                     LoadingContent()
                 }
 
-                is ViewerUiState.Stable -> {
+                is ViewerState.Stable -> {
                     ViewerContent(
-                        uiState = uiState,
-                        onUiAction = onUiAction,
+                        state = state,
+                        onIntent = onIntent,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
 
-                is ViewerUiState.Error -> {
+                is ViewerState.Error -> {
                     ErrorContent(
-                        error = uiState.error,
-                        onClickActionButton = { onUiAction(ViewerUiAction.OnClickBackButton) }
+                        error = state.error,
+                        onClickActionButton = { onIntent(ViewerIntent.NavigateBack) }
                     )
                 }
             }
@@ -116,34 +116,34 @@ private fun ViewerScreenPreview(
 ) {
     NewsflowAndroidTheme {
         ViewerScreen(
-            uiState = parameter.uiState,
-            onUiAction = {},
+            state = parameter.state,
+            onIntent = {},
         )
     }
 }
 
 private data class ViewerScreenPreviewParameter(
-    val uiState: ViewerUiState,
+    val state: ViewerState,
 )
 
 private class ViewerScreenPPP : CollectionPreviewParameterProvider<ViewerScreenPreviewParameter> (
     collection = listOf(
         ViewerScreenPreviewParameter(
-            uiState = ViewerUiState.Init,
+            state = ViewerState.Init,
         ),
         ViewerScreenPreviewParameter(
-            uiState = ViewerUiState.Loading,
+            state = ViewerState.Loading,
         ),
         ViewerScreenPreviewParameter(
-            uiState = ViewerUiState.Stable(
+            state = ViewerState.Stable(
                 viewingArticle = Article(
                     id = "2135641799",
                     source = "Politico",
                     author = "Will Knight",
                     title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
                     description = """
-                        At its Re:Invent conference, 
-                        Amazon also announced new tools to help customers build generative AI programs, 
+                        At its Re:Invent conference,
+                        Amazon also announced new tools to help customers build generative AI programs,
                         including one that checks whether a chatbot's outputs are accurate or not.
                     """.trimIndent(),
                     url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
@@ -153,7 +153,7 @@ private class ViewerScreenPPP : CollectionPreviewParameterProvider<ViewerScreenP
             )
         ),
         ViewerScreenPreviewParameter(
-            uiState = ViewerUiState.Error(
+            state = ViewerState.Error(
                 error = NewsflowError.InternalError.ArticleNotFound("Article Not Found")
             )
         )
