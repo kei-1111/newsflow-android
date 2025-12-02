@@ -101,7 +101,7 @@ private fun ViewerScreen(
                 is ViewerState.Error -> {
                     ErrorContent(
                         error = state.error,
-                        onClickActionButton = { onIntent(ViewerIntent.NavigateBack) }
+                        onClickAction = { onIntent(ViewerIntent.NavigateBack) }
                     )
                 }
             }

@@ -36,9 +36,9 @@ internal fun ViewerContent(
         topBar = {
             ViewerTopAppBar(
                 scrollBehavior = scrollBehavior,
-                onClickBackButton = { onIntent(ViewerIntent.NavigateBack) },
-                onClickShareButton = { onIntent(ViewerIntent.ShareArticle(state.viewingArticle)) },
-                onClickBookmarkButton = { /* TODO: ブックマーク機能を実装する際に作成 */ },
+                onClickBack = { onIntent(ViewerIntent.NavigateBack) },
+                onClickShare = { onIntent(ViewerIntent.ShareArticle(state.viewingArticle)) },
+                onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
             )
         },
     ) { innerPadding ->

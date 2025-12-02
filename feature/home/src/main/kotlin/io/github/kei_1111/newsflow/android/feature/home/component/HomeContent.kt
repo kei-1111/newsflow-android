@@ -60,11 +60,11 @@ internal fun HomeContent(
     state.selectedArticle?.let {
         ArticleOverviewBottomSheet(
             article = it,
-            onDismissArticleOverviewBottomSheet = { onIntent(HomeIntent.DismissArticleOverview) },
-            onClickCopyUrlButton = { onIntent(HomeIntent.CopyArticleUrl) },
-            onClickShareButton = { onIntent(HomeIntent.ShareArticle) },
-            onClickGeminiSummaryButton = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
-            onClickBookmarkButton = { /* TODO: ブックマーク機能を実装する際に作成 */ },
+            onDismiss = { onIntent(HomeIntent.DismissArticleOverview) },
+            onClickCopyUrl = { onIntent(HomeIntent.CopyArticleUrl) },
+            onClickShare = { onIntent(HomeIntent.ShareArticle) },
+            onClickSummary = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
+            onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
         )
     }
 
@@ -82,7 +82,7 @@ internal fun HomeContent(
         ) {
             HomeTabRow(
                 selectedCategory = state.currentNewsCategory,
-                onClickNewsCategoryTab = { category ->
+                onClickNewsCategory = { category ->
                     onIntent(HomeIntent.ChangeCategory(category))
                     coroutineScope.launch {
                         pagerState.animateScrollToPage(NewsCategory.entries.indexOf(category))
@@ -93,8 +93,8 @@ internal fun HomeContent(
                 pagerState = pagerState,
                 isLoading = state.isLoading,
                 articlesByCategory = state.articlesByCategory,
-                onClickArticleCard = { onIntent(HomeIntent.NavigateViewer(it)) },
-                onClickMoreButton = { onIntent(HomeIntent.ShowArticleOverview(it)) },
+                onClickArticle = { onIntent(HomeIntent.NavigateViewer(it)) },
+                onClickMore = { onIntent(HomeIntent.ShowArticleOverview(it)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),

@@ -43,16 +43,16 @@ import io.github.kei_1111.newsflow.library.core.model.Article
 @Composable
 fun ArticleOverviewBottomSheet(
     article: Article,
-    onDismissArticleOverviewBottomSheet: () -> Unit,
-    onClickCopyUrlButton: () -> Unit,
-    onClickShareButton: () -> Unit,
-    onClickGeminiSummaryButton: () -> Unit,
-    onClickBookmarkButton: () -> Unit,
+    onDismiss: () -> Unit,
+    onClickCopyUrl: () -> Unit,
+    onClickShare: () -> Unit,
+    onClickSummary: () -> Unit,
+    onClickBookmark: () -> Unit,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
     ModalBottomSheet(
-        onDismissRequest = onDismissArticleOverviewBottomSheet,
+        onDismissRequest = onDismiss,
         modifier = modifier,
         sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
@@ -127,7 +127,7 @@ fun ArticleOverviewBottomSheet(
                         .clip(MaterialTheme.shapes.small)
                         .debouncedClickable(
                             indication = null,
-                            onClick = onClickCopyUrlButton
+                            onClick = onClickCopyUrl
                         )
                         .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -160,7 +160,7 @@ fun ArticleOverviewBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 FilledTonalIconButton(
-                    onClick = onClickShareButton,
+                    onClick = onClickShare,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
@@ -168,7 +168,7 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
                 FilledTonalIconButton(
-                    onClick = onClickGeminiSummaryButton,
+                    onClick = onClickSummary,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_smart_toy),
@@ -176,7 +176,7 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
                 FilledTonalIconButton(
-                    onClick = onClickBookmarkButton,
+                    onClick = onClickBookmark,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_bookmark),
@@ -215,11 +215,11 @@ private fun ArticleDetailBottomSheetPreview(
                     publishedAt = 1763726640000,
                 ),
                 sheetState = sheetState,
-                onDismissArticleOverviewBottomSheet = {},
-                onClickCopyUrlButton = {},
-                onClickShareButton = {},
-                onClickGeminiSummaryButton = {},
-                onClickBookmarkButton = {},
+                onDismiss = {},
+                onClickCopyUrl = {},
+                onClickShare = {},
+                onClickSummary = {},
+                onClickBookmark = {},
             )
         }
     }

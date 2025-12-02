@@ -104,7 +104,7 @@ private fun HomeScreen(
                 is HomeState.Error -> {
                     ErrorContent(
                         error = state.error,
-                        onClickActionButton = { onIntent(HomeIntent.RetryLoad) }
+                        onClickAction = { onIntent(HomeIntent.RetryLoad) }
                     )
                 }
             }

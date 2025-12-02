@@ -43,8 +43,8 @@ import java.util.Locale
 @Composable
 fun ArticleCard(
     article: Article,
-    onClickArticleCard: () -> Unit,
-    onClickMoreButton: () -> Unit,
+    onClickArticle: () -> Unit,
+    onClickMore: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -56,7 +56,7 @@ fun ArticleCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .debouncedClickable { onClickArticleCard() }
+                .debouncedClickable { onClickArticle() }
                 .padding(8.dp),
         ) {
             Column(
@@ -122,7 +122,7 @@ fun ArticleCard(
             }
             Spacer(modifier = Modifier.width(4.dp))
             IconButton(
-                onClick = onClickMoreButton,
+                onClick = onClickMore,
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.Top),
@@ -160,8 +160,8 @@ private fun ArticleCardPreview(
                     imageUrl = parameter.imageUrl,
                     publishedAt = 1763726640000,
                 ),
-                onClickArticleCard = {},
-                onClickMoreButton = {},
+                onClickArticle = {},
+                onClickMore = {},
             )
         }
     }
