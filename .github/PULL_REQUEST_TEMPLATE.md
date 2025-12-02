@@ -29,6 +29,8 @@ Closes #
 Fixes #
 Relates to #
 
+**Related (newsflow-library)**: 
+
 ## スクリーンショット / Screenshots
 
 <!-- UIに変更がある場合は、変更前後のスクリーンショットを添付してください -->

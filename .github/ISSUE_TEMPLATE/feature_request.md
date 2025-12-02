@@ -61,3 +61,5 @@ Do not use this for issues to the template repository itself.
 
 <!-- その他、機能リクエストに関する追加情報があれば記載してください -->
 <!-- Add any other context or screenshots about the feature request here -->
+
+**Related (newsflow-library)**: 
