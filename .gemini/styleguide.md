@@ -73,10 +73,13 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
 * **Images:** Use `img_` prefix with snake_case: `img_banner`, `img_article_preview`
 
 ## Callbacks
-* **Pattern:** `on + Action + Target`
-* **Click Actions:** `onClickRetryButton`, `onClickArticleCard`
-* **Dismiss Actions:** `onDismissDialog`, `onDismissBottomSheet`
-* **Change Actions:** `onChangeSearchQuery`, `onChangeCategory`
+* **Philosophy:** Components focus on View only, no knowledge of Intent/Action. Callbacks describe "what happened".
+* **Pattern:** `on + 操作/イベント + UI要素`
+* **UI component types omitted:** `onClickArticle` ✅, `onClickArticleCard` ❌
+* **Click:** `onClickArticle`, `onClickMore`
+* **Dismiss:** `onDismissDialog`, `onDismissBottomSheet`
+* **Change:** `onChangeQuery`, `onChangeCategory`
+* **XXXButton components:** Use `onClick` only: `ShareButton(onClick = ...)`
 
 ## Version Catalog (libs.versions.toml)
 * **Versions:** Use camelCase: `androidGradlePlugin`, `kotlinVersion`
