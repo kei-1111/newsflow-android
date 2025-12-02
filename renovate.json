@@ -7,6 +7,11 @@
   "ignoreUnstable": true,
   "packageRules": [
     {
+      "description": "Ignore custom newsflow library packages",
+      "matchPackagePrefixes": ["io.github.kei-1111.newsflow.library"],
+      "enabled": false
+    },
+    {
       "description": "Patch updates - auto-merge",
       "matchUpdateTypes": ["patch"],
       "automerge": true,
