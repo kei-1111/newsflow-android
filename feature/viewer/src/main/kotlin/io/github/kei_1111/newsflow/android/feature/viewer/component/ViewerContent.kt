@@ -2,6 +2,9 @@ package io.github.kei_1111.newsflow.android.feature.viewer.component
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -69,13 +72,38 @@ internal fun ViewerContent(
                             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                         }
                         webViewClient = object : WebViewClient() {
-                            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                            override fun onPageStarted(
+                                view: WebView?,
+                                url: String?,
+                                favicon: Bitmap?
+                            ) {
                                 super.onPageStarted(view, url, favicon)
                                 onIntent(ViewerIntent.StartWebViewLoading)
                             }
 
-                            override fun onPageCommitVisible(view: WebView?, url: String?) {
+                            override fun onPageCommitVisible(
+                                view: WebView?,
+                                url: String?
+                            ) {
                                 super.onPageCommitVisible(view, url)
+                                onIntent(ViewerIntent.FinishWebViewLoading)
+                            }
+
+                            override fun onReceivedError(
+                                view: WebView?,
+                                request: WebResourceRequest?,
+                                error: WebResourceError?
+                            ) {
+                                super.onReceivedError(view, request, error)
+                                onIntent(ViewerIntent.FinishWebViewLoading)
+                            }
+
+                            override fun onReceivedHttpError(
+                                view: WebView?,
+                                request: WebResourceRequest?,
+                                errorResponse: WebResourceResponse?
+                            ) {
+                                super.onReceivedHttpError(view, request, errorResponse)
                                 onIntent(ViewerIntent.FinishWebViewLoading)
                             }
                         }
