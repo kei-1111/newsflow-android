@@ -24,9 +24,9 @@ import io.github.kei_1111.newsflow.android.feature.viewer.R
 @Composable
 internal fun ViewerTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    onClickBackButton: () -> Unit,
-    onClickShareButton: () -> Unit,
-    onClickBookmarkButton: () -> Unit,
+    onClickBack: () -> Unit,
+    onClickShare: () -> Unit,
+    onClickBookmark: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -34,7 +34,7 @@ internal fun ViewerTopAppBar(
         modifier = modifier,
         navigationIcon = {
             IconButton(
-                onClick = onClickBackButton,
+                onClick = onClickBack,
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back),
@@ -48,7 +48,7 @@ internal fun ViewerTopAppBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = onClickShareButton,
+                    onClick = onClickShare,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
@@ -57,7 +57,7 @@ internal fun ViewerTopAppBar(
                     )
                 }
                 IconButton(
-                    onClick = onClickBookmarkButton,
+                    onClick = onClickBookmark,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_bookmark_outlined),
@@ -79,9 +79,9 @@ private fun ViewerTopAppBarPreview() {
         Surface {
             ViewerTopAppBar(
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-                onClickBackButton = {},
-                onClickShareButton = {},
-                onClickBookmarkButton = {},
+                onClickBack = {},
+                onClickShare = {},
+                onClickBookmark = {},
             )
         }
     }

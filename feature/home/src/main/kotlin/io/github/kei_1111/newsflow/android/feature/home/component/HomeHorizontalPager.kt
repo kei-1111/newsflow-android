@@ -30,8 +30,8 @@ internal fun HomeHorizontalPager(
     pagerState: PagerState,
     isLoading: Boolean,
     articlesByCategory: Map<NewsCategory, List<Article>>,
-    onClickArticleCard: (Article) -> Unit,
-    onClickMoreButton: (Article) -> Unit,
+    onClickArticle: (Article) -> Unit,
+    onClickMore: (Article) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     HorizontalPager(
@@ -47,8 +47,8 @@ internal fun HomeHorizontalPager(
             } else {
                 ArticleCardList(
                     articles = articlesByCategory[NewsCategory.entries[page]] ?: emptyList(),
-                    onClickArticleCard = onClickArticleCard,
-                    onClickMoreButton = onClickMoreButton,
+                    onClickArticle = onClickArticle,
+                    onClickMore = onClickMore,
                     contentPadding = PaddingValues(
                         start = 16.dp,
                         top = 16.dp,
@@ -72,8 +72,8 @@ private fun HomeHorizontalPagerPreview(
                 pagerState = rememberPagerState { NewsCategory.entries.size },
                 isLoading = parameter.isLoading,
                 articlesByCategory = parameter.articlesByCategory,
-                onClickArticleCard = {},
-                onClickMoreButton = {},
+                onClickArticle = {},
+                onClickMore = {},
             )
         }
     }

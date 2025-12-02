@@ -172,19 +172,44 @@ setup-environment.sh
 
 ## コールバック関数
 
-パターン: `on + 動作 + 対象`
+コンポーネントはViewに徹するべきであり、ビジネスロジックやIntent/Actionの知識を持たない。そのためコールバックには「何が起きたか」を表すアクション系の命名を使用する。
 
-動作によって対象が異なる：
+パターン: `on + 操作/イベント + UI要素`
 
-| 動作 | 対象 | 理由 |
-|------|------|------|
-| `onClick` | UIコンポーネント | Actionで直接実行される |
-| `onDismiss` | UIコンポーネント | Actionで直接実行される |
-| `onChange` | データ/状態 | Action感がない |
+### 操作/イベントの種類
+
+| 種類 | 用途 | 例 |
+|------|------|-----|
+| `Click` | タップ/クリック | `onClickArticle`, `onClickShare` |
+| `LongClick` | 長押し | `onLongClickArticle` |
+| `Dismiss` | 閉じる | `onDismissDialog`, `onDismissBottomSheet` |
+| `Change` | 値/選択の変化 | `onChangeQuery`, `onChangeCategory` |
+| `Settle` | 確定/落ち着く | `onSettlePage` |
+| `Input` | テキスト入力 | `onInputSearch` |
+| `Swipe` | スワイプ | `onSwipePage` |
+| `Drag` | ドラッグ | `onDragItem` |
+| `Scroll` | スクロール | `onScrollList` |
+
+### 命名ルール
+
+1. **UIコンポーネント種別（Button, Card等）は省略**
+   - ✅ `onClickArticle`, `onClickShare`
+   - ❌ `onClickArticleCard`, `onClickShareButton`
+
+2. **UI要素名はコンポーネント内での名前**
+   - ArticleCard内: `onClickArticle`, `onClickMore`
+   - ❌ `onClickArticleCardArticle`
+
+3. **XXXButtonコンポーネントの場合は`onClick`のみ**
+   - ✅ `ShareButton(onClick = ...)`
+   - ❌ `ShareButton(onClickShare = ...)`
 
 ```kotlin
-onClickRetryButton: () -> Unit
-onClickNewsCategoryTab: () -> Unit
-onDismissDialog: () -> Unit
-onChangeSearchQuery: (String) -> Unit
+// ArticleCard.kt
+@Composable
+fun ArticleCard(
+    article: Article,
+    onClickArticle: () -> Unit,
+    onClickMore: () -> Unit,
+)
 ```

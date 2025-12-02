@@ -21,7 +21,7 @@ import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 @Composable
 internal fun HomeTabRow(
     selectedCategory: NewsCategory,
-    onClickNewsCategoryTab: (NewsCategory) -> Unit,
+    onClickNewsCategory: (NewsCategory) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     PrimaryScrollableTabRow(
@@ -35,7 +35,7 @@ internal fun HomeTabRow(
             NewsCategoryTab(
                 newsCategory = newsCategory,
                 selected = newsCategory == selectedCategory,
-                onClick = { onClickNewsCategoryTab(newsCategory) },
+                onClick = { onClickNewsCategory(newsCategory) },
             )
         }
     }
@@ -94,7 +94,7 @@ private fun HomeTabRowPreview() {
         Surface {
             HomeTabRow(
                 selectedCategory = NewsCategory.entries.first(),
-                onClickNewsCategoryTab = {},
+                onClickNewsCategory = {},
             )
         }
     }

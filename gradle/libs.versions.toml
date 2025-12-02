@@ -10,7 +10,7 @@ kotlin = "2.2.21"
 lifecycleViewmodelNavigation3 = "2.10.0"
 material3Expressive = "1.5.0-alpha09"
 navigation3 = "1.0.0"
-newsflowLibrary = "0.3.1"
+newsflowLibrary = "0.3.2"
 serialization = "2.2.21"
 serializationJson = "1.9.0"
 

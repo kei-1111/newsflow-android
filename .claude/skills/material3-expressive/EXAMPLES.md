@@ -54,7 +54,7 @@ fun ArticleListScreen(
                 items(articles) { article ->
                     ArticleCard(
                         article = article,
-                        onClickArticleCard = { onClickArticle(article) }
+                        onClickArticle = { onClickArticle(article) }
                     )
                 }
             }
@@ -71,7 +71,7 @@ fun ArticleListScreen(
 fun EditorScreen(
     content: String,
     onChangeContent: (String) -> Unit,
-    onClickSaveButton: () -> Unit
+    onClickSave: () -> Unit
 ) {
     var toolbarExpanded by remember { mutableStateOf(true) }
 
@@ -80,7 +80,7 @@ fun EditorScreen(
             FloatingToolbar(
                 expanded = toolbarExpanded,
                 floatingActionButton = {
-                    FloatingActionButton(onClick = onClickSaveButton) {
+                    FloatingActionButton(onClick = onClickSave) {
                         Icon(
                             painter = painterResource(R.drawable.ic_save),
                             contentDescription = null,
@@ -164,7 +164,7 @@ fun FeedScreen(
             items(items) { item ->
                 FeedItemCard(
                     item = item,
-                    onClickFeedItemCard = { onClickItem(item) }
+                    onClickFeedItem = { onClickItem(item) }
                 )
             }
         }
@@ -183,22 +183,15 @@ fun LoadingContent(
     isLoading: Boolean,
     content: @Composable () -> Unit
 ) {
-    AnimatedContent(
-        targetState = isLoading,
-        transitionSpec = {
-            fadeIn() togetherWith fadeOut()
+    if (isLoading) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            ContainedLoadingIndicator()
         }
-    ) { loading ->
-        if (loading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                ContainedLoadingIndicator()
-            }
-        } else {
-            content()
-        }
+    } else {
+        content()
     }
 }
 ```

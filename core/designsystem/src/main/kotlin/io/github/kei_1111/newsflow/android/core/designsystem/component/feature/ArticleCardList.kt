@@ -17,8 +17,8 @@ import io.github.kei_1111.newsflow.library.core.model.Article
 @Composable
 fun ArticleCardList(
     articles: List<Article>,
-    onClickArticleCard: (Article) -> Unit,
-    onClickMoreButton: (Article) -> Unit,
+    onClickArticle: (Article) -> Unit,
+    onClickMore: (Article) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
@@ -32,8 +32,8 @@ fun ArticleCardList(
         items(articles) {
             ArticleCard(
                 article = it,
-                onClickArticleCard = { onClickArticleCard(it) },
-                onClickMoreButton = { onClickMoreButton(it) }
+                onClickArticle = { onClickArticle(it) },
+                onClickMore = { onClickMore(it) }
             )
         }
     }
@@ -61,8 +61,8 @@ private fun ArticleCardListPreview() {
                         publishedAt = 1763726640000,
                     )
                 },
-                onClickArticleCard = {},
-                onClickMoreButton = {},
+                onClickArticle = {},
+                onClickMore = {},
             )
         }
     }

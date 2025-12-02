@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
@@ -41,16 +43,16 @@ import io.github.kei_1111.newsflow.library.core.model.Article
 @Composable
 fun ArticleOverviewBottomSheet(
     article: Article,
-    onDismissArticleOverviewBottomSheet: () -> Unit,
-    onClickCopyUrlButton: () -> Unit,
-    onClickShareButton: () -> Unit,
-    onClickGeminiSummaryButton: () -> Unit,
-    onClickBookmarkButton: () -> Unit,
+    onDismiss: () -> Unit,
+    onClickCopyUrl: () -> Unit,
+    onClickShare: () -> Unit,
+    onClickSummary: () -> Unit,
+    onClickBookmark: () -> Unit,
     modifier: Modifier = Modifier,
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
 ) {
     ModalBottomSheet(
-        onDismissRequest = onDismissArticleOverviewBottomSheet,
+        onDismissRequest = onDismiss,
         modifier = modifier,
         sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
@@ -60,7 +62,6 @@ fun ArticleOverviewBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             article.imageUrl?.let { imageUrl ->
                 AsyncImage(
@@ -72,7 +73,7 @@ fun ArticleOverviewBottomSheet(
                     contentScale = ContentScale.Crop,
                 )
             }
-
+            Spacer(modifier = Modifier.height(16.dp))
             Column(
                 modifier = Modifier.padding(horizontal = 24.dp)
             ) {
@@ -110,8 +111,8 @@ fun ArticleOverviewBottomSheet(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
                 article.description?.let { description ->
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = description,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -126,7 +127,7 @@ fun ArticleOverviewBottomSheet(
                         .clip(MaterialTheme.shapes.small)
                         .debouncedClickable(
                             indication = null,
-                            onClick = onClickCopyUrlButton
+                            onClick = onClickCopyUrl
                         )
                         .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -148,7 +149,9 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider()
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,7 +160,7 @@ fun ArticleOverviewBottomSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 FilledTonalIconButton(
-                    onClick = onClickShareButton,
+                    onClick = onClickShare,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
@@ -165,7 +168,7 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
                 FilledTonalIconButton(
-                    onClick = onClickGeminiSummaryButton,
+                    onClick = onClickSummary,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_smart_toy),
@@ -173,7 +176,7 @@ fun ArticleOverviewBottomSheet(
                     )
                 }
                 FilledTonalIconButton(
-                    onClick = onClickBookmarkButton,
+                    onClick = onClickBookmark,
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_bookmark),
@@ -188,7 +191,9 @@ fun ArticleOverviewBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @ComponentPreviews
-private fun ArticleDetailBottomSheetPreview() {
+private fun ArticleDetailBottomSheetPreview(
+    @PreviewParameter(ArticleOverviewBottomSheetPPP::class) parameter: ArticleOverviewBottomSheetPreviewParameter
+) {
     val sheetState = SheetState(
         skipPartiallyExpanded = true,
         positionalThreshold = { 0f },
@@ -201,25 +206,56 @@ private fun ArticleDetailBottomSheetPreview() {
             ArticleOverviewBottomSheet(
                 article = Article(
                     id = "2135641799",
-                    source = "Politico",
-                    author = "Will Knight",
+                    source = parameter.source,
+                    author = parameter.author,
                     title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
-                    description = """
-                        At its Re:Invent conference,
-                        Amazon also announced new tools to help customers build generative AI programs,
-                        including one that checks whether a chatbot's outputs are accurate or not.
-                    """.trimIndent(),
+                    description = parameter.description,
                     url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
-                    imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                    imageUrl = parameter.imageUrl,
                     publishedAt = 1763726640000,
                 ),
                 sheetState = sheetState,
-                onDismissArticleOverviewBottomSheet = {},
-                onClickCopyUrlButton = {},
-                onClickShareButton = {},
-                onClickGeminiSummaryButton = {},
-                onClickBookmarkButton = {},
+                onDismiss = {},
+                onClickCopyUrl = {},
+                onClickShare = {},
+                onClickSummary = {},
+                onClickBookmark = {},
             )
         }
     }
 }
+
+private data class ArticleOverviewBottomSheetPreviewParameter(
+    val source: String?,
+    val author: String?,
+    val description: String?,
+    val imageUrl: String?
+)
+
+private class ArticleOverviewBottomSheetPPP :
+    CollectionPreviewParameterProvider<ArticleOverviewBottomSheetPreviewParameter>(
+        collection = listOf(
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = "Politico",
+                author = "Will Knight",
+                description = """
+                    At its Re:Invent conference, 
+                    Amazon also announced new tools to help customers build generative AI programs, 
+                    including one that checks whether a chatbot's outputs are accurate or not.
+                """.trimIndent(),
+                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+            ),
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = null,
+                author = "Will Knight",
+                description = null,
+                imageUrl = null,
+            ),
+            ArticleOverviewBottomSheetPreviewParameter(
+                source = "Politico",
+                author = null,
+                description = null,
+                imageUrl = null
+            )
+        )
+    )

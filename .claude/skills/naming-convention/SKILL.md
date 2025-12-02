@@ -22,7 +22,7 @@ description: newsflow-androidプロジェクトの命名規則を適用するス
 | アイコン | `ic_<name>` | `ic_arrow_back` |
 | 画像 | `img_<name>[_preview]` | `img_banner`, `img_sample_preview` |
 | スクリプト | ケバブケース + `.sh` | `create-module.sh` |
-| コールバック | `on + 動作 + 対象` | `onClickRetryButton`, `onChangeSearchQuery` |
+| コールバック | `on + 操作/イベント + UI要素` | `onClickArticle`, `onChangeQuery` |
 
 ## バージョンカタログ（libs.versions.toml）
 
