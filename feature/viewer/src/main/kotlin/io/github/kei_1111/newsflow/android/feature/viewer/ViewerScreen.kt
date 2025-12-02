@@ -149,7 +149,8 @@ private class ViewerScreenPPP : CollectionPreviewParameterProvider<ViewerScreenP
                     url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
                     imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
                     publishedAt = 1763726640000,
-                )
+                ),
+                isWebViewLoading = false,
             )
         ),
         ViewerScreenPreviewParameter(
