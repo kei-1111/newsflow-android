@@ -1,6 +1,5 @@
 package io.github.kei_1111.newsflow.android.feature.viewer.component
 
-import android.R.attr.onClick
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api

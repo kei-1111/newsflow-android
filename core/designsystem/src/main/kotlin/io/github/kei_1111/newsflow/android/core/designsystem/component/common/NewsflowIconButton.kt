@@ -1,6 +1,5 @@
 package io.github.kei_1111.newsflow.android.core.designsystem.component.common
 
-import android.R.attr.onClick
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
