@@ -46,7 +46,7 @@ internal fun ViewerContent(
             ViewerTopAppBar(
                 scrollBehavior = scrollBehavior,
                 onClickBack = { onIntent(ViewerIntent.NavigateBack) },
-                onClickShare = { onIntent(ViewerIntent.ShareArticle(state.viewingArticle)) },
+                onClickShare = { onIntent(ViewerIntent.ShareArticle) },
                 onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
             )
         },
