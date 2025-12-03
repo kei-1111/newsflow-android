@@ -3,6 +3,7 @@ package io.github.kei_1111.newsflow.android.feature.home.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
@@ -10,6 +11,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,6 +48,7 @@ internal fun HomeContent(
     val coroutineScope = rememberCoroutineScope()
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val pullToRefreshState = rememberPullToRefreshState()
 
     val layoutDirection = LocalLayoutDirection.current
 
@@ -69,7 +73,7 @@ internal fun HomeContent(
     }
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier,
         topBar = { HomeTopAppBar(scrollBehavior) },
     ) { innerPadding ->
         Column(
@@ -89,16 +93,25 @@ internal fun HomeContent(
                     }
                 },
             )
-            HomeHorizontalPager(
-                pagerState = pagerState,
-                isLoading = state.isLoading,
-                articlesByCategory = state.articlesByCategory,
-                onClickArticle = { onIntent(HomeIntent.NavigateViewer(it)) },
-                onClickMore = { onIntent(HomeIntent.ShowArticleOverview(it)) },
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = { onIntent(HomeIntent.Refresh) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-            )
+                state = pullToRefreshState,
+            ) {
+                HomeHorizontalPager(
+                    pagerState = pagerState,
+                    isLoading = state.isLoading,
+                    articlesByCategory = state.articlesByCategory,
+                    onClickArticle = { onIntent(HomeIntent.NavigateViewer(it)) },
+                    onClickMore = { onIntent(HomeIntent.ShowArticleOverview(it)) },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(scrollBehavior.nestedScrollConnection),
+                )
+            }
         }
     }
 }

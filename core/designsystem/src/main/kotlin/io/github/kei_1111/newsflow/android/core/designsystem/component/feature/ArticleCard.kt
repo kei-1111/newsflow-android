@@ -14,7 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.R
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.modifier.debouncedClickable
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -121,8 +122,9 @@ fun ArticleCard(
                 )
             }
             Spacer(modifier = Modifier.width(4.dp))
-            IconButton(
+            NewsflowIconButton(
                 onClick = onClickMore,
+                shapes = IconButtonDefaults.shapes(),
                 modifier = Modifier
                     .size(16.dp)
                     .align(Alignment.Top),

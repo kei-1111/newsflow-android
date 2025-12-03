@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.NewsflowLogo
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -30,8 +30,9 @@ internal fun HomeTopAppBar(
         title = { NewsflowLogo() },
         modifier = modifier,
         actions = {
-            IconButton(
+            NewsflowIconButton(
                 onClick = { /* TODO: 記事検索機能を実装する際に作成 */ },
+                shapes = IconButtonDefaults.shapes(),
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onSurface
                 )

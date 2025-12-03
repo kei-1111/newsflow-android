@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -34,12 +35,13 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.R
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.modifier.debouncedClickable
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.library.core.model.Article
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ArticleOverviewBottomSheet(
     article: Article,
@@ -159,24 +161,30 @@ fun ArticleOverviewBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                FilledTonalIconButton(
+                NewsflowIconButton(
                     onClick = onClickShare,
+                    shapes = IconButtonDefaults.shapes(),
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(),
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
                         contentDescription = null,
                     )
                 }
-                FilledTonalIconButton(
+                NewsflowIconButton(
                     onClick = onClickSummary,
+                    shapes = IconButtonDefaults.shapes(),
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(),
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_smart_toy),
                         contentDescription = null,
                     )
                 }
-                FilledTonalIconButton(
+                NewsflowIconButton(
                     onClick = onClickBookmark,
+                    shapes = IconButtonDefaults.shapes(),
+                    colors = IconButtonDefaults.filledTonalIconButtonColors(),
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_bookmark),
