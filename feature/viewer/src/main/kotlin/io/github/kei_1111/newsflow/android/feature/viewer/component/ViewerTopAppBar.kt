@@ -1,10 +1,12 @@
 package io.github.kei_1111.newsflow.android.feature.viewer.component
 
+import android.R.attr.onClick
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -14,13 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.viewer.R
 
 // TODO: nestedScrollが上手く行っておらずWebViewのスクロールで
 //  ViewerTopAppBarが閉じるときにガタガタするのを直したい、大きくスクロールすれば出てこないし緊急性は低いので今後やる
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 internal fun ViewerTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
@@ -33,8 +36,9 @@ internal fun ViewerTopAppBar(
         title = { /*ViewerTopAppBarはtitleに何も表示させないため空*/ },
         modifier = modifier,
         navigationIcon = {
-            IconButton(
+            NewsflowIconButton(
                 onClick = onClickBack,
+                shapes = IconButtonDefaults.shapes()
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back),
@@ -47,8 +51,9 @@ internal fun ViewerTopAppBar(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(
+                NewsflowIconButton(
                     onClick = onClickShare,
+                    shapes = IconButtonDefaults.shapes()
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
@@ -56,8 +61,9 @@ internal fun ViewerTopAppBar(
                         modifier = Modifier.size(24.dp)
                     )
                 }
-                IconButton(
+                NewsflowIconButton(
                     onClick = onClickBookmark,
+                    shapes = IconButtonDefaults.shapes()
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_bookmark_outlined),

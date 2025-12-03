@@ -65,7 +65,7 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
 # Naming Conventions
 
 ## Components
-* **Common Components:** Prefix with `Newsflow`: `NewsflowButton`, `NewsflowTab`
+* **Common Components:** Prefix with `Newsflow`: `NewsflowButton`, `NewsflowTab`, `NewsflowIconButton`
 * **Feature Components:** No prefix required: `ArticleCard`, `ErrorContent`
 
 ## Resources
