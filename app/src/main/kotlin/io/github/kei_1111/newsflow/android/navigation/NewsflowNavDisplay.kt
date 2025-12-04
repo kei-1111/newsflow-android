@@ -20,7 +20,7 @@ fun NewsflowNavDisplay() {
 
     NavDisplay(
         backStack = backStack,
-        onBack = { backStack.removeLastOrNull() },
+        onBack = backStack::removeLastOrNull,
         entryDecorators = listOf(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
@@ -28,16 +28,16 @@ fun NewsflowNavDisplay() {
         entryProvider = entryProvider {
             homeEntry(
                 navigateSearch = backStack::navigateSearch,
-                navigateViewer = { backStack.navigateViewer(it) }
+                navigateViewer = backStack::navigateViewer
             )
 
             searchEntry(
-                navigateBack = { backStack.removeLastOrNull() },
-                navigateViewer = { backStack.navigateViewer(it) }
+                navigateBack = backStack::removeLastOrNull,
+                navigateViewer = backStack::navigateViewer
             )
 
             viewerEntry(
-                navigateBack = { backStack.removeLastOrNull() }
+                navigateBack = backStack::removeLastOrNull
             )
         }
     )
