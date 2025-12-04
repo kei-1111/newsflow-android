@@ -7,6 +7,9 @@ import kotlinx.serialization.Serializable
 data object Home : NavKey
 
 @Serializable
+data object Search : NavKey
+
+@Serializable
 data class Viewer(
     val articleId: String,
 ) : NavKey

@@ -36,6 +36,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Suppress("ModifierMissing")
 @Composable
 fun HomeScreen(
+    navigateSearch: () -> Unit,
     navigateViewer: (String) -> Unit,
 ) {
     val viewModel = koinViewModel<HomeViewModel>()
@@ -45,6 +46,7 @@ fun HomeScreen(
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
 
+    val currentNavigateSearch by rememberUpdatedState(navigateSearch)
     val currentNavigateViewer by rememberUpdatedState(navigateViewer)
 
     LaunchedEffect(viewModel) {
@@ -52,6 +54,9 @@ fun HomeScreen(
             when (effect) {
                 is HomeEffect.NavigateViewer -> {
                     currentNavigateViewer(effect.id)
+                }
+                is HomeEffect.NavigateSearch -> {
+                    currentNavigateSearch()
                 }
                 is HomeEffect.CopyUrl -> {
                     coroutineScope.launch {

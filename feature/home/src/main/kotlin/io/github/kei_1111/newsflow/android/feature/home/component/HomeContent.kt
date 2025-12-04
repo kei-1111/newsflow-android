@@ -74,7 +74,12 @@ internal fun HomeContent(
 
     Scaffold(
         modifier = modifier,
-        topBar = { HomeTopAppBar(scrollBehavior) },
+        topBar = {
+            HomeTopAppBar(
+                scrollBehavior = scrollBehavior,
+                onClickSearch = { onIntent(HomeIntent.NavigateSearch) }
+            )
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
