@@ -105,7 +105,7 @@ internal fun HomeContent(
                     pagerState = pagerState,
                     isLoading = state.isLoading,
                     articlesByCategory = state.articlesByCategory,
-                    onClickArticle = { onIntent(HomeIntent.NavigateViewer(it)) },
+                    onClickArticle = { onIntent(HomeIntent.SelectArticle(it)) },
                     onClickMore = { onIntent(HomeIntent.ShowArticleOverview(it)) },
                     modifier = Modifier
                         .fillMaxSize()
