@@ -40,6 +40,7 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 newsflow-library-shared = { group = "io.github.kei-1111.newsflow.library", name = "shared", version.ref = "newsflowLibrary" }
 newsflow-library-model = { group = "io.github.kei-1111.newsflow.library", name = "model", version.ref = "newsflowLibrary" }
 newsflow-library-home = { group = "io.github.kei-1111.newsflow.library", name = "home", version.ref = "newsflowLibrary" }
+newsflow-library-search = { group = "io.github.kei-1111.newsflow.library", name = "search", version.ref = "newsflowLibrary" }
 newsflow-library-viewer = { group = "io.github.kei-1111.newsflow.library", name = "viewer", version.ref = "newsflowLibrary" }
 
 # Use build-logic

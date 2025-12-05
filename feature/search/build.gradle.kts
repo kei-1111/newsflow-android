@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    // Add your dependencies here
+    implementation(libs.newsflow.library.search)
 }
