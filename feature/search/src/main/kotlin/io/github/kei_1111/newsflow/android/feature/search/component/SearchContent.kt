@@ -53,6 +53,16 @@ internal fun SearchContent(
         )
     }
 
+    if (state.isOptionsSheetVisible) {
+        SearchOptionBottomSheet(
+            searchOptions = state.searchOptions,
+            onChangeSortBy = { onIntent(SearchIntent.UpdateSortBy(it)) },
+            onChangeDateRange = { onIntent(SearchIntent.UpdateDateRange(it)) },
+            onChangeLanguage = { onIntent(SearchIntent.UpdateLanguage(it)) },
+            onDismiss = { onIntent(SearchIntent.DismissOptionsSheet) },
+        )
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -62,7 +72,7 @@ internal fun SearchContent(
                 onChangeQuery = { onIntent(SearchIntent.UpdateQuery(it)) },
                 onClickClear = { onIntent(SearchIntent.ClearQuery) },
                 onClickBack = { onIntent(SearchIntent.NavigateBack) },
-                onClickOption = { /* TODO: 詳細検索機能を実装する際に作成 */ }
+                onClickOption = { onIntent(SearchIntent.ShowOptionsSheet) }
             )
         },
     ) { innerPadding ->
