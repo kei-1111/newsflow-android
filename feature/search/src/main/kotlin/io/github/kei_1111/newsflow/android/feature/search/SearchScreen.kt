@@ -110,7 +110,12 @@ private fun SearchScreen(
                 is SearchState.Error -> {
                     ErrorContent(
                         error = state.error,
-                        onClickAction = { onIntent(SearchIntent.RetrySearch) }
+                        onClickAction = {
+                            when (state.error) {
+                                is NewsflowError.NetworkError -> onIntent(SearchIntent.RetrySearch)
+                                is NewsflowError.InternalError -> onIntent(SearchIntent.NavigateBack)
+                            }
+                        }
                     )
                 }
             }
