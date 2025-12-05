@@ -24,6 +24,7 @@ import io.github.kei_1111.newsflow.android.feature.home.R
 @Composable
 internal fun HomeTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
+    onClickSearch: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -31,7 +32,7 @@ internal fun HomeTopAppBar(
         modifier = modifier,
         actions = {
             NewsflowIconButton(
-                onClick = { /* TODO: 記事検索機能を実装する際に作成 */ },
+                onClick = onClickSearch,
                 shapes = IconButtonDefaults.shapes(),
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = MaterialTheme.colorScheme.onSurface
@@ -59,7 +60,8 @@ private fun HomeTopAppBarPreview() {
     NewsflowAndroidTheme {
         Surface {
             HomeTopAppBar(
-                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+                scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
+                onClickSearch = {}
             )
         }
     }

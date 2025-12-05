@@ -1,10 +1,10 @@
-package io.github.kei_1111.newsflow.android.feature.home
+package io.github.kei_1111.newsflow.android.feature.search
 
 import android.content.ClipData
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,54 +19,54 @@ import androidx.compose.ui.platform.toClipEntry
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ErrorContent
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ScreenPreviews
-import io.github.kei_1111.newsflow.android.feature.home.component.HomeContent
+import io.github.kei_1111.newsflow.android.feature.search.component.SearchContent
 import io.github.kei_1111.newsflow.library.core.model.Article
-import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
-import io.github.kei_1111.newsflow.library.feature.home.HomeEffect
-import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
-import io.github.kei_1111.newsflow.library.feature.home.HomeState
-import io.github.kei_1111.newsflow.library.feature.home.HomeViewModel
+import io.github.kei_1111.newsflow.library.feature.search.SearchEffect
+import io.github.kei_1111.newsflow.library.feature.search.SearchIntent
+import io.github.kei_1111.newsflow.library.feature.search.SearchState
+import io.github.kei_1111.newsflow.library.feature.search.SearchViewModel
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Suppress("ModifierMissing")
 @Composable
-fun HomeScreen(
-    navigateSearch: () -> Unit,
+fun SearchScreen(
+    navigateBack: () -> Unit,
     navigateViewer: (String) -> Unit,
 ) {
-    val viewModel = koinViewModel<HomeViewModel>()
+    val viewModel = koinViewModel<SearchViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val clipboard = LocalClipboard.current
     val coroutineScope = rememberCoroutineScope()
 
-    val currentNavigateSearch by rememberUpdatedState(navigateSearch)
+    val currentNavigateBack by rememberUpdatedState(navigateBack)
     val currentNavigateViewer by rememberUpdatedState(navigateViewer)
 
     LaunchedEffect(viewModel) {
         viewModel.effect.collect { effect ->
             when (effect) {
-                is HomeEffect.NavigateViewer -> {
-                    currentNavigateViewer(effect.id)
+                is SearchEffect.NavigateViewer -> {
+                    currentNavigateViewer(effect.articleId)
                 }
-                is HomeEffect.NavigateSearch -> {
-                    currentNavigateSearch()
+                is SearchEffect.NavigateBack -> {
+                    currentNavigateBack()
                 }
-                is HomeEffect.CopyUrl -> {
+                is SearchEffect.CopyUrl -> {
                     coroutineScope.launch {
                         val url = effect.url
                         val clipData = ClipData.newPlainText(url, url)
                         clipboard.setClipEntry(clipData.toClipEntry())
-                        Toast.makeText(context, R.string.copy_url, Toast.LENGTH_SHORT).show()
                     }
                 }
-                is HomeEffect.ShareArticle -> {
+                is SearchEffect.ShareArticle -> {
                     val title = effect.title
                     val url = effect.url
                     val shareIntent = Intent(Intent.ACTION_SEND).apply {
@@ -80,7 +80,7 @@ fun HomeScreen(
         }
     }
 
-    HomeScreen(
+    SearchScreen(
         state = state,
         onIntent = viewModel::onIntent,
         modifier = Modifier.fillMaxSize()
@@ -88,9 +88,9 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreen(
-    state: HomeState,
-    onIntent: (HomeIntent) -> Unit,
+private fun SearchScreen(
+    state: SearchState,
+    onIntent: (SearchIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
@@ -99,17 +99,23 @@ private fun HomeScreen(
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                is HomeState.Stable -> {
-                    HomeContent(
+                is SearchState.Stable -> {
+                    SearchContent(
                         state = state,
                         onIntent = onIntent,
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
-                is HomeState.Error -> {
+                is SearchState.Error -> {
                     ErrorContent(
                         error = state.error,
-                        onClickAction = { onIntent(HomeIntent.RetryLoad) }
+                        onClickAction = {
+                            when (state.error) {
+                                is NewsflowError.NetworkError -> onIntent(SearchIntent.RetrySearch)
+                                is NewsflowError.InternalError -> onIntent(SearchIntent.NavigateBack)
+                            }
+                        }
                     )
                 }
             }
@@ -119,52 +125,50 @@ private fun HomeScreen(
 
 @Composable
 @ScreenPreviews
-private fun HomeScreenPreview(
-    @PreviewParameter(HomeScreenPPP::class) parameter: HomeScreenPreviewParameter,
+private fun SearchScreenPreview(
+    @PreviewParameter(SearchScreenPPP::class) parameter: SearchScreenPreviewParameter
 ) {
     NewsflowAndroidTheme {
-        HomeScreen(
+        SearchScreen(
             state = parameter.state,
             onIntent = {},
-            modifier = Modifier.fillMaxSize()
         )
     }
 }
 
-private data class HomeScreenPreviewParameter(
-    val state: HomeState,
+private data class SearchScreenPreviewParameter(
+    val state: SearchState
 )
 
-private class HomeScreenPPP : CollectionPreviewParameterProvider<HomeScreenPreviewParameter>(
+private class SearchScreenPPP : CollectionPreviewParameterProvider<SearchScreenPreviewParameter>(
     collection = listOf(
-        HomeScreenPreviewParameter(
-            state = HomeState.Stable(
-                isLoading = false,
-                currentNewsCategory = NewsCategory.GENERAL,
-                articlesByCategory = mapOf(
-                    NewsCategory.GENERAL to List(10) {
-                        Article(
-                            id = "2135641799",
-                            source = "Politico",
-                            author = "Will Knight",
-                            title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
-                            description = """
-                                At its Re:Invent conference,
-                                Amazon also announced new tools to help customers build generative AI programs,
-                                including one that checks whether a chatbot's outputs are accurate or not.
-                            """.trimIndent(),
-                            url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
-                            imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
-                            publishedAt = 1763726640000,
-                        )
-                    }
-                )
-            ),
+        SearchScreenPreviewParameter(
+            state = SearchState.Stable(
+                query = "Amazon",
+                isSearching = false,
+                articles = List(10) {
+                    Article(
+                        id = "2135641799",
+                        source = "Politico",
+                        author = "Will Knight",
+                        title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                        description = """
+                            At its Re:Invent conference, 
+                            Amazon also announced new tools to help customers build generative AI programs, 
+                            including one that checks whether a chatbot's outputs are accurate or not.
+                        """.trimIndent(),
+                        url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                        imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                        publishedAt = 1763726640000,
+                    )
+                },
+                selectedArticle = null,
+            )
         ),
-        HomeScreenPreviewParameter(
-            state = HomeState.Error(
-                error = NewsflowError.NetworkError.NetworkFailure("Network Failure")
+        SearchScreenPreviewParameter(
+            state = SearchState.Error(
+                error = NewsflowError.InternalError.InvalidParameter("Search query cannot be empty")
             )
         )
-    )
+    ),
 )

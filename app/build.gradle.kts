@@ -26,6 +26,7 @@ android {
 dependencies {
     implementation(projects.core.navigation)
     implementation(projects.feature.home)
+    implementation(projects.feature.search)
     implementation(projects.feature.viewer)
 
     implementation(libs.androidx.activity.compose)

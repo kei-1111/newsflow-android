@@ -74,7 +74,12 @@ internal fun HomeContent(
 
     Scaffold(
         modifier = modifier,
-        topBar = { HomeTopAppBar(scrollBehavior) },
+        topBar = {
+            HomeTopAppBar(
+                scrollBehavior = scrollBehavior,
+                onClickSearch = { onIntent(HomeIntent.NavigateSearch) }
+            )
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -95,7 +100,7 @@ internal fun HomeContent(
             )
             PullToRefreshBox(
                 isRefreshing = state.isRefreshing,
-                onRefresh = { onIntent(HomeIntent.Refresh) },
+                onRefresh = { onIntent(HomeIntent.RefreshArticles) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),

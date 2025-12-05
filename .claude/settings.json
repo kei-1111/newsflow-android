@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(material3-expressive)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

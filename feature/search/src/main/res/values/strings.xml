@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_placeholder">Search articles</string>
+
+    <!-- Search Option BottomSheet -->
+    <string name="search_option_sort_by">Sort by</string>
+    <string name="search_option_sort_relevancy">Relevancy</string>
+    <string name="search_option_sort_popularity">Popularity</string>
+    <string name="search_option_sort_newest">Newest</string>
+
+    <string name="search_option_date_range">Date range</string>
+    <string name="search_option_date_all">All</string>
+    <string name="search_option_date_last_24_hours">Last 24 hours</string>
+    <string name="search_option_date_last_week">Last week</string>
+    <string name="search_option_date_last_month">Last month</string>
+
+    <string name="search_option_language">Language</string>
+    <string name="search_option_language_all">All</string>
+    <string name="search_option_language_english">English</string>
+    <string name="search_option_language_japanese">Japanese</string>
+</resources>

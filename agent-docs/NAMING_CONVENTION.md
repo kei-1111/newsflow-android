@@ -1,10 +1,46 @@
-# 命名規則 詳細リファレンス
+# newsflow-android 命名規則
 
-## ConventionPlugin
+新しいファイル、クラス、モジュール、リソースを作成する際は、このプロジェクトの命名規則に従ってください。
+
+## クイックリファレンス
+
+| 対象 | パターン | 例 |
+|------|----------|-----|
+| ConventionPlugin | `<Name>ConventionPlugin` | `AndroidLibraryConventionPlugin` |
+| Plugin ID | `newsflow.android.<type>.<subtype>` | `newsflow.android.android.library` |
+| ベースパッケージ | `io.github.kei_1111.newsflow.android` | - |
+| Coreモジュール | `core:<name>` | `core:designsystem` |
+| Featureモジュール | `feature:<name>` | `feature:home` |
+| Theme関数 | `<ProjectName>Theme` | `NewsflowAndroidTheme` |
+| Applicationクラス | `<ProjectName>Application` | `NewsflowAndroidApplication` |
+| 汎用コンポーネント | `Newsflow<ComponentName>` | `NewsflowButton` |
+| アイコン | `ic_<name>` | `ic_arrow_back` |
+| 画像 | `img_<name>[_preview]` | `img_banner`, `img_sample_preview` |
+| スクリプト | ケバブケース + `.sh` | `create-module.sh` |
+| コールバック | `on + 操作/イベント + UI要素` | `onClickArticle`, `onChangeQuery` |
+
+## バージョンカタログ（libs.versions.toml）
+
+```toml
+[versions]
+androidGradlePlugin = "8.12.3"  # キャメルケース
+
+[libraries]
+androidx-core-ktx = { ... }     # ケバブケース
+
+[plugins]
+android-application = { ... }   # ケバブケース
+```
+
+---
+
+## 詳細リファレンス
+
+### ConventionPlugin
 
 自作プラグインは `ConventionPlugin` をサフィックスにつけて、他のプラグインと差別化する。
 
-### クラス名
+**クラス名:**
 ```kotlin
 AndroidApplicationConventionPlugin
 AndroidLibraryConventionPlugin
@@ -13,7 +49,8 @@ AndroidFeatureConventionPlugin
 DetektConventionPlugin
 ```
 
-### Plugin ID
+**Plugin ID:**
+
 パターン: `<prefix>.<type>.<subtype>`
 
 ```
@@ -26,16 +63,16 @@ newsflow.android.detekt
 
 ---
 
-## パッケージ名
+### パッケージ名
 
 プロジェクト名のハイフンは除去する（my-app → myapp）
 
-### ベースパッケージ
+**ベースパッケージ:**
 ```
 io.github.kei_1111.newsflow.android
 ```
 
-### サブパッケージ構造
+**サブパッケージ構造:**
 ```
 io.github.kei_1111.newsflow.android
 ├── app
@@ -51,16 +88,15 @@ io.github.kei_1111.newsflow.android
 
 ---
 
-## モジュール命名
+### モジュール命名
 
-### パターン
 | タイプ | パターン | 例 |
 |--------|----------|-----|
 | Core | `core:<module-name>` | `core:designsystem`, `core:ui` |
 | Feature | `feature:<module-name>` | `feature:home`, `feature:settings` |
 | App | `app` | `app` |
 
-### settings.gradle.kts
+**settings.gradle.kts:**
 ```kotlin
 include(":app")
 include(":core:designsystem")
@@ -70,7 +106,7 @@ include(":feature:home")
 
 ---
 
-## バージョンカタログ（libs.versions.toml）
+### バージョンカタログ（libs.versions.toml）
 
 | セクション | ケース | 例 |
 |------------|--------|-----|
@@ -78,7 +114,6 @@ include(":feature:home")
 | libraries | ケバブケース | `androidx-core-ktx = { ... }` |
 | plugins | ケバブケース | `android-application = { ... }` |
 
-### 例
 ```toml
 [versions]
 androidGradlePlugin = "8.12.3"
@@ -94,9 +129,10 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 
 ---
 
-## Composable関数
+### Composable関数
 
-### Theme関数
+**Theme関数:**
+
 パターン: `<ProjectName>Theme`
 ```kotlin
 @Composable
@@ -105,7 +141,8 @@ fun NewsflowAndroidTheme(
 ) { ... }
 ```
 
-### 汎用コンポーネント
+**汎用コンポーネント:**
+
 パターン: `Newsflow<ComponentName>`
 
 `core:designsystem`の`component/common`に配置するコンポーネントはプレフィックス `Newsflow` をつける。
@@ -123,7 +160,7 @@ fun NewsflowTextField(...) { ... }
 
 ---
 
-## Applicationクラス
+### Applicationクラス
 
 パターン: `<ProjectName>Application`
 
@@ -133,9 +170,10 @@ class NewsflowAndroidApplication : Application() { ... }
 
 ---
 
-## リソース
+### リソース
 
-### アイコン
+**アイコン:**
+
 パターン: `ic_<icon_name>`（スネークケース）
 
 ```
@@ -145,7 +183,8 @@ ic_arrow_back
 ic_chevron_right
 ```
 
-### 画像
+**画像:**
+
 パターン: `img_<image_name>[_preview]`（スネークケース）
 
 ```
@@ -158,7 +197,7 @@ img_article_preview     # プレビュー用
 
 ---
 
-## スクリプト
+### スクリプト
 
 パターン: ケバブケース + `.sh`
 
@@ -170,13 +209,13 @@ setup-environment.sh
 
 ---
 
-## コールバック関数
+### コールバック関数
 
 コンポーネントはViewに徹するべきであり、ビジネスロジックやIntent/Actionの知識を持たない。そのためコールバックには「何が起きたか」を表すアクション系の命名を使用する。
 
 パターン: `on + 操作/イベント + UI要素`
 
-### 操作/イベントの種類
+**操作/イベントの種類:**
 
 | 種類 | 用途 | 例 |
 |------|------|-----|
@@ -190,19 +229,19 @@ setup-environment.sh
 | `Drag` | ドラッグ | `onDragItem` |
 | `Scroll` | スクロール | `onScrollList` |
 
-### 命名ルール
+**命名ルール:**
 
 1. **UIコンポーネント種別（Button, Card等）は省略**
-   - ✅ `onClickArticle`, `onClickShare`
-   - ❌ `onClickArticleCard`, `onClickShareButton`
+   - OK: `onClickArticle`, `onClickShare`
+   - NG: `onClickArticleCard`, `onClickShareButton`
 
 2. **UI要素名はコンポーネント内での名前**
    - ArticleCard内: `onClickArticle`, `onClickMore`
-   - ❌ `onClickArticleCardArticle`
+   - NG: `onClickArticleCardArticle`
 
 3. **XXXButtonコンポーネントの場合は`onClick`のみ**
-   - ✅ `ShareButton(onClick = ...)`
-   - ❌ `ShareButton(onClickShare = ...)`
+   - OK: `ShareButton(onClick = ...)`
+   - NG: `ShareButton(onClickShare = ...)`
 
 ```kotlin
 // ArticleCard.kt
