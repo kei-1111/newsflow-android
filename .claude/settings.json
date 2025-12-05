@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Skill(naming-convention)",
       "Skill(material3-expressive)"
     ],
     "deny": [],

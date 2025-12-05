@@ -73,5 +73,6 @@ build-logic/convention/ # Convention Plugins
 
 | ドキュメント | 内容 |
 |-------------|------|
+| `agent-docs/NAMING_CONVENTION.md` | 命名規則 |
+| `agent-docs/UI_CONVENTION.md` | UI実装ガイドライン |
 | `.claude/skills/material3-expressive/SKILL.md` | M3 Expressive UI実装ガイドライン |
-| `.claude/skills/naming-convention/SKILL.md` | 命名規則 |
