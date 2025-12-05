@@ -57,16 +57,14 @@ fun NewsflowFilterChip(
 @ComponentPreviews
 private fun NewsflowFilterChipPreview() {
     NewsflowAndroidTheme {
-        Surface {
-            var count by remember { mutableIntStateOf(0) }
+        var count by remember { mutableIntStateOf(0) }
 
-            Surface {
-                NewsflowFilterChip(
-                    selected = true,
-                    onClick = { count++ },
-                    label = { Text("Clicked $count") }
-                )
-            }
+        Surface {
+            NewsflowFilterChip(
+                selected = true,
+                onClick = { count++ },
+                label = { Text("Clicked $count") }
+            )
         }
     }
 }
