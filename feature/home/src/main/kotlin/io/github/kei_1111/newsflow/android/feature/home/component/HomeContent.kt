@@ -100,7 +100,7 @@ internal fun HomeContent(
             )
             PullToRefreshBox(
                 isRefreshing = state.isRefreshing,
-                onRefresh = { onIntent(HomeIntent.Refresh) },
+                onRefresh = { onIntent(HomeIntent.RefreshArticles) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
@@ -110,7 +110,7 @@ internal fun HomeContent(
                     pagerState = pagerState,
                     isLoading = state.isLoading,
                     articlesByCategory = state.articlesByCategory,
-                    onClickArticle = { onIntent(HomeIntent.SelectArticle(it)) },
+                    onClickArticle = { onIntent(HomeIntent.NavigateViewer(it)) },
                     onClickMore = { onIntent(HomeIntent.ShowArticleOverview(it)) },
                     modifier = Modifier
                         .fillMaxSize()

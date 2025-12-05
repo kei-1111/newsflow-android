@@ -100,7 +100,7 @@ internal fun SearchContent(
             } else {
                 ArticleCardList(
                     articles = state.articles,
-                    onClickArticle = { onIntent(SearchIntent.SelectArticle(it)) },
+                    onClickArticle = { onIntent(SearchIntent.NavigateViewer(it)) },
                     onClickMore = { onIntent(SearchIntent.ShowArticleOverview(it)) },
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(
