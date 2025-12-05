@@ -14,8 +14,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -39,8 +42,12 @@ internal fun SearchContent(
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
     val layoutDirection = LocalLayoutDirection.current
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     state.selectedArticle?.let {
         ArticleOverviewBottomSheet(
@@ -69,10 +76,11 @@ internal fun SearchContent(
             SearchTopAppBar(
                 scrollBehavior = scrollBehavior,
                 query = state.query,
+                focusRequester = focusRequester,
                 onChangeQuery = { onIntent(SearchIntent.UpdateQuery(it)) },
                 onClickClear = { onIntent(SearchIntent.ClearQuery) },
                 onClickBack = { onIntent(SearchIntent.NavigateBack) },
-                onClickOption = { onIntent(SearchIntent.ShowOptionsSheet) }
+                onClickOption = { onIntent(SearchIntent.ShowOptionsSheet) },
             )
         },
     ) { innerPadding ->

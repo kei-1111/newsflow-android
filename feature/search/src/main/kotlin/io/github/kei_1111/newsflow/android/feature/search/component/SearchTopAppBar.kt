@@ -14,7 +14,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
@@ -28,6 +30,7 @@ import io.github.kei_1111.newsflow.android.feature.search.R
 internal fun SearchTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     query: String,
+    focusRequester: FocusRequester,
     onChangeQuery: (String) -> Unit,
     onClickClear: () -> Unit,
     onClickBack: () -> Unit,
@@ -47,6 +50,7 @@ internal fun SearchTopAppBar(
                 query = query,
                 onChangeQuery = onChangeQuery,
                 onClickClear = onClickClear,
+                focusRequester = focusRequester,
             )
         },
         modifier = modifier,
@@ -95,6 +99,7 @@ private fun SearchTopAppBarPreview() {
                 onClickClear = {},
                 onClickBack = {},
                 onClickOption = {},
+                focusRequester = remember { FocusRequester() },
             )
         }
     }
