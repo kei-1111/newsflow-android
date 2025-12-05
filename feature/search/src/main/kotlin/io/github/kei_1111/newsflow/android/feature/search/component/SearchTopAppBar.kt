@@ -31,7 +31,7 @@ internal fun SearchTopAppBar(
     onChangeQuery: (String) -> Unit,
     onClickClear: () -> Unit,
     onClickBack: () -> Unit,
-    onClickTune: () -> Unit,
+    onClickOption: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
@@ -64,11 +64,11 @@ internal fun SearchTopAppBar(
         },
         actions = {
             NewsflowIconButton(
-                onClick = onClickTune,
+                onClick = onClickOption,
                 shapes = IconButtonDefaults.shapes()
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_tune),
+                    painter = painterResource(R.drawable.ic_option),
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
@@ -94,7 +94,7 @@ private fun SearchTopAppBarPreview() {
                 onChangeQuery = {},
                 onClickClear = {},
                 onClickBack = {},
-                onClickTune = {},
+                onClickOption = {},
             )
         }
     }

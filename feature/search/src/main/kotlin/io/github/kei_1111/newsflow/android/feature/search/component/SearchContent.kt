@@ -62,7 +62,7 @@ internal fun SearchContent(
                 onChangeQuery = { onIntent(SearchIntent.UpdateQuery(it)) },
                 onClickClear = { onIntent(SearchIntent.ClearQuery) },
                 onClickBack = { onIntent(SearchIntent.NavigateBack) },
-                onClickTune = { /* TODO: 詳細検索機能を実装する際に作成 */ }
+                onClickOption = { /* TODO: 詳細検索機能を実装する際に作成 */ }
             )
         },
     ) { innerPadding ->
