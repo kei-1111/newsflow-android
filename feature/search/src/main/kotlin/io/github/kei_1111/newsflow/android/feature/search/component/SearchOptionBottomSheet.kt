@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowFilterChip
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.search.R
@@ -109,7 +110,7 @@ private fun <T> OptionSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             options.forEach { option ->
-                FilterChip(
+                NewsflowFilterChip(
                     selected = option == selectedOption,
                     onClick = { onChangeOption(option) },
                     label = { Text(optionLabel(option)) },
