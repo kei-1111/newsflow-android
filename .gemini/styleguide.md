@@ -94,7 +94,7 @@ It follows Material 3 Expressive guidelines and project-specific conventions to 
 
 ## Best Practices
 * **No Unused Code:** Remove unused imports, variables, and functions.
-* **No Magic Numbers:** Define constants for numeric values. Exception: UI layout values (e.g., `16.dp`, `8.dp`) can be used directly in Compose code.
+* **No Magic Numbers:** Define constants for numeric values. Exception: UI-related values can be used directly in Compose code (e.g., `16.dp`, `0.24f` for alpha, animation durations).
 * **Early Return:** Prefer early returns to reduce nesting.
 
 # Tooling
