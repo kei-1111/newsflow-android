@@ -79,6 +79,6 @@ newsflow-android-android-application = { id = "newsflow.android.android.applicat
 newsflow-android-android-feature = { id = "newsflow.android.android.feature" }
 newsflow-android-android-library = { id = "newsflow.android.android.library" }
 newsflow-android-android-library-compose = { id = "newsflow.android.android.library.compose" }
-newsflow-android-android-library-test = { id = "newsflow.android.android.library.test" }
+newsflow-android-android-ui-test = { id = "newsflow.android.android.ui.test" }
 newsflow-android-detekt = { id = "newsflow.android.detekt" }
 
