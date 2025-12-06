@@ -1,0 +1,59 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  claude-review:
+    if: |
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       contains(github.event.comment.body, '/claude review')) ||
+      (github.event_name == 'pull_request_review_comment' &&
+       contains(github.event.comment.body, '/claude review')) ||
+      github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Code Review
+        id: claude-review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          trigger_phrase: "/claude review"
+          claude_args: |
+            --model claude-opus-4-5-20251101
+            --max-turns 15
+            --system-prompt "**IMPORTANT: You MUST respond in Japanese. All review comments and feedback must be written in Japanese.**
+
+            このPRをレビューし、CLAUDE.mdとagent-docs/の規約に従って以下の観点でフィードバックを提供してください:
+
+            1. Material 3 Expressive準拠
+            2. Newsflowコンポーネント使用
+            3. UI規約準拠（agent-docs/UI_CONVENTION.md）
+            4. 命名規則準拠（agent-docs/NAMING_CONVENTION.md）
+
+            詳細な規約はCLAUDE.mdと.claude/skills/material3-expressive/SKILL.mdを参照してください。
+
+            レビュー形式（日本語で出力）:
+            ### レビューサマリー
+            ### 準拠状況
+            ### 推奨事項"
