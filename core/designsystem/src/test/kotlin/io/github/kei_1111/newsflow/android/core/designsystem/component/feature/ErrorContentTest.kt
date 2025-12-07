@@ -2,6 +2,7 @@
 
 package io.github.kei_1111.newsflow.android.core.designsystem.component.feature
 
+import android.content.Context
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.Surface
@@ -13,7 +14,9 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.captureRoboImage
+import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.ui.provider.DebounceClicker
 import io.github.kei_1111.newsflow.android.core.ui.provider.LocalDebounceClicker
 import io.github.kei_1111.newsflow.library.core.model.NewsflowError
@@ -32,38 +35,37 @@ class ErrorContentTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val context: Context
+        get() = ApplicationProvider.getApplicationContext()
+
     // region UI Tests
 
     @Test
     fun errorContent_networkError_displaysRetryButton() {
         composeTestRule.setContent {
             TestTheme {
-                Surface{
-                    ErrorContent(
-                        error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
+                    onClickAction = {},
+                )
             }
         }
 
-        composeTestRule.onNodeWithText("Retry").assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.error_retry_button)).assertIsDisplayed()
     }
 
     @Test
     fun errorContent_internalError_displaysBackButton() {
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.InternalError.ArticleNotFound("Article Not Found"),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.InternalError.ArticleNotFound("Article Not Found"),
+                    onClickAction = {},
+                )
             }
         }
 
-        composeTestRule.onNodeWithText("Go Back").assertIsDisplayed()
+        composeTestRule.onNodeWithText(context.getString(R.string.error_back_button)).assertIsDisplayed()
     }
 
     @Test
@@ -72,16 +74,14 @@ class ErrorContentTest {
 
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
-                        onClickAction = { clicked = true },
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
+                    onClickAction = { clicked = true },
+                )
             }
         }
 
-        composeTestRule.onNodeWithText("Retry").performClick()
+        composeTestRule.onNodeWithText(context.getString(R.string.error_retry_button)).performClick()
         assert(clicked) { "Retry button click was not triggered" }
     }
 
@@ -93,12 +93,10 @@ class ErrorContentTest {
     fun errorContent_networkFailure_screenshot() {
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.NetworkError.NetworkFailure("Network Error"),
+                    onClickAction = {},
+                )
             }
         }
 
@@ -109,12 +107,10 @@ class ErrorContentTest {
     fun errorContent_unauthorized_screenshot() {
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.NetworkError.Unauthorized(),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.NetworkError.Unauthorized(),
+                    onClickAction = {},
+                )
             }
         }
 
@@ -125,12 +121,10 @@ class ErrorContentTest {
     fun errorContent_serverError_screenshot() {
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.NetworkError.ServerError("Server Error"),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.NetworkError.ServerError("Server Error"),
+                    onClickAction = {},
+                )
             }
         }
 
@@ -141,12 +135,10 @@ class ErrorContentTest {
     fun errorContent_articleNotFound_screenshot() {
         composeTestRule.setContent {
             TestTheme {
-                Surface {
-                    ErrorContent(
-                        error = NewsflowError.InternalError.ArticleNotFound("Article Not Found"),
-                        onClickAction = {},
-                    )
-                }
+                ErrorContent(
+                    error = NewsflowError.InternalError.ArticleNotFound("Article Not Found"),
+                    onClickAction = {},
+                )
             }
         }
 
@@ -166,7 +158,7 @@ private fun TestTheme(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalDebounceClicker provides DebounceClicker(debounceMillis = 0L)) {
         MaterialExpressiveTheme(
             colorScheme = lightColorScheme(),
-            content = content
+            content = { Surface { content() } }
         )
     }
 }
