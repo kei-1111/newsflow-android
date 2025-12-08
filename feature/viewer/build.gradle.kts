@@ -9,5 +9,5 @@ android {
 dependencies {
     implementation(libs.newsflow.library.viewer)
 
-    testImplementation(project(":core:test"))
+    testImplementation(projects.core.test)
 }
