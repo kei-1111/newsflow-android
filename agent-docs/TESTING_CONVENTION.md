@@ -96,14 +96,6 @@ class HomeScreenRobot(
 
 ### 2.2 TestTag規約
 
-#### TestTagの使用方針
-
-| 状況 | 推奨アプローチ |
-|------|--------------|
-| テキストがある要素 | `onNodeWithText()` を優先 |
-| アイコンやボタン | `contentDescription` を優先（アクセシビリティにも有効） |
-| 上記で識別できない | `testTag` を使用 |
-
 #### onTag拡張関数の使用
 
 TestTagによる要素検索には、`core/test`モジュールで提供される`onTag`拡張関数を使用します。
