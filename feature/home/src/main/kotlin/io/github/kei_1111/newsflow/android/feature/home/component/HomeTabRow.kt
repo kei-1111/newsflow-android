@@ -7,6 +7,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -15,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowTab
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
+import io.github.kei_1111.newsflow.android.feature.home.HomeTestTags
 import io.github.kei_1111.newsflow.android.feature.home.R
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 
@@ -26,7 +28,7 @@ internal fun HomeTabRow(
 ) {
     PrimaryScrollableTabRow(
         selectedTabIndex = NewsCategory.entries.indexOf(selectedCategory),
-        modifier = modifier,
+        modifier = modifier.testTag(HomeTestTags.TabRow.Root),
         edgePadding = 0.dp,
         minTabWidth = 0.dp,
         contentColor = TabRowDefaults.primaryContentColor
@@ -36,6 +38,7 @@ internal fun HomeTabRow(
                 newsCategory = newsCategory,
                 selected = newsCategory == selectedCategory,
                 onClick = { onClickNewsCategory(newsCategory) },
+                modifier = Modifier.testTag(HomeTestTags.TabRow.tab(newsCategory)),
             )
         }
     }
