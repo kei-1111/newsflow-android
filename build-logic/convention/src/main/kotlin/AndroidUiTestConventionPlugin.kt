@@ -27,6 +27,10 @@ class AndroidUiTestConventionPlugin : Plugin<Project> {
                 }
             }
 
+            // ReleaseビルドのUIテストはスキップ（debugImplementationのマニフェストが利用不可のため）
+            tasks.matching { it.name.contains("testRelease") && it.name.contains("UnitTest") }
+                .configureEach { enabled = false }
+
             dependencies {
                 testImplementation(libs.library("junit"))
                 testImplementation(libs.library("robolectric"))

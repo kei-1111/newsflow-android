@@ -7,17 +7,9 @@ import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import io.github.kei_1111.newsflow.android.core.ui.provider.DebounceClicker
 import io.github.kei_1111.newsflow.android.core.ui.provider.DebouncedClickProvider
-import io.github.kei_1111.newsflow.android.core.ui.provider.LocalDebounceClicker
 
-/**
- * Robolectric環境用のテストテーマ
- *
- * - dynamicColorSchemeはRobolectricで動作しないため固定スキームを使用
- * - debounceMillis=0のDebounceClickerを提供してクリックを即座に処理
- */
+@Suppress("ModifierMissing")
 @Composable
 fun NewsflowTestTheme(content: @Composable () -> Unit) {
     DebouncedClickProvider {

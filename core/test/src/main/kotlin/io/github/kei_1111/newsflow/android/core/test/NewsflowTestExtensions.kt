@@ -5,9 +5,6 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onNodeWithTag
 
-/**
- * setContentにNewsflowTestThemeを自動適用する拡張関数
- */
 fun ComposeContentTestRule.setNewsflowContent(content: @Composable () -> Unit) {
     setContent {
         NewsflowTestTheme {
@@ -16,8 +13,5 @@ fun ComposeContentTestRule.setNewsflowContent(content: @Composable () -> Unit) {
     }
 }
 
-/**
- * onNodeWithTagの短縮形
- */
 fun ComposeContentTestRule.onTag(testTag: String): SemanticsNodeInteraction =
     onNodeWithTag(testTag)

@@ -18,4 +18,6 @@ android {
 
 dependencies {
     implementation(libs.newsflow.library.home)
+
+    testImplementation(project(":core:test"))
 }

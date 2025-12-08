@@ -10,7 +10,6 @@ class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("org.jetbrains.kotlin.plugin.compose")
                 apply("newsflow.android.android.library")
-                apply("newsflow.android.android.ui.test")
             }
 
             extensions.configure<LibraryExtension> {
