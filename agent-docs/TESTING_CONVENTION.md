@@ -15,6 +15,36 @@
 
 **注意**: ビジネスロジックのテストは外部KMPライブラリ（newsflow-library）側で行います。
 
+### テストランナー
+
+プロジェクト共通の`NewsflowTestRunner`を使用します。
+
+```kotlin
+// core/test/.../NewsflowTestRunner.kt
+class NewsflowTestRunner(testClass: Class<*>) : RobolectricTestRunner(testClass) {
+    override fun buildGlobalConfig(): Config {
+        return Config.Builder()
+            .setSdk(36)
+            .setQualifiers("w400dp-h800dp-xxhdpi")
+            .build()
+    }
+}
+```
+
+**テストクラスの基本構成:**
+
+```kotlin
+@RunWith(NewsflowTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+class MyScreenTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+    // ...
+}
+```
+
+**注意**: `@GraphicsMode`はRunner経由で設定できないため、各テストクラスで指定が必要です。
+
 ## 2. テスト設計原則
 
 ### 2.1 Robot Pattern
@@ -292,9 +322,8 @@ fun buttonWithDebounce_clickAfterDebounceTime_emitsIntent() {
 ### 基本構成
 
 ```kotlin
-@RunWith(RobolectricTestRunner::class)
+@RunWith(NewsflowTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(sdk = [34], qualifiers = "w400dp-h800dp-xxhdpi")
 class HomeScreenScreenshotTest {
 
     @get:Rule
