@@ -252,3 +252,45 @@ fun ArticleCard(
     onClickMore: () -> Unit,
 )
 ```
+
+---
+
+### TestTags（UIテスト用タグ）
+
+UIテストで要素を特定するためのtestTag文字列は、各モジュールに`<ModuleName>TestTags`オブジェクトとして配置する。
+
+**命名パターン**: `{コンポーネント名}{要素名}`（アッパーキャメルケース）
+
+**ファイル配置**:
+- `core/designsystem` → `DesignSystemTestTags.kt`
+- `feature/home` → `HomeTestTags.kt`
+
+**ルール**:
+1. **Rootプロパティの値にはRootを付けない**
+   - ✅ `const val Root = "ErrorContent"`
+   - ❌ `const val Root = "ErrorContentRoot"`
+
+2. **子要素はコンポーネント名をプレフィックスとして付ける**
+   - ✅ `const val Icon = "ErrorContentIcon"`
+   - ✅ `const val ActionButton = "ErrorContentActionButton"`
+
+3. **動的IDにはコンポーネント名をプレフィックスとして付ける**
+   - ✅ `fun card(id: String) = "ArticleCard$id"`
+
+**例**:
+```kotlin
+object DesignSystemTestTags {
+    object ErrorContent {
+        const val Root = "ErrorContent"
+        const val Icon = "ErrorContentIcon"
+        const val Title = "ErrorContentTitle"
+        const val Description = "ErrorContentDescription"
+        const val ActionButton = "ErrorContentActionButton"
+    }
+
+    object ArticleCard {
+        const val Root = "ArticleCard"
+        fun card(id: String) = "ArticleCard$id"
+    }
+}
+```

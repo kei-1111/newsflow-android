@@ -17,8 +17,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,7 @@ fun ErrorContent(
 ) {
     Column(
         modifier = modifier
+            .testTag(DesignSystemTestTags.ErrorContent.Root)
             .width(IntrinsicSize.Max)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -55,7 +58,9 @@ fun ErrorContent(
                 }
             ),
             contentDescription = null,
-            modifier = Modifier.size(120.dp),
+            modifier = Modifier
+                .testTag(DesignSystemTestTags.ErrorContent.Icon)
+                .size(120.dp),
             tint = MaterialTheme.colorScheme.error,
         )
         Spacer(modifier = Modifier.height(24.dp))
@@ -71,6 +76,7 @@ fun ErrorContent(
                     is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_title
                 }
             ),
+            modifier = Modifier.testTag(DesignSystemTestTags.ErrorContent.Title),
             style = MaterialTheme.typography.headlineMediumEmphasized,
             color = MaterialTheme.colorScheme.error,
         )
@@ -87,13 +93,16 @@ fun ErrorContent(
                     is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_description
                 }
             ),
+            modifier = Modifier.testTag(DesignSystemTestTags.ErrorContent.Description),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(modifier = Modifier.height(32.dp))
         NewsflowButton(
             onClick = onClickAction,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .testTag(DesignSystemTestTags.ErrorContent.ActionButton)
+                .fillMaxWidth(),
             shapes = ButtonDefaults.shapes(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.error,
