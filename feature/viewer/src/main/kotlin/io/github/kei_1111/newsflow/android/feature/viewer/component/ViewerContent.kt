@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.viewinterop.AndroidView
@@ -26,6 +27,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
+import io.github.kei_1111.newsflow.android.feature.viewer.ViewerTestTags
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerIntent
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerState
@@ -41,7 +43,9 @@ internal fun ViewerContent(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .testTag(ViewerTestTags.Content.Root),
         topBar = {
             ViewerTopAppBar(
                 scrollBehavior = scrollBehavior,

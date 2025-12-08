@@ -12,6 +12,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -75,19 +76,21 @@ fun ViewerScreen(
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun ViewerScreen(
+internal fun ViewerScreen(
     state: ViewerState,
     onIntent: (ViewerIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(modifier = modifier) {
+    Surface(modifier = modifier.testTag(ViewerTestTags.ViewerScreen.Root)) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
                 is ViewerState.Init, ViewerState.Loading -> {
-                    LoadingContent()
+                    LoadingContent(
+                        modifier = Modifier.testTag(ViewerTestTags.Loading.Root)
+                    )
                 }
 
                 is ViewerState.Stable -> {

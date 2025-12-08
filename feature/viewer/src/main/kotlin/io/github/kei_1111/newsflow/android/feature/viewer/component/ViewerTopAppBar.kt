@@ -13,12 +13,14 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.viewer.R
+import io.github.kei_1111.newsflow.android.feature.viewer.ViewerTestTags
 
 // TODO: nestedScrollが上手く行っておらずWebViewのスクロールで
 //  ViewerTopAppBarが閉じるときにガタガタするのを直したい、大きくスクロールすれば出てこないし緊急性は低いので今後やる
@@ -33,10 +35,11 @@ internal fun ViewerTopAppBar(
 ) {
     TopAppBar(
         title = { /*ViewerTopAppBarはtitleに何も表示させないため空*/ },
-        modifier = modifier,
+        modifier = modifier.testTag(ViewerTestTags.TopAppBar.Root),
         navigationIcon = {
             NewsflowIconButton(
                 onClick = onClickBack,
+                modifier = Modifier.testTag(ViewerTestTags.TopAppBar.BackButton),
                 shapes = IconButtonDefaults.shapes()
             ) {
                 Icon(
@@ -52,6 +55,7 @@ internal fun ViewerTopAppBar(
             ) {
                 NewsflowIconButton(
                     onClick = onClickShare,
+                    modifier = Modifier.testTag(ViewerTestTags.TopAppBar.ShareButton),
                     shapes = IconButtonDefaults.shapes()
                 ) {
                     Icon(
@@ -62,6 +66,7 @@ internal fun ViewerTopAppBar(
                 }
                 NewsflowIconButton(
                     onClick = onClickBookmark,
+                    modifier = Modifier.testTag(ViewerTestTags.TopAppBar.BookmarkButton),
                     shapes = IconButtonDefaults.shapes()
                 ) {
                     Icon(
