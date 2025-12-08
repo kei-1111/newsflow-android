@@ -7,14 +7,12 @@ import io.github.kei_1111.newsflow.android.core.test.setNewsflowContent
 import io.github.kei_1111.newsflow.android.feature.viewer.fixture.ViewerTestFixtures
 import org.junit.Rule
 import org.junit.Test
+import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
-@RunWith(RobolectricTestRunner::class)
+@RunWith(NewsflowTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(sdk = [34], qualifiers = "w400dp-h800dp-xxhdpi")
 class ViewerScreenScreenshotTest {
 
     @get:Rule
