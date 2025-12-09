@@ -46,9 +46,6 @@ class HomeScreenRobot(
     fun clickFirstArticleMoreButton(): HomeScreenRobot = apply {
         advanceDebounceTime()
         composeTestRule
-            .onAllNodesWithTag(DesignSystemTestTags.ArticleCard.Root, useUnmergedTree = true)
-            .onFirst()
-        composeTestRule
             .onTag(DesignSystemTestTags.ArticleCard.moreButton("article_0"))
             .performClick()
     }
