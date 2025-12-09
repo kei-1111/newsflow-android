@@ -60,7 +60,7 @@ fun ArticleCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .debouncedClickable { onClickArticle() }
-                .padding(8.dp),
+                .padding(6.dp),
         ) {
             Column(
                 modifier = Modifier
