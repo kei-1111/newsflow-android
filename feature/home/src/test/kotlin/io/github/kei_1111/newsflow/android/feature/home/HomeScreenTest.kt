@@ -1,15 +1,16 @@
 package io.github.kei_1111.newsflow.android.feature.home
 
 import androidx.compose.ui.test.junit4.createComposeRule
+import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import io.github.kei_1111.newsflow.android.feature.home.fixture.HomeTestFixtures
 import io.github.kei_1111.newsflow.android.feature.home.robot.HomeScreenRobot
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 
@@ -183,6 +184,71 @@ class HomeScreenTest {
         assertEquals(
             listOf(HomeIntent.RetryLoad, HomeIntent.RetryLoad),
             receivedIntents
+        )
+    }
+
+    // === BottomSheet Tests ===
+
+    @Test
+    fun bottomSheet_displaysWhenArticleSelected() {
+        robot
+            .setupWithState(HomeTestFixtures.createStateWithSelectedArticle())
+            .verifyBottomSheetDisplayed()
+    }
+
+    @Test
+    fun bottomSheet_notDisplayedWhenNoArticleSelected() {
+        robot
+            .setupWithState(HomeTestFixtures.createStableState())
+            .verifyBottomSheetNotDisplayed()
+    }
+
+    @Test
+    fun moreButtonClick_emitsShowArticleOverviewIntent() {
+        val receivedIntents = mutableListOf<HomeIntent>()
+
+        robot
+            .setupWithState(
+                state = HomeTestFixtures.createStableState(),
+                onIntent = { receivedIntents.add(it) }
+            )
+            .clickFirstArticleMoreButton()
+
+        assertEquals(1, receivedIntents.size)
+        assertTrue(receivedIntents.first() is HomeIntent.ShowArticleOverview)
+    }
+
+    // === Tab Interaction Tests ===
+
+    @Test
+    fun tabClick_emitsChangeCategoryIntent() {
+        val receivedIntents = mutableListOf<HomeIntent>()
+
+        robot
+            .setupWithState(
+                state = HomeTestFixtures.createAllCategoriesState(),
+                onIntent = { receivedIntents.add(it) }
+            )
+            .clickTab(NewsCategory.BUSINESS)
+
+        assertTrue(
+            receivedIntents.any { it == HomeIntent.ChangeCategory(NewsCategory.BUSINESS) }
+        )
+    }
+
+    @Test
+    fun tabClick_differentCategory_emitsCorrectIntent() {
+        val receivedIntents = mutableListOf<HomeIntent>()
+
+        robot
+            .setupWithState(
+                state = HomeTestFixtures.createAllCategoriesState(),
+                onIntent = { receivedIntents.add(it) }
+            )
+            .clickTab(NewsCategory.TECHNOLOGY)
+
+        assertTrue(
+            receivedIntents.any { it == HomeIntent.ChangeCategory(NewsCategory.TECHNOLOGY) }
         )
     }
 }

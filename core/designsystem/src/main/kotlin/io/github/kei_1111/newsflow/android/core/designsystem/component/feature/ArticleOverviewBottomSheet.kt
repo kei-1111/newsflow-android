@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -34,6 +35,7 @@ import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameter
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
+import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
@@ -63,7 +65,8 @@ fun ArticleOverviewBottomSheet(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp),
+                .padding(bottom = 24.dp)
+                .testTag(DesignSystemTestTags.ArticleOverviewBottomSheet.Root),
         ) {
             article.imageUrl?.let { imageUrl ->
                 AsyncImage(

@@ -3,12 +3,12 @@ package io.github.kei_1111.newsflow.android.feature.home
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.captureRoboImage
+import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import io.github.kei_1111.newsflow.android.core.test.setNewsflowContent
 import io.github.kei_1111.newsflow.android.feature.home.fixture.HomeTestFixtures
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import org.junit.Rule
 import org.junit.Test
-import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 

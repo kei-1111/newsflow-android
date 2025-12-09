@@ -1,13 +1,17 @@
 package io.github.kei_1111.newsflow.android.feature.home.robot
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import io.github.kei_1111.newsflow.android.core.test.onTag
 import io.github.kei_1111.newsflow.android.core.test.setNewsflowContent
 import io.github.kei_1111.newsflow.android.feature.home.HomeScreen
 import io.github.kei_1111.newsflow.android.feature.home.HomeTestTags
+import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
 import io.github.kei_1111.newsflow.library.feature.home.HomeState
 import org.robolectric.shadows.ShadowSystemClock
@@ -37,6 +41,28 @@ class HomeScreenRobot(
     fun clickSearchButton(): HomeScreenRobot = apply {
         advanceDebounceTime()
         composeTestRule.onTag(HomeTestTags.TopAppBar.SearchButton).performClick()
+    }
+
+    fun clickFirstArticleMoreButton(): HomeScreenRobot = apply {
+        advanceDebounceTime()
+        composeTestRule
+            .onAllNodesWithTag(DesignSystemTestTags.ArticleCard.Root, useUnmergedTree = true)
+            .onFirst()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleCard.moreButton("article_0"))
+            .performClick()
+    }
+
+    fun clickArticleMoreButton(articleId: String): HomeScreenRobot = apply {
+        advanceDebounceTime()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleCard.moreButton(articleId))
+            .performClick()
+    }
+
+    fun clickTab(category: NewsCategory): HomeScreenRobot = apply {
+        advanceDebounceTime()
+        composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).performClick()
     }
 
     // === Verification Methods ===
@@ -71,6 +97,24 @@ class HomeScreenRobot(
 
     fun verifyArticleListDisplayed(): HomeScreenRobot = apply {
         composeTestRule.onTag(HomeTestTags.ArticleList.Root).assertIsDisplayed()
+    }
+
+    fun verifyBottomSheetDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleOverviewBottomSheet.Root)
+            .assertIsDisplayed()
+    }
+
+    fun verifyBottomSheetNotDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleOverviewBottomSheet.Root)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifyTabSelected(category: NewsCategory): HomeScreenRobot = apply {
+        composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).assertIsDisplayed()
     }
 
     // === Private Helpers ===
