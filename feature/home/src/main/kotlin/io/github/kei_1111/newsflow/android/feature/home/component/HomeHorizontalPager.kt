@@ -53,7 +53,9 @@ internal fun HomeHorizontalPager(
                     articles = articlesByCategory[NewsCategory.entries[page]] ?: emptyList(),
                     onClickArticle = onClickArticle,
                     onClickMore = onClickMore,
-                    modifier = Modifier.testTag(HomeTestTags.ArticleList.Root),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(HomeTestTags.ArticleList.Root),
                     contentPadding = PaddingValues(
                         start = 16.dp,
                         top = 16.dp,
