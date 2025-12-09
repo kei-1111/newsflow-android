@@ -1,6 +1,7 @@
 package io.github.kei_1111.newsflow.android.feature.viewer
 
 import androidx.compose.ui.test.junit4.createComposeRule
+import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import io.github.kei_1111.newsflow.android.feature.viewer.fixture.ViewerTestFixtures
 import io.github.kei_1111.newsflow.android.feature.viewer.robot.ViewerScreenRobot
 import io.github.kei_1111.newsflow.library.feature.viewer.ViewerIntent
@@ -8,7 +9,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import io.github.kei_1111.newsflow.android.core.test.NewsflowTestRunner
 import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 
