@@ -14,6 +14,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.L
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
+import io.github.kei_1111.newsflow.android.feature.home.HomeTestTags
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 
@@ -43,12 +45,17 @@ internal fun HomeHorizontalPager(
             contentAlignment = Alignment.Center,
         ) {
             if (isLoading) {
-                LoadingContent()
+                LoadingContent(
+                    modifier = Modifier.testTag(HomeTestTags.Loading.Root)
+                )
             } else {
                 ArticleCardList(
                     articles = articlesByCategory[NewsCategory.entries[page]] ?: emptyList(),
                     onClickArticle = onClickArticle,
                     onClickMore = onClickMore,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(HomeTestTags.ArticleList.Root),
                     contentPadding = PaddingValues(
                         start = 16.dp,
                         top = 16.dp,

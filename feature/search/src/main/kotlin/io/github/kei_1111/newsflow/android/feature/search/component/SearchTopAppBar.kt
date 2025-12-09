@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
@@ -24,6 +25,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.component.common.Ne
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.search.R
+import io.github.kei_1111.newsflow.android.feature.search.SearchTestTags
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -53,11 +55,12 @@ internal fun SearchTopAppBar(
                 focusRequester = focusRequester,
             )
         },
-        modifier = modifier,
+        modifier = modifier.testTag(SearchTestTags.TopAppBar.Root),
         navigationIcon = {
             NewsflowIconButton(
                 onClick = onClickBack,
-                shapes = IconButtonDefaults.shapes()
+                shapes = IconButtonDefaults.shapes(),
+                modifier = Modifier.testTag(SearchTestTags.TopAppBar.BackButton)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_arrow_back),
@@ -69,7 +72,8 @@ internal fun SearchTopAppBar(
         actions = {
             NewsflowIconButton(
                 onClick = onClickOption,
-                shapes = IconButtonDefaults.shapes()
+                shapes = IconButtonDefaults.shapes(),
+                modifier = Modifier.testTag(SearchTestTags.TopAppBar.OptionButton)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_option),

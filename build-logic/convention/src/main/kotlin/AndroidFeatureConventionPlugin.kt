@@ -10,6 +10,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("newsflow.android.android.library.compose")
+                apply("newsflow.android.android.ui.test")
             }
 
             dependencies {

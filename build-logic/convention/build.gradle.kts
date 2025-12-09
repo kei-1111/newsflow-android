@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.android.gradle)
     compileOnly(libs.detekt.gradle)
     compileOnly(libs.kotlin.gradle)
+    compileOnly(libs.roborazzi.gradle)
 }
 
 gradlePlugin {
@@ -45,6 +46,10 @@ gradlePlugin {
         register("detekt") {
             id = libs.plugins.newsflow.android.detekt.get().pluginId
             implementationClass = "DetektConventionPlugin"
+        }
+        register("androidUiTest") {
+            id = libs.plugins.newsflow.android.android.ui.test.get().pluginId
+            implementationClass = "AndroidUiTestConventionPlugin"
         }
     }
 }

@@ -1,0 +1,160 @@
+name: Screenshot Test
+
+on:
+  pull_request:
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      pull-requests: write
+      actions: read
+
+    env:
+      GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GPR_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Download baseline screenshots from main branch
+        id: download-baseline
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: screenshot-baseline
+          workflow: screenshot-record.yml
+          branch: main
+          path: baseline-screenshots
+        continue-on-error: true
+
+      - name: Setup baseline screenshots
+        if: steps.download-baseline.outcome == 'success'
+        run: |
+          echo "Setting up baseline screenshots..."
+
+          # 各モジュールのbuild/outputs/roborazziディレクトリを作成し、ベースライン画像をコピー
+          for module_path in $(find baseline-screenshots -type d -name "roborazzi" 2>/dev/null); do
+            # baseline-screenshots/feature/home/build/outputs/roborazzi -> feature/home/build/outputs/roborazzi
+            relative_path="${module_path#baseline-screenshots/}"
+            target_dir="${relative_path}"
+
+            echo "Copying $module_path to $target_dir"
+            mkdir -p "$target_dir"
+            cp -r "$module_path"/* "$target_dir"/ 2>/dev/null || true
+          done
+
+          echo "Baseline screenshots setup complete"
+          find . -path "*/build/outputs/roborazzi/*.png" -type f | head -10
+
+      - name: Run screenshot comparison
+        id: compare
+        run: ./gradlew compareRoborazziDebug --stacktrace
+        continue-on-error: true
+
+      - name: Upload screenshot diff
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-diff
+          path: |
+            **/build/outputs/roborazzi/**/*_compare.png
+            **/build/outputs/roborazzi/**/*_actual.png
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Upload all screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot-results
+          path: '**/build/outputs/roborazzi/**/*.png'
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Check for screenshot differences
+        id: check-diff
+        if: always()
+        run: |
+          DIFF_COUNT=$(find . -path "*/build/outputs/roborazzi/*" -name "*_compare.png" -type f 2>/dev/null | wc -l | tr -d ' ')
+          echo "diff_count=$DIFF_COUNT" >> $GITHUB_OUTPUT
+
+          if [ "$DIFF_COUNT" -gt 0 ]; then
+            echo "has_diff=true" >> $GITHUB_OUTPUT
+            echo "::warning::Found $DIFF_COUNT screenshot difference(s)"
+          else
+            echo "has_diff=false" >> $GITHUB_OUTPUT
+            echo "No screenshot differences found"
+          fi
+
+      - name: Comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const baselineExists = '${{ steps.download-baseline.outcome }}' === 'success';
+            const hasDiff = '${{ steps.check-diff.outputs.has_diff }}' === 'true';
+            const diffCount = parseInt('${{ steps.check-diff.outputs.diff_count }}' || '0');
+            const compareResult = '${{ steps.compare.outcome }}';
+
+            let body = '## 📸 Screenshot Test Results\n\n';
+
+            if (!baselineExists) {
+              body += '⚠️ **No baseline screenshots found on main branch.**\n\n';
+              body += 'This is expected for the first PR or if screenshot tests are new.\n';
+              body += 'Once this PR is merged to main, baseline screenshots will be recorded.\n';
+            } else if (hasDiff) {
+              body += `❌ **${diffCount} screenshot difference(s) detected!**\n\n`;
+              body += '📥 Download the `screenshot-diff` artifact to see the visual differences.\n\n';
+              body += 'If these changes are intentional, the baseline will be updated when this PR is merged to main.\n';
+            } else {
+              body += '✅ **All screenshots match the baseline!**\n';
+            }
+
+            body += '\n---\n';
+            body += `Compare task: ${compareResult === 'success' ? '✅ Passed' : '⚠️ ' + compareResult}\n`;
+
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Screenshot Test Results')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }

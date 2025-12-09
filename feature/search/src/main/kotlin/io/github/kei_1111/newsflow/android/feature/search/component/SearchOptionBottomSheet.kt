@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.component.common.Ne
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.search.R
+import io.github.kei_1111.newsflow.android.feature.search.SearchTestTags
 import io.github.kei_1111.newsflow.library.feature.search.model.DateRangePreset
 import io.github.kei_1111.newsflow.library.feature.search.model.SearchLanguage
 import io.github.kei_1111.newsflow.library.feature.search.model.SearchOptions
@@ -56,7 +58,8 @@ internal fun SearchOptionBottomSheet(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 24.dp)
-                .navigationBarsPadding(),
+                .navigationBarsPadding()
+                .testTag(SearchTestTags.OptionBottomSheet.Root),
             verticalArrangement = Arrangement.spacedBy(24.dp),
         ) {
             OptionSection(

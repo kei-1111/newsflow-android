@@ -8,4 +8,6 @@ android {
 
 dependencies {
     implementation(libs.newsflow.library.search)
+
+    testImplementation(projects.core.test)
 }

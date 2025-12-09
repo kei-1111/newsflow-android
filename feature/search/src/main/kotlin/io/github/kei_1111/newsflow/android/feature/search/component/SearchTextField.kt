@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -30,6 +31,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.component.common.Ne
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.search.R
+import io.github.kei_1111.newsflow.android.feature.search.SearchTestTags
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -41,7 +43,7 @@ internal fun SearchTextField(
     modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.testTag(SearchTestTags.SearchTextField.Root),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.surfaceContainer,
     ) {
@@ -87,7 +89,9 @@ internal fun SearchTextField(
             NewsflowIconButton(
                 onClick = onClickClear,
                 shapes = IconButtonDefaults.shapes(),
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier
+                    .size(16.dp)
+                    .testTag(SearchTestTags.SearchTextField.ClearButton)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_clear),

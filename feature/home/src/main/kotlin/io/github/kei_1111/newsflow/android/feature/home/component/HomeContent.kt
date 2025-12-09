@@ -20,12 +20,14 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleOverviewBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
+import io.github.kei_1111.newsflow.android.feature.home.HomeTestTags
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.core.model.NewsCategory
 import io.github.kei_1111.newsflow.library.feature.home.HomeIntent
@@ -73,7 +75,7 @@ internal fun HomeContent(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(HomeTestTags.Content.Root),
         topBar = {
             HomeTopAppBar(
                 scrollBehavior = scrollBehavior,

@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -30,6 +31,7 @@ import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameter
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
+import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.component.common.NewsflowIconButton
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
@@ -127,7 +129,8 @@ fun ArticleCard(
                 shapes = IconButtonDefaults.shapes(),
                 modifier = Modifier
                     .size(16.dp)
-                    .align(Alignment.Top),
+                    .align(Alignment.Top)
+                    .testTag(DesignSystemTestTags.ArticleCard.moreButton(article.id)),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_more_vert),

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.A
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
+import io.github.kei_1111.newsflow.android.feature.search.SearchTestTags
 import io.github.kei_1111.newsflow.library.core.model.Article
 import io.github.kei_1111.newsflow.library.feature.search.SearchIntent
 import io.github.kei_1111.newsflow.library.feature.search.SearchState
@@ -71,7 +73,7 @@ internal fun SearchContent(
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag(SearchTestTags.Content.Root),
         topBar = {
             SearchTopAppBar(
                 scrollBehavior = scrollBehavior,
@@ -96,13 +98,17 @@ internal fun SearchContent(
             contentAlignment = Alignment.Center
         ) {
             if (state.isSearching) {
-                LoadingContent()
+                LoadingContent(
+                    modifier = Modifier.testTag(SearchTestTags.Loading.Root)
+                )
             } else {
                 ArticleCardList(
                     articles = state.articles,
                     onClickArticle = { onIntent(SearchIntent.NavigateViewer(it)) },
                     onClickMore = { onIntent(SearchIntent.ShowArticleOverview(it)) },
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .testTag(SearchTestTags.ArticleList.Root),
                     contentPadding = PaddingValues(
                         start = 16.dp,
                         top = 16.dp,

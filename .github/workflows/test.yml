@@ -80,3 +80,84 @@ jobs:
           else
             echo "✓ All tests passed"
           fi
+
+      - name: Comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { execSync } = require('child_process');
+
+            // テスト結果XMLを解析
+            const testResults = execSync('find . -name "TEST-*.xml" -type f').toString().trim();
+            const files = testResults ? testResults.split('\n') : [];
+
+            let totalTests = 0;
+            let totalFailures = 0;
+            let totalErrors = 0;
+            let totalSkipped = 0;
+
+            for (const file of files) {
+              if (!file) continue;
+              const content = fs.readFileSync(file, 'utf8');
+              const testsMatch = content.match(/tests="(\d+)"/);
+              const failuresMatch = content.match(/failures="(\d+)"/);
+              const errorsMatch = content.match(/errors="(\d+)"/);
+              const skippedMatch = content.match(/skipped="(\d+)"/);
+
+              if (testsMatch) totalTests += parseInt(testsMatch[1]);
+              if (failuresMatch) totalFailures += parseInt(failuresMatch[1]);
+              if (errorsMatch) totalErrors += parseInt(errorsMatch[1]);
+              if (skippedMatch) totalSkipped += parseInt(skippedMatch[1]);
+            }
+
+            const passed = totalTests - totalFailures - totalErrors - totalSkipped;
+            const hasFailures = totalFailures > 0 || totalErrors > 0;
+
+            let body = '## 🧪 Unit Test Results\n\n';
+
+            if (totalTests === 0) {
+              body += '⚠️ **No test results found.**\n';
+            } else if (hasFailures) {
+              body += `❌ **${totalFailures + totalErrors} test(s) failed!**\n\n`;
+              body += `| Status | Count |\n|--------|-------|\n`;
+              body += `| ✅ Passed | ${passed} |\n`;
+              body += `| ❌ Failed | ${totalFailures} |\n`;
+              body += `| ⚠️ Errors | ${totalErrors} |\n`;
+              body += `| ⏭️ Skipped | ${totalSkipped} |\n`;
+              body += `| **Total** | **${totalTests}** |\n`;
+              body += '\n📥 Download the `test-reports` artifact for details.\n';
+            } else {
+              body += `✅ **All ${totalTests} tests passed!**\n\n`;
+              if (totalSkipped > 0) {
+                body += `(${totalSkipped} skipped)\n`;
+              }
+            }
+
+            // 既存のコメントを探して更新 or 新規作成
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Unit Test Results')
+            );
+
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
