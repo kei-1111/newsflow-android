@@ -7,11 +7,11 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import io.github.kei_1111.newsflow.android.core.navigation.Home
-import io.github.kei_1111.newsflow.android.feature.home.navigation.homeEntry
-import io.github.kei_1111.newsflow.android.feature.search.navigation.navigateSearch
-import io.github.kei_1111.newsflow.android.feature.search.navigation.searchEntry
-import io.github.kei_1111.newsflow.android.feature.viewer.navigation.navigateViewer
-import io.github.kei_1111.newsflow.android.feature.viewer.navigation.viewerEntry
+import io.github.kei_1111.newsflow.android.feature.home.homeEntry
+import io.github.kei_1111.newsflow.android.feature.search.navigateSearch
+import io.github.kei_1111.newsflow.android.feature.search.searchEntry
+import io.github.kei_1111.newsflow.android.feature.viewer.navigateViewer
+import io.github.kei_1111.newsflow.android.feature.viewer.viewerEntry
 
 @Suppress("ModifierMissing")
 @Composable

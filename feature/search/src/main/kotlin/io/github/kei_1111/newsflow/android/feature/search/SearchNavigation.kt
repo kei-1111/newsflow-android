@@ -1,10 +1,9 @@
-package io.github.kei_1111.newsflow.android.feature.search.navigation
+package io.github.kei_1111.newsflow.android.feature.search
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import io.github.kei_1111.newsflow.android.core.navigation.Search
-import io.github.kei_1111.newsflow.android.feature.search.SearchScreen
 
 fun NavBackStack<NavKey>.navigateSearch() = this.add(Search)
 
