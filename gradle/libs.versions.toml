@@ -2,9 +2,9 @@
 activityCompose = "1.12.1"
 agp = "8.13.1"
 coil = "3.3.0"
-composeBom = "2025.11.01"
+composeBom = "2025.12.00"
 detekt = "1.23.8"
-detektCompose = "0.4.28"
+detektCompose = "0.5.1"
 koin = "4.1.1"
 kotlin = "2.2.21"
 lifecycleViewmodelNavigation3 = "2.10.0"
@@ -17,7 +17,7 @@ serializationJson = "1.9.0"
 # Testing
 junit = "4.13.2"
 robolectric = "4.16"
-roborazzi = "1.34.0"
+roborazzi = "1.52.0"
 
 # SDK versions
 compileSdk = "36"
