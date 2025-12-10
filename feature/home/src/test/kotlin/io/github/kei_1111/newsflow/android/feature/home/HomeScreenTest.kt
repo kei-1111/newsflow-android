@@ -15,7 +15,6 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.GraphicsMode
 
 @RunWith(NewsflowTestRunner::class)
-@GraphicsMode(GraphicsMode.Mode.NATIVE)
 class HomeScreenTest {
 
     @get:Rule
