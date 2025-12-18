@@ -8,6 +8,7 @@ class NewsflowAndroidApplication : Application() {
         super.onCreate()
         initKoin(
             newsApiKey = BuildConfig.NEWS_API_KEY,
+            geminiApiKey = BuildConfig.GEMINI_API_KEY,
             appContext = this,
         )
     }
