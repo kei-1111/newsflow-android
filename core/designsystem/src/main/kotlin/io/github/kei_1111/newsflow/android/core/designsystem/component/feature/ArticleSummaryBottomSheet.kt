@@ -36,12 +36,16 @@ fun ArticleSummaryBottomSheet(
     isSummarizing: Boolean,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+    sheetState: SheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { !(isSummarizing && it == SheetValue.Hidden) }
+    ),
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         modifier = modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root),
         sheetState = sheetState,
+        sheetGesturesEnabled = !isSummarizing,
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         dragHandle = null,
     ) {
