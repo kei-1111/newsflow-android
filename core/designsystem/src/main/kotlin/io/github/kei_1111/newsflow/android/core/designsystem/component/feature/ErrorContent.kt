@@ -55,6 +55,7 @@ fun ErrorContent(
                     is NewsflowError.NetworkError.NetworkFailure -> R.drawable.img_networkfailure
                     is NewsflowError.InternalError.ArticleNotFound -> R.drawable.img_articlenotfound
                     is NewsflowError.InternalError.InvalidParameter -> R.drawable.img_invalidparameter
+                    else -> R.drawable.img_invalidparameter
                 }
             ),
             contentDescription = null,
@@ -74,6 +75,7 @@ fun ErrorContent(
                     is NewsflowError.NetworkError.NetworkFailure -> R.string.error_network_failure_title
                     is NewsflowError.InternalError.ArticleNotFound -> R.string.error_article_not_found_title
                     is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_title
+                    else -> R.string.error_network_failure_title
                 }
             ),
             modifier = Modifier.testTag(DesignSystemTestTags.ErrorContent.Title),
@@ -91,6 +93,7 @@ fun ErrorContent(
                     is NewsflowError.NetworkError.NetworkFailure -> R.string.error_network_failure_description
                     is NewsflowError.InternalError.ArticleNotFound -> R.string.error_article_not_found_description
                     is NewsflowError.InternalError.InvalidParameter -> R.string.error_invalid_parameter_description
+                    else -> R.string.error_network_failure_description
                 }
             ),
             modifier = Modifier.testTag(DesignSystemTestTags.ErrorContent.Description),
