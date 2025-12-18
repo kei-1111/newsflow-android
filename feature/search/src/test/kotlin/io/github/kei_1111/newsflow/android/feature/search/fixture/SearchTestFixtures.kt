@@ -140,4 +140,28 @@ object SearchTestFixtures {
         imageUrl = imageUrl,
         publishedAt = publishedAt
     )
+
+    fun createSummarizingState(
+        query: String = "test query",
+        summary: String = ""
+    ) = SearchState.Stable(
+        query = query,
+        isSearching = false,
+        articles = createArticles(),
+        selectedArticle = null,
+        isSummarizing = true,
+        summary = summary
+    )
+
+    fun createSummaryCompletedState(
+        query: String = "test query",
+        summary: String = "This is a test summary of the article content."
+    ) = SearchState.Stable(
+        query = query,
+        isSearching = false,
+        articles = createArticles(),
+        selectedArticle = null,
+        isSummarizing = false,
+        summary = summary
+    )
 }

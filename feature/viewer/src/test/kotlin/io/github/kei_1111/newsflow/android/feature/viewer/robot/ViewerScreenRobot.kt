@@ -1,6 +1,7 @@
 package io.github.kei_1111.newsflow.android.feature.viewer.robot
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.performClick
 import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
@@ -73,6 +74,48 @@ class ViewerScreenRobot(
 
     fun verifyRetryButtonDisplayed(): ViewerScreenRobot = apply {
         composeTestRule.onTag(DesignSystemTestTags.ErrorContent.ActionButton).assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetNotDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTitleDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingNotDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTextDisplayed(): ViewerScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Summary)
+            .assertIsDisplayed()
     }
 
     // === Private Helpers ===

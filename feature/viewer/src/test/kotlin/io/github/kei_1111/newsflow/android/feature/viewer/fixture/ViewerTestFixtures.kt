@@ -60,4 +60,24 @@ object ViewerTestFixtures {
         imageUrl = imageUrl,
         publishedAt = publishedAt
     )
+
+    fun createSummarizingState(
+        viewingArticle: Article = createArticle(),
+        summary: String = ""
+    ): ViewerState.Stable = ViewerState.Stable(
+        viewingArticle = viewingArticle,
+        isWebViewLoading = false,
+        isSummarizing = true,
+        summary = summary
+    )
+
+    fun createSummaryCompletedState(
+        viewingArticle: Article = createArticle(),
+        summary: String = "This is a test summary of the article content."
+    ): ViewerState.Stable = ViewerState.Stable(
+        viewingArticle = viewingArticle,
+        isWebViewLoading = false,
+        isSummarizing = false,
+        summary = summary
+    )
 }

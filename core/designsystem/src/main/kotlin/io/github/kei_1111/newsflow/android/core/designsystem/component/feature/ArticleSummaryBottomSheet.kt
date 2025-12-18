@@ -20,7 +20,9 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextOverflow
+import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -38,7 +40,7 @@ fun ArticleSummaryBottomSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        modifier = modifier,
+        modifier = modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root),
         sheetState = sheetState,
         shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
         dragHandle = null,
@@ -58,6 +60,7 @@ fun ArticleSummaryBottomSheet(
         ) {
             Text(
                 text = "Article Summary",
+                modifier = Modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title),
                 color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 3,
@@ -67,6 +70,7 @@ fun ArticleSummaryBottomSheet(
             if (summary.isNotEmpty()) {
                 Text(
                     text = summary,
+                    modifier = Modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Summary),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -74,7 +78,9 @@ fun ArticleSummaryBottomSheet(
             }
             if (isSummarizing) {
                 LoadingContent(
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
                 )
             }
         }

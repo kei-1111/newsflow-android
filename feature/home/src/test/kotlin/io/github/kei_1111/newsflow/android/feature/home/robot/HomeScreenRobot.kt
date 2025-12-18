@@ -112,6 +112,48 @@ class HomeScreenRobot(
         composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).assertIsDisplayed()
     }
 
+    fun verifySummaryBottomSheetDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetNotDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTitleDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingNotDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTextDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Summary)
+            .assertIsDisplayed()
+    }
+
     // === Private Helpers ===
 
     private fun advanceDebounceTime() {

@@ -151,4 +151,42 @@ class ViewerScreenTest {
             receivedIntents
         )
     }
+
+    // === Summary BottomSheet Tests ===
+
+    @Test
+    fun summarizingState_displaysSummaryBottomSheet() {
+        robot
+            .setupWithState(ViewerTestFixtures.createSummarizingState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTitleDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summarizingStateWithPartialSummary_displaysSummaryAndLoading() {
+        robot
+            .setupWithState(
+                ViewerTestFixtures.createSummarizingState(summary = "Partial summary text...")
+            )
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summaryCompletedState_displaysSummaryWithoutLoading() {
+        robot
+            .setupWithState(ViewerTestFixtures.createSummaryCompletedState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingNotDisplayed()
+    }
+
+    @Test
+    fun stableState_noSummary_summaryBottomSheetNotDisplayed() {
+        robot
+            .setupWithState(ViewerTestFixtures.createStableState())
+            .verifySummaryBottomSheetNotDisplayed()
+    }
 }
