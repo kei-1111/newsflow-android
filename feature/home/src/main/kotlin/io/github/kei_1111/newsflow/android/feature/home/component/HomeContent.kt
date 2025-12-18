@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleOverviewBottomSheet
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleSummaryBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 import io.github.kei_1111.newsflow.android.feature.home.BuildConfig
@@ -69,8 +70,16 @@ internal fun HomeContent(
             onDismiss = { onIntent(HomeIntent.DismissArticleOverview) },
             onClickCopyUrl = { onIntent(HomeIntent.CopyArticleUrl) },
             onClickShare = { onIntent(HomeIntent.ShareArticle) },
-            onClickSummary = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
+            onClickSummary = { onIntent(HomeIntent.SummarizeArticle) },
             onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
+        )
+    }
+
+    if (state.isSummarizing || state.summary.isNotEmpty()) {
+        ArticleSummaryBottomSheet(
+            summary = state.summary,
+            isSummarizing = state.isSummarizing,
+            onDismiss = { onIntent(HomeIntent.DismissSummary) }
         )
     }
 
@@ -152,7 +161,8 @@ private fun HomeContentPreview(
                                 publishedAt = 1763726640000,
                             )
                         }
-                    )
+                    ),
+                    summary = parameter.summary,
                 ),
                 onIntent = {},
             )
@@ -162,12 +172,14 @@ private fun HomeContentPreview(
 
 private data class HomeContentPreviewParameter(
     val selectedArticle: Article?,
+    val summary: String,
 )
 
 private class HomeContentPPP : CollectionPreviewParameterProvider<HomeContentPreviewParameter>(
     collection = listOf(
         HomeContentPreviewParameter(
             selectedArticle = null,
+            summary = "",
         ),
         HomeContentPreviewParameter(
             selectedArticle = Article(
@@ -183,7 +195,28 @@ private class HomeContentPPP : CollectionPreviewParameterProvider<HomeContentPre
                 url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
                 imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
                 publishedAt = 1763726640000,
-            )
+            ),
+            summary = "",
+        ),
+        HomeContentPreviewParameter(
+            selectedArticle = Article(
+                id = "2135641799",
+                source = "Politico",
+                author = "Will Knight",
+                title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                description = """
+                    At its Re:Invent conference, 
+                    Amazon also announced new tools to help customers build generative AI programs, 
+                    including one that checks whether a chatbot's outputs are accurate or not.
+                """.trimIndent(),
+                url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                publishedAt = 1763726640000,
+            ),
+            summary = """
+                NASA has completed the assembly of its next-generation Nancy Grace Roman Telescope, an infrared observatory slated for launch as early as Fall 2026 or May 2027. 
+                This powerful telescope features a Wide-Field Instrument, providing a view 100 times larger than Hubble's, and an advanced Coronagraph Instrument
+            """.trimIndent(),
         )
     )
 )

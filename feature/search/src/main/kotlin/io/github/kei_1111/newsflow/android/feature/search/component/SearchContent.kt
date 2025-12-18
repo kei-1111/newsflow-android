@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleCardList
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleOverviewBottomSheet
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleSummaryBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -57,7 +58,7 @@ internal fun SearchContent(
             onDismiss = { onIntent(SearchIntent.DismissArticleOverview) },
             onClickCopyUrl = { onIntent(SearchIntent.CopyArticleUrl) },
             onClickShare = { onIntent(SearchIntent.ShareArticle) },
-            onClickSummary = { /* TODO: AIによる記事要約機能を実装する際に作成 */ },
+            onClickSummary = { onIntent(SearchIntent.SummarizeArticle) },
             onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
         )
     }
@@ -69,6 +70,14 @@ internal fun SearchContent(
             onChangeDateRange = { onIntent(SearchIntent.UpdateDateRange(it)) },
             onChangeLanguage = { onIntent(SearchIntent.UpdateLanguage(it)) },
             onDismiss = { onIntent(SearchIntent.DismissOptionsSheet) },
+        )
+    }
+
+    if (state.isSummarizing || state.summary.isNotEmpty()) {
+        ArticleSummaryBottomSheet(
+            summary = state.summary,
+            isSummarizing = state.isSummarizing,
+            onDismiss = { onIntent(SearchIntent.DismissSummary) }
         )
     }
 
@@ -135,6 +144,7 @@ private fun SearchContentPreview(
                     isSearching = parameter.isSearching,
                     articles = parameter.articles,
                     selectedArticle = parameter.selectedArticle,
+                    summary = parameter.summary,
                 ),
                 onIntent = {},
             )
@@ -146,7 +156,8 @@ private data class SearchContentPreviewParameter(
     val query: String,
     val isSearching: Boolean,
     val articles: List<Article>,
-    val selectedArticle: Article?
+    val selectedArticle: Article?,
+    val summary: String,
 )
 
 private class SearchContentPPP : CollectionPreviewParameterProvider<SearchContentPreviewParameter>(
@@ -156,12 +167,14 @@ private class SearchContentPPP : CollectionPreviewParameterProvider<SearchConten
             isSearching = false,
             articles = emptyList(),
             selectedArticle = null,
+            summary = "",
         ),
         SearchContentPreviewParameter(
             query = "Amazon",
             isSearching = true,
             articles = emptyList(),
-            selectedArticle = null
+            selectedArticle = null,
+            summary = "",
         ),
         SearchContentPreviewParameter(
             query = "Amazon",
@@ -183,6 +196,7 @@ private class SearchContentPPP : CollectionPreviewParameterProvider<SearchConten
                 )
             },
             selectedArticle = null,
+            summary = "",
         ),
         SearchContentPreviewParameter(
             query = "Amazon",
@@ -217,6 +231,45 @@ private class SearchContentPPP : CollectionPreviewParameterProvider<SearchConten
                 imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
                 publishedAt = 1763726640000,
             ),
+            summary = "",
+        ),
+        SearchContentPreviewParameter(
+            query = "Amazon",
+            isSearching = false,
+            articles = List(10) {
+                Article(
+                    id = "2135641799",
+                    source = "Politico",
+                    author = "Will Knight",
+                    title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                    description = """
+                        At its Re:Invent conference, 
+                        Amazon also announced new tools to help customers build generative AI programs, 
+                        including one that checks whether a chatbot's outputs are accurate or not.
+                    """.trimIndent(),
+                    url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                    imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                    publishedAt = 1763726640000,
+                )
+            },
+            selectedArticle = Article(
+                id = "2135641799",
+                source = "Politico",
+                author = "Will Knight",
+                title = "Amazon Is Building a Mega AI Supercomputer With Anthropic",
+                description = """
+                    At its Re:Invent conference, 
+                    Amazon also announced new tools to help customers build generative AI programs, 
+                    including one that checks whether a chatbot's outputs are accurate or not.
+                """.trimIndent(),
+                url = "https://www.wired.com/story/amazon-reinvent-anthropic-supercomputer/",
+                imageUrl = "${BuildConfig.DRAWABLE_PATH}/img_article_card_preview.png",
+                publishedAt = 1763726640000,
+            ),
+            summary = """
+                NASA has completed the assembly of its next-generation Nancy Grace Roman Telescope, an infrared observatory slated for launch as early as Fall 2026 or May 2027. 
+                This powerful telescope features a Wide-Field Instrument, providing a view 100 times larger than Hubble's, and an advanced Coronagraph Instrument
+            """.trimIndent(),
         )
     )
 )

@@ -8,6 +8,7 @@ object ViewerTestTags {
     object TopAppBar {
         const val Root = "ViewerTopAppBar"
         const val BackButton = "ViewerTopAppBarBackButton"
+        const val SummaryButton = "ViewerTopAppBarSummaryButton"
         const val ShareButton = "ViewerTopAppBarShareButton"
         const val BookmarkButton = "ViewerTopAppBarBookmarkButton"
     }

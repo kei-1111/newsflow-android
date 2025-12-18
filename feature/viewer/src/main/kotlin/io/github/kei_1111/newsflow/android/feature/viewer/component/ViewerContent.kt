@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.viewinterop.AndroidView
 import io.github.kei_1111.newsflow.android.core.designsystem.BuildConfig
+import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.ArticleSummaryBottomSheet
 import io.github.kei_1111.newsflow.android.core.designsystem.component.feature.LoadingContent
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
@@ -42,6 +43,14 @@ internal fun ViewerContent(
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    if (state.isSummarizing || state.summary.isNotEmpty()) {
+        ArticleSummaryBottomSheet(
+            summary = state.summary,
+            isSummarizing = state.isSummarizing,
+            onDismiss = { onIntent(ViewerIntent.DismissSummary) }
+        )
+    }
+
     Scaffold(
         modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
@@ -51,6 +60,7 @@ internal fun ViewerContent(
                 scrollBehavior = scrollBehavior,
                 onClickBack = { onIntent(ViewerIntent.NavigateBack) },
                 onClickShare = { onIntent(ViewerIntent.ShareArticle) },
+                onClickSummary = { onIntent(ViewerIntent.SummarizeArticle) },
                 onClickBookmark = { /* TODO: ブックマーク機能を実装する際に作成 */ },
             )
         },
@@ -156,6 +166,7 @@ private fun ViewerContentPreview(
                         publishedAt = 1763726640000,
                     ),
                     isWebViewLoading = parameter.isWebViewLoading,
+                    summary = parameter.summary
                 ),
                 onIntent = {},
             )
@@ -165,15 +176,25 @@ private fun ViewerContentPreview(
 
 private data class ViewerContentPreviewParameter(
     val isWebViewLoading: Boolean,
+    val summary: String,
 )
 
 private class ViewerContentPPP : CollectionPreviewParameterProvider<ViewerContentPreviewParameter>(
     collection = listOf(
         ViewerContentPreviewParameter(
             isWebViewLoading = false,
+            summary = ""
         ),
         ViewerContentPreviewParameter(
             isWebViewLoading = true,
+            summary = "",
+        ),
+        ViewerContentPreviewParameter(
+            isWebViewLoading = true,
+            summary = """
+                NASA has completed the assembly of its next-generation Nancy Grace Roman Telescope, an infrared observatory slated for launch as early as Fall 2026 or May 2027. 
+                This powerful telescope features a Wide-Field Instrument, providing a view 100 times larger than Hubble's, and an advanced Coronagraph Instrument
+            """.trimIndent(),
         ),
     )
 )

@@ -29,6 +29,7 @@ import io.github.kei_1111.newsflow.android.feature.viewer.ViewerTestTags
 internal fun ViewerTopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     onClickBack: () -> Unit,
+    onClickSummary: () -> Unit,
     onClickShare: () -> Unit,
     onClickBookmark: () -> Unit,
     modifier: Modifier = Modifier,
@@ -53,6 +54,17 @@ internal fun ViewerTopAppBar(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                NewsflowIconButton(
+                    onClick = onClickSummary,
+                    modifier = Modifier.testTag(ViewerTestTags.TopAppBar.SummaryButton),
+                    shapes = IconButtonDefaults.shapes()
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_smart_toy),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
                 NewsflowIconButton(
                     onClick = onClickShare,
                     modifier = Modifier.testTag(ViewerTestTags.TopAppBar.ShareButton),
@@ -90,6 +102,7 @@ private fun ViewerTopAppBarPreview() {
             ViewerTopAppBar(
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 onClickBack = {},
+                onClickSummary = {},
                 onClickShare = {},
                 onClickBookmark = {},
             )
