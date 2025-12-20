@@ -298,5 +298,10 @@ class HomeScreenTest {
                 onIntent = { receivedIntents.add(it) }
             )
             .verifySummaryBottomSheetDisplayed()
+            .dismissSummaryBottomSheet()
+
+        assertTrue(
+            receivedIntents.any { it == HomeIntent.DismissSummary }
+        )
     }
 }

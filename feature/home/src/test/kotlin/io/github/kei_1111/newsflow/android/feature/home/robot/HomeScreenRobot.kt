@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
 import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import io.github.kei_1111.newsflow.android.core.test.onTag
 import io.github.kei_1111.newsflow.android.core.test.setNewsflowContent
@@ -58,6 +60,12 @@ class HomeScreenRobot(
     fun clickTab(category: NewsCategory): HomeScreenRobot = apply {
         advanceDebounceTime()
         composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).performClick()
+    }
+
+    fun dismissSummaryBottomSheet(): HomeScreenRobot = apply {
+        composeTestRule.onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .performTouchInput { swipeDown() }
+        composeTestRule.waitForIdle()
     }
 
     // === Verification Methods ===
