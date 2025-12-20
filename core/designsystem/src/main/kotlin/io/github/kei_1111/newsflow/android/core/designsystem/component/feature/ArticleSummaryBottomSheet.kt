@@ -22,11 +22,13 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
+import io.github.kei_1111.newsflow.android.core.designsystem.R
 import io.github.kei_1111.newsflow.android.core.designsystem.theme.NewsflowAndroidTheme
 import io.github.kei_1111.newsflow.android.core.ui.preview.ComponentPreviews
 
@@ -67,7 +69,7 @@ fun ArticleSummaryBottomSheet(
                 .padding(horizontal = 24.dp),
         ) {
             Text(
-                text = "Article Summary",
+                text = stringResource(R.string.article_summary_title),
                 modifier = Modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title),
                 color = MaterialTheme.colorScheme.onSurface,
                 overflow = TextOverflow.Ellipsis,

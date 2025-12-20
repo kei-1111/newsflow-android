@@ -18,4 +18,6 @@
     <string name="search_option_language_all">All</string>
     <string name="search_option_language_english">English</string>
     <string name="search_option_language_japanese">Japanese</string>
+
+    <string name="error_summary">Summary Error</string>
 </resources>

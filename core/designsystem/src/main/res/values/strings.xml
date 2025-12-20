@@ -27,4 +27,7 @@
     <string name="article_action_share">Share</string>
     <string name="article_action_summarize_with_gemini">Summarize with Gemini</string>
     <string name="article_action_bookmark">Bookmark</string>
+
+    <!-- Article Summary Bottom Sheet -->
+    <string name="article_summary_title">Article Summary</string>
 </resources>

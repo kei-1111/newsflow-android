@@ -79,7 +79,7 @@ fun SearchScreen(
                     context.startActivity(Intent.createChooser(shareIntent, null))
                 }
                 is SearchEffect.SummaryError -> {
-                    Toast.makeText(context, "Summary Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.error_summary, Toast.LENGTH_SHORT).show()
                 }
             }
         }
