@@ -12,12 +12,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -36,11 +37,14 @@ fun ArticleSummaryBottomSheet(
     isSummarizing: Boolean,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
-        confirmValueChange = { !(isSummarizing && it == SheetValue.Hidden) }
-    ),
 ) {
+    val currentIsSummarizing by rememberUpdatedState(isSummarizing)
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = { !(currentIsSummarizing && it == SheetValue.Hidden) }
+    )
+
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         modifier = modifier.testTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root),
@@ -91,26 +95,17 @@ fun ArticleSummaryBottomSheet(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @ComponentPreviews
 private fun ArticleSummaryBottomSheetPreview(
     @PreviewParameter(ArticleSummaryBottomSheetPPP::class) parameter: ArticleSummaryBottomSheetPreviewParameter
 ) {
-    val sheetState = SheetState(
-        skipPartiallyExpanded = true,
-        positionalThreshold = { 0f },
-        velocityThreshold = { 0f },
-        initialValue = SheetValue.Expanded,
-    )
-
     NewsflowAndroidTheme {
         Surface {
             ArticleSummaryBottomSheet(
                 summary = parameter.summary,
                 isSummarizing = parameter.isSummarizing,
                 onDismiss = {},
-                sheetState = sheetState,
             )
         }
     }
