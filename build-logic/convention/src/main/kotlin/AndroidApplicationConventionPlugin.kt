@@ -37,6 +37,12 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         name = "NEWS_API_KEY",
                         value = "\"${localProperties.getProperty("NEWS_API_KEY") ?: ""}\"",
                     )
+
+                    buildConfigField(
+                        type = "String",
+                        name = "GEMINI_API_KEY",
+                        value = "\"${localProperties.getProperty("GEMINI_API_KEY") ?: ""}\"",
+                    )
                 }
 
                 buildFeatures.buildConfig = true

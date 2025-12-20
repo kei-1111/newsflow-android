@@ -118,4 +118,30 @@ object HomeTestFixtures {
             selectedArticle = null
         )
     }
+
+    fun createSummarizingState(
+        currentCategory: NewsCategory = NewsCategory.GENERAL,
+        summary: String = ""
+    ) = HomeState.Stable(
+        isLoading = false,
+        isRefreshing = false,
+        currentNewsCategory = currentCategory,
+        articlesByCategory = mapOf(currentCategory to createArticles()),
+        selectedArticle = null,
+        isSummarizing = true,
+        summary = summary
+    )
+
+    fun createSummaryCompletedState(
+        currentCategory: NewsCategory = NewsCategory.GENERAL,
+        summary: String = "This is a test summary of the article content."
+    ) = HomeState.Stable(
+        isLoading = false,
+        isRefreshing = false,
+        currentNewsCategory = currentCategory,
+        articlesByCategory = mapOf(currentCategory to createArticles()),
+        selectedArticle = null,
+        isSummarizing = false,
+        summary = summary
+    )
 }

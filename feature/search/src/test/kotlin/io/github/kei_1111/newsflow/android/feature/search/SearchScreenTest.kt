@@ -11,7 +11,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.GraphicsMode
 
 @RunWith(NewsflowTestRunner::class)
 class SearchScreenTest {
@@ -235,5 +234,43 @@ class SearchScreenTest {
             listOf(SearchIntent.NavigateBack, SearchIntent.NavigateBack),
             receivedIntents
         )
+    }
+
+    // === Summary BottomSheet Tests ===
+
+    @Test
+    fun summarizingState_displaysSummaryBottomSheet() {
+        robot
+            .setupWithState(SearchTestFixtures.createSummarizingState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTitleDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summarizingStateWithPartialSummary_displaysSummaryAndLoading() {
+        robot
+            .setupWithState(
+                SearchTestFixtures.createSummarizingState(summary = "Partial summary text...")
+            )
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summaryCompletedState_displaysSummaryWithoutLoading() {
+        robot
+            .setupWithState(SearchTestFixtures.createSummaryCompletedState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingNotDisplayed()
+    }
+
+    @Test
+    fun stableState_noSummary_summaryBottomSheetNotDisplayed() {
+        robot
+            .setupWithState(SearchTestFixtures.createStableState())
+            .verifySummaryBottomSheetNotDisplayed()
     }
 }

@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.GraphicsMode
 
 @RunWith(NewsflowTestRunner::class)
 class ViewerScreenTest {
@@ -151,5 +150,43 @@ class ViewerScreenTest {
             listOf(ViewerIntent.NavigateBack, ViewerIntent.NavigateBack),
             receivedIntents
         )
+    }
+
+    // === Summary BottomSheet Tests ===
+
+    @Test
+    fun summarizingState_displaysSummaryBottomSheet() {
+        robot
+            .setupWithState(ViewerTestFixtures.createSummarizingState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTitleDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summarizingStateWithPartialSummary_displaysSummaryAndLoading() {
+        robot
+            .setupWithState(
+                ViewerTestFixtures.createSummarizingState(summary = "Partial summary text...")
+            )
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summaryCompletedState_displaysSummaryWithoutLoading() {
+        robot
+            .setupWithState(ViewerTestFixtures.createSummaryCompletedState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingNotDisplayed()
+    }
+
+    @Test
+    fun stableState_noSummary_summaryBottomSheetNotDisplayed() {
+        robot
+            .setupWithState(ViewerTestFixtures.createStableState())
+            .verifySummaryBottomSheetNotDisplayed()
     }
 }

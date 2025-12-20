@@ -77,6 +77,9 @@ fun HomeScreen(
                     }
                     context.startActivity(Intent.createChooser(shareIntent, null))
                 }
+                is HomeEffect.SummaryError -> {
+                    Toast.makeText(context, R.string.error_summary, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

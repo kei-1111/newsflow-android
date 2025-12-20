@@ -12,7 +12,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.GraphicsMode
 
 @RunWith(NewsflowTestRunner::class)
 class HomeScreenTest {
@@ -248,6 +247,61 @@ class HomeScreenTest {
 
         assertTrue(
             receivedIntents.any { it == HomeIntent.ChangeCategory(NewsCategory.TECHNOLOGY) }
+        )
+    }
+
+    // === Summary BottomSheet Tests ===
+
+    @Test
+    fun summarizingState_displaysSummaryBottomSheet() {
+        robot
+            .setupWithState(HomeTestFixtures.createSummarizingState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTitleDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summarizingStateWithPartialSummary_displaysSummaryAndLoading() {
+        robot
+            .setupWithState(
+                HomeTestFixtures.createSummarizingState(summary = "Partial summary text...")
+            )
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingDisplayed()
+    }
+
+    @Test
+    fun summaryCompletedState_displaysSummaryWithoutLoading() {
+        robot
+            .setupWithState(HomeTestFixtures.createSummaryCompletedState())
+            .verifySummaryBottomSheetDisplayed()
+            .verifySummaryTextDisplayed()
+            .verifySummaryLoadingNotDisplayed()
+    }
+
+    @Test
+    fun stableState_noSummary_summaryBottomSheetNotDisplayed() {
+        robot
+            .setupWithState(HomeTestFixtures.createStableState())
+            .verifySummaryBottomSheetNotDisplayed()
+    }
+
+    @Test
+    fun summaryBottomSheetDismiss_emitsDismissSummaryIntent() {
+        val receivedIntents = mutableListOf<HomeIntent>()
+
+        robot
+            .setupWithState(
+                state = HomeTestFixtures.createSummaryCompletedState(),
+                onIntent = { receivedIntents.add(it) }
+            )
+            .verifySummaryBottomSheetDisplayed()
+            .dismissSummaryBottomSheet()
+
+        assertTrue(
+            receivedIntents.any { it == HomeIntent.DismissSummary }
         )
     }
 }

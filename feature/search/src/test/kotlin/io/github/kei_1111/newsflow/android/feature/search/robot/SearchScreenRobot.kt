@@ -115,6 +115,48 @@ class SearchScreenRobot(
         composeTestRule.onTag(DesignSystemTestTags.ErrorContent.ActionButton).assertIsDisplayed()
     }
 
+    fun verifySummaryBottomSheetDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetNotDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTitleDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingNotDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTextDisplayed(): SearchScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Summary)
+            .assertIsDisplayed()
+    }
+
     // === Private Helpers ===
 
     private fun advanceDebounceTime() {

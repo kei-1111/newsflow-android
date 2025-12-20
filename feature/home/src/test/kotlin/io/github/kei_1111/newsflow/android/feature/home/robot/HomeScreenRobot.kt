@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTouchInput
+import androidx.compose.ui.test.swipeDown
 import io.github.kei_1111.newsflow.android.core.designsystem.DesignSystemTestTags
 import io.github.kei_1111.newsflow.android.core.test.onTag
 import io.github.kei_1111.newsflow.android.core.test.setNewsflowContent
@@ -60,6 +62,12 @@ class HomeScreenRobot(
         composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).performClick()
     }
 
+    fun dismissSummaryBottomSheet(): HomeScreenRobot = apply {
+        composeTestRule.onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .performTouchInput { swipeDown() }
+        composeTestRule.waitForIdle()
+    }
+
     // === Verification Methods ===
 
     fun verifyHomeScreenDisplayed(): HomeScreenRobot = apply {
@@ -110,6 +118,48 @@ class HomeScreenRobot(
 
     fun verifyTabSelected(category: NewsCategory): HomeScreenRobot = apply {
         composeTestRule.onTag(HomeTestTags.TabRow.tab(category)).assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryBottomSheetNotDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Root)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTitleDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Title)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsDisplayed()
+    }
+
+    fun verifySummaryLoadingNotDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Loading)
+            .assertIsNotDisplayed()
+    }
+
+    fun verifySummaryTextDisplayed(): HomeScreenRobot = apply {
+        composeTestRule.waitForIdle()
+        composeTestRule
+            .onTag(DesignSystemTestTags.ArticleSummaryBottomSheet.Summary)
+            .assertIsDisplayed()
     }
 
     // === Private Helpers ===

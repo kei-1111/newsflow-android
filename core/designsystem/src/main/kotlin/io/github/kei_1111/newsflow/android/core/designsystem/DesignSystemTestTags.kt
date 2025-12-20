@@ -23,4 +23,11 @@ object DesignSystemTestTags {
         const val SummaryButton = "ArticleOverviewBottomSheetSummaryButton"
         const val BookmarkButton = "ArticleOverviewBottomSheetBookmarkButton"
     }
+
+    object ArticleSummaryBottomSheet {
+        const val Root = "ArticleSummaryBottomSheet"
+        const val Title = "ArticleSummaryBottomSheetTitle"
+        const val Summary = "ArticleSummaryBottomSheetSummary"
+        const val Loading = "ArticleSummaryBottomSheetLoading"
+    }
 }

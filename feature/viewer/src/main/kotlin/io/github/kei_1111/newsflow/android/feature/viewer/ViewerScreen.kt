@@ -1,6 +1,7 @@
 package io.github.kei_1111.newsflow.android.feature.viewer
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -62,6 +63,10 @@ fun ViewerScreen(
                         putExtra(Intent.EXTRA_TEXT, "${title}\n$url")
                     }
                     context.startActivity(Intent.createChooser(shareIntent, null))
+                }
+
+                is ViewerEffect.SummaryError -> {
+                    Toast.makeText(context, R.string.error_summary, Toast.LENGTH_SHORT).show()
                 }
             }
         }
